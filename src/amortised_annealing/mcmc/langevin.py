@@ -29,12 +29,12 @@ class ULA:
         self.step_size = step_size
 
     @torch.no_grad()
-    def step(self, x: torch.Tensor, beta: float) -> torch.Tensor: 
+    def step(self, x: torch.Tensor, beta: float) -> Tuple[torch.Tensor, float]:
         h = self.step_size
         grad_E = _grad_energy(x, self.energy)
-        noise = torch.randn_like(x) # need same shape and device as x
+        noise = torch.randn_like(x)
         x_next = x - beta * h * grad_E + math.sqrt(2 * h) * noise
-        return x_next
+        return x_next, 1.0
     
     @torch.no_grad()
     def run(
@@ -42,11 +42,11 @@ class ULA:
         x0: torch.Tensor,
         beta: float, 
         n_steps: int,
-    ) -> torch.Tensor: 
+    ) -> Tuple[torch.Tensor, float]: 
         """Run ULA for n_steps starting from x0"""
         for _ in range(n_steps):
-            x0 = self.step(x0, beta)
-        return x0
+            x0, _ = self.step(x0, beta)
+        return x0, 1.0
 
 class MALA: 
     """Metropolis-Adjusted Langevin Algorithm targeting pi_beta ∝ exp(-beta * E(x)).
