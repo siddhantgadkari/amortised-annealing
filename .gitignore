@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# MacOS
+.DS_Store
+
+# VSCode
+.vscode/
+
+# ML artifacts
+checkpoints/
+outputs/
+wandb/
+runs/
+
+# Data
+data/
