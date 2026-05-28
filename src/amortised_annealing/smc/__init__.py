@@ -3,6 +3,7 @@ from .resampling import systematic_resample, stratified_resample, multinomial_re
 from .ess import ess, log_ess_ratio
 from .sampler import SMCSampler, SMCDiagnostics
 from .proposals import ULAProposal, DiffusionAnnealingProposal
+from .fkc import FKCAnnealedSampler
 
 __all__ = [
     "ParticleCloud",
@@ -16,4 +17,5 @@ __all__ = [
     "SMCDiagnostics",
     "ULAProposal",
     "DiffusionAnnealingProposal",
+    "FKCAnnealedSampler",
 ]

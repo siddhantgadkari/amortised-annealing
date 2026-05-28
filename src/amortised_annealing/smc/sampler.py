@@ -87,11 +87,10 @@ class SMCSampler:
 
         diag.record(ladder[0], cloud, self.energy_fn)
 
-        iterator = range(1, len(ladder))
-        if show_progress:
-            iterator = tqdm(iterator, desc="SMC", dynamic_ncols=True)
+        steps = range(1, len(ladder))
+        pbar = tqdm(steps, desc="SMC", dynamic_ncols=True) if show_progress else None
 
-        for k in iterator:
+        for k in (pbar if pbar is not None else steps):
             beta_prev = ladder[k - 1]
             beta_curr = ladder[k]
 
@@ -115,8 +114,8 @@ class SMCSampler:
 
             diag.record(beta_curr, cloud, self.energy_fn)
 
-            if show_progress:
-                iterator.set_postfix(
+            if pbar is not None:
+                pbar.set_postfix(
                     beta=f"{beta_curr:.2f}",
                     ess=f"{ess_ratio:.2f}",
                     E_min=f"{diag.best_energies[-1]:.3f}",
