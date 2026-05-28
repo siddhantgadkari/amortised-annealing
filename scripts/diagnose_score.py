@@ -77,9 +77,11 @@ def main() -> None:
         beta_max=sched_cfg.get("beta_max", 20.0),
     )
 
+    loss_type = cfg.get("training", {}).get("loss_type", "eps")
+
     # Per-bin loss
     losses = loss_by_t_bin(model, x_data, schedule, device,
-                           batch_size=args.batch_size, bins=BINS)
+                           batch_size=args.batch_size, bins=BINS, loss_type=loss_type)
 
     print(f"\nDSM loss by time bin — {args.run_name}")
     print(f"  {'bin':<14}  loss      interpretation")

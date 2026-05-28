@@ -94,6 +94,7 @@ def run_config(cfg_path: Path) -> None:
         ema_decay     = train_c.get("ema_decay",     0.999),
         log_every     = train_c.get("log_every",     500),
         log_uniform_t = train_c.get("log_uniform_t", False),
+        loss_type     = train_c.get("loss_type",     "eps"),
         seed          = job["seed"],
     )
 

@@ -5,7 +5,7 @@ import yaml
 
 # --- sweep axes ---
 DIMS     = [2, 5, 10, 20]
-BETA_MS  = [0.1, 1.0, 5.0, 10.0]
+BETA_MS  = [0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
 ENERGIES = ["double_well", "many_well", "ackley", "rastrigin"]
 METHODS  = ["ULA", "MALA"]
 

@@ -22,7 +22,8 @@ class TrainingConfig:
     ema_decay:     float = 0.999
     log_every:     int   = 500
     seed:          int   = 0
-    log_uniform_t: bool  = False  # set True to focus training on small-t (sharp score regime)
+    log_uniform_t: bool  = False   # set True to focus training on small-t (sharp score regime)
+    loss_type:     str   = "eps"   # "eps" or "score" — must match model's predict_score setting
 
 
 def _ema_update(ema_model: MLPScore, model: MLPScore, decay: float) -> None:
@@ -69,7 +70,8 @@ def train_score_model(
         idx = torch.randint(n, (config.batch_size,))
         x0 = x_data[idx].to(device)
 
-        loss = dsm_loss(model, x0, schedule, t_eps=config.t_eps, log_uniform_t=config.log_uniform_t)
+        loss = dsm_loss(model, x0, schedule, t_eps=config.t_eps,
+                        log_uniform_t=config.log_uniform_t, loss_type=config.loss_type)
 
         optimizer.zero_grad()
         loss.backward()
