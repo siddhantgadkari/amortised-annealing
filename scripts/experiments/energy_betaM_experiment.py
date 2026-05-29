@@ -101,7 +101,7 @@ ULA_STEP_SIZE = 1e-3
 
 # Annealing — diffusion SMC
 N_DIFFUSION_STEPS  = 10
-DIFF_T_START       = 0.3
+DIFF_T_START       = 0.05
 DIFF_T_END         = 1e-3
 DIFF_SCORE_SCALING = True
 
