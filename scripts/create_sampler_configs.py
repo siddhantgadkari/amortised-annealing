@@ -5,9 +5,10 @@ import yaml
 
 # --- sweep axes ---
 DIMS     = [2, 5, 10, 20]
-BETA_MS  = [0.1, 0.5, 1.0, 2.0, 5.0, 10.0]
-ENERGIES = ["double_well", "many_well", "ackley", "rastrigin"]
-METHODS  = ["ULA", "MALA"]
+BETA_MS  = [0.1, 0.25, 0.5, 1.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
+# ENERGIES = ["double_well", "many_well", "ackley", "rastrigin"]
+ENERGIES = ["ackley"]
+METHODS  = ["ULA"]#, "MALA"]
 
 # --- fixed sampler defaults ---
 SEED        = 0

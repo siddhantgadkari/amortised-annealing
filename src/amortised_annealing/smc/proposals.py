@@ -8,11 +8,12 @@ from ..mcmc.langevin import ULA
 
 
 class ULAProposal:
-    """Classical annealed SMC proposal: ULA mutation kernel + AIS weight update.
+    """Classical annealed SMC proposal: AIS weight update + ULA mutation kernel.
 
-    This is the standard baseline for annealed SMC. At each beta step, particles
-    are mutated by running `n_steps` of ULA targeting pi_{beta_curr}, then weighted
-    by the AIS incremental weight -(beta_curr - beta_prev) * E(x).
+    At each beta step the AIS weight -(beta_curr - beta_prev) * E(x) is applied
+    at the current (old) positions to reweight pi_{beta_prev} -> pi_{beta_curr},
+    then particles are mutated by running `n_steps` of ULA targeting pi_{beta_curr}
+    to improve mixing.
     """
 
     def __init__(
@@ -43,6 +44,9 @@ class DiffusionAnnealingProposal:
     The score can be scaled by (beta_curr / beta_train) as a heuristic push
     toward the colder target; this is a proposal heuristic, not an exact
     correction — the AIS weight corrects the mismatch.
+
+    This is a heuristic proposal; the standard AIS weight corrects only the beta change,
+    not the proposal bias. FKC/path weights are needed for a principled correction.
 
     Weight: standard AIS incremental weight -(Δβ) * E(x).
     """

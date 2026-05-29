@@ -42,9 +42,9 @@ class SMCSampler:
     """Generic Sequential Monte Carlo sampler.
 
     For each step k along the beta ladder:
-      1. Mutate:  x <- mutation_kernel(x, beta_k)
-      2. Weight:  log_w += weight_update(x, beta_{k-1}, beta_k)
-      3. Resample if ESS/N < ess_threshold
+      1. Weight:  log_w += weight_update(x, beta_{k-1}, beta_k)  [at old positions]
+      2. Resample if ESS/N < ess_threshold
+      3. Mutate:  x <- mutation_kernel(x, beta_k)
 
     mutation_kernel: (x: Tensor, beta: float) -> Tensor
     weight_update:   (x: Tensor, beta_prev: float, beta_curr: float) -> Tensor [N]
@@ -94,8 +94,7 @@ class SMCSampler:
             beta_prev = ladder[k - 1]
             beta_curr = ladder[k]
 
-            cloud.x = self.mutation_kernel(cloud.x, beta_curr)
-
+            # Weight at old positions: reweights IS samples from π_{β_prev} to π_{β_curr}
             delta_lw = self.weight_update(cloud.x, beta_prev, beta_curr)
             delta_lw = torch.nan_to_num(delta_lw, nan=float("-inf"))
             cloud.log_weights = cloud.log_weights + delta_lw
@@ -111,6 +110,9 @@ class SMCSampler:
                 cloud.x = cloud.x[idx]
                 cloud.log_weights = torch.zeros(N, device=cloud.log_weights.device)
                 diag.n_resamples += 1
+
+            # Mutate after weighting/resampling: kernel targets π_{β_curr} and improves mixing
+            cloud.x = self.mutation_kernel(cloud.x, beta_curr)
 
             diag.record(beta_curr, cloud, self.energy_fn)
 

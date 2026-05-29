@@ -14,8 +14,9 @@ from pathlib import Path
 import torch
 import yaml
 
-from amortised_annealing.diffusion import VPSchedule, MLPScore, ReverseSDE, euler_maruyama_sample
+from amortised_annealing.diffusion import VPSchedule, MLPScore, ReverseSDE
 from amortised_annealing.energies import DoubleWell, ManyWell, Ackley, Rastrigin
+from amortised_annealing.sampling import DiffusionModelSampler
 
 ROOT      = Path(__file__).parent.parent
 MODEL_DIR = ROOT / "data" / "models"
@@ -111,15 +112,8 @@ def main() -> None:
 
     # --- generate samples ---
     print(f"Generating {args.n_samples} samples with {args.n_steps} EM steps...")
-    x = euler_maruyama_sample(
-        rsde,
-        n_samples     = args.n_samples,
-        n_steps       = args.n_steps,
-        device        = device,
-        t_start       = args.t_start,
-        t_end         = args.t_end,
-        show_progress = args.progress,
-    )
+    diff_sampler = DiffusionModelSampler(rsde, n_steps=args.n_steps, t_start=args.t_start, t_end=args.t_end)
+    x = diff_sampler.sample(args.n_samples, device, show_progress=args.progress)
 
     # --- compute stats ---
     gen_stats  = _energy_stats(x.cpu(), energy)
@@ -128,11 +122,11 @@ def main() -> None:
         "median": sample_summary["median_energy"],
         "min":    sample_summary["min_energy"],
         "std":    sample_summary["std_energy"],
-        "q01":    sample_summary["energy_quantiles"]["q01"],
-        "q05":    sample_summary["energy_quantiles"]["q05"],
-        "q25":    sample_summary["energy_quantiles"]["q25"],
-        "q75":    sample_summary["energy_quantiles"]["q75"],
-        "q95":    sample_summary["energy_quantiles"]["q95"],
+        "q01":    sample_summary["energy_quantiles"].get("q01", float("nan")),
+        "q05":    sample_summary["energy_quantiles"].get("q05", float("nan")),
+        "q25":    sample_summary["energy_quantiles"].get("q25", float("nan")),
+        "q75":    sample_summary["energy_quantiles"].get("q75", float("nan")),
+        "q95":    sample_summary["energy_quantiles"].get("q95", float("nan")),
     }
 
     # --- print ---
