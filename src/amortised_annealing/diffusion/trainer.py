@@ -60,15 +60,16 @@ def train_score_model(
     optimizer = optim.Adam(model.parameters(), lr=config.lr)
     scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=config.n_steps)
 
+    x_data = x_data.to(device)  # pre-load once; avoids per-step CPU→GPU transfer
     n = x_data.shape[0]
     loss_history: List[float] = []
-    running_loss = 0.0
+    running_loss = torch.zeros(1, device=device)
 
     model.train()
     pbar = tqdm(range(1, config.n_steps + 1), desc="training score model", dynamic_ncols=True)
     for step in pbar:
-        idx = torch.randint(n, (config.batch_size,))
-        x0 = x_data[idx].to(device)
+        idx = torch.randint(n, (config.batch_size,), device=device)
+        x0 = x_data[idx]
 
         loss = dsm_loss(model, x0, schedule, t_eps=config.t_eps,
                         log_uniform_t=config.log_uniform_t, loss_type=config.loss_type)
@@ -81,12 +82,12 @@ def train_score_model(
 
         _ema_update(ema_model, model, config.ema_decay)
 
-        running_loss += loss.item()
+        running_loss += loss.detach()
         if step % config.log_every == 0:
-            avg = running_loss / config.log_every
+            avg = (running_loss / config.log_every).item()  # single sync per log interval
             loss_history.append(avg)
             pbar.set_postfix(loss=f"{avg:.4f}")
-            running_loss = 0.0
+            running_loss.zero_()
             if callback is not None:
                 callback(step, avg)
 
