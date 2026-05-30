@@ -210,9 +210,10 @@ def setup_and_sample(dim: int, seed: int) -> dict[float, str]:
         run_name = _sample_run_name(dim, beta_m, seed)
         out_dir  = SAMPLE_DIR / run_name
         if REUSE_SAMPLES and (out_dir / "particles.pt").exists():
+            print(f"    [sample] REUSE  {run_name}")
             runs[beta_m] = run_name
             continue
-        print(f"    [sample] {run_name}")
+        print(f"    [sample] RUN    {run_name}")
         cfg      = _make_sampling_config(dim, beta_m, seed)
         cfg_path = SAMPLING_CONFIGS_DIR / f"{run_name}.yaml"
         with open(cfg_path, "w") as f:
@@ -231,9 +232,10 @@ def setup_and_train(sample_runs: dict[float, str], seed: int) -> dict[float, str
         model_run  = _model_run_name(sample_run, seed)
         out_dir    = MODEL_DIR / model_run
         if REUSE_MODELS and (out_dir / "ema_model.pt").exists():
+            print(f"    [train]  REUSE  {model_run}")
             runs[beta_m] = model_run
             continue
-        print(f"    [train]  {model_run}")
+        print(f"    [train]  RUN    {model_run}")
         cfg      = _make_training_config(sample_run, seed)
         cfg_path = TRAINING_CONFIGS_DIR / f"{model_run}.yaml"
         with open(cfg_path, "w") as f:
@@ -369,12 +371,13 @@ def generate_model_samples(model_run: str, seed: int, device: torch.device) -> d
     out_dir = MODEL_SAMPLE_DIR / model_run
 
     if REUSE_MODEL_SAMPLES and (out_dir / "samples.pt").exists():
+        print(f"    [model samples] REUSE  {model_run}")
         summary = json.loads((out_dir / "summary.json").read_text())
         return {k: summary[k] for k in ("model_stats", "mcmc_stats", "delta_stats", "wall_clock_seconds")}
 
     rsde, energy, dim, beta_m, sample_run = _load_model(model_run, device)
 
-    print(f"    [model samples] {model_run}  N={MCMC_N_PARTICLES}")
+    print(f"    [model samples] RUN    {model_run}  N={MCMC_N_PARTICLES}")
     torch.manual_seed(seed)
     t0 = time.perf_counter()
     x = DiffusionModelSampler(
@@ -517,6 +520,7 @@ def run_seed(seed: int, device: torch.device) -> list[dict]:
         for beta_m in BETA_MS:
             key = (dim, beta_m)
             if key in existing:
+                print(f"    [anneal] REUSE  dim={dim} beta_m={beta_m}")
                 continue
 
             model_run  = model_runs[beta_m]
