@@ -1,0 +1,37 @@
+{
+  "model_run": "rastrigin_d2_beta9_ula_seed1_mlp256x3_eps_seed1",
+  "n_samples": 8192,
+  "n_steps": 500,
+  "t_start": 1.0,
+  "t_end": 0.001,
+  "seed": 1,
+  "wall_clock_seconds": 0.63,
+  "model_stats": {
+    "mean_energy": 20.6198,
+    "median_energy": 20.5556,
+    "min_energy": 0.0367,
+    "std_energy": 10.0741,
+    "q01": 1.2611,
+    "q05": 3.7911,
+    "q25": 13.3194,
+    "q75": 27.8208,
+    "q95": 37.8969
+  },
+  "mcmc_stats": {
+    "mean_energy": 18.9448,
+    "median_energy": 18.937,
+    "min_energy": 0.0253,
+    "std_energy": 7.8877,
+    "q01": 1.5846,
+    "q05": 4.9921,
+    "q25": 13.6252,
+    "q75": 24.9686,
+    "q95": 31.563
+  },
+  "delta_stats": {
+    "delta_mean": 0.0884,
+    "delta_median": 0.0855,
+    "delta_min": 0.4506,
+    "delta_std": 0.2772
+  }
+}
