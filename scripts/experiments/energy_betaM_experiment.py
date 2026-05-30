@@ -520,7 +520,6 @@ def run_seed(seed: int, device: torch.device) -> list[dict]:
         for beta_m in BETA_MS:
             key = (dim, beta_m)
             if key in existing:
-                print(f"    [anneal] REUSE  dim={dim} beta_m={beta_m}")
                 continue
 
             model_run  = model_runs[beta_m]
