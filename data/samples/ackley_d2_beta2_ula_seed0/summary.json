@@ -1,0 +1,20 @@
+{
+  "status": "completed",
+  "energy": "ackley",
+  "dim": 2,
+  "beta_m": 2.0,
+  "sampler": "ULA",
+  "n_particles": 8192,
+  "wall_clock_seconds": 9.61,
+  "mean_energy": 1.047,
+  "median_energy": 0.713,
+  "min_energy": 0.007,
+  "std_energy": 0.978,
+  "energy_quantiles": {
+    "q25": 0.354,
+    "q75": 1.382
+  },
+  "acceptance_rate": {
+    "mean": 1.0
+  }
+}

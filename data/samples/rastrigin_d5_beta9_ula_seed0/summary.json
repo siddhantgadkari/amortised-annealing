@@ -1,0 +1,37 @@
+{
+  "status": "completed",
+  "seed": 0,
+  "energy": "rastrigin",
+  "dim": 5,
+  "beta_m": 9.0,
+  "sampler": "ULA",
+  "n_particles": 8192,
+  "n_steps": 10000,
+  "burn_in": 2000,
+  "save_every": 100,
+  "step_size": 0.001,
+  "wall_clock_seconds": 7.63,
+  "device": "cuda",
+  "gpu_name": "NVIDIA L4",
+  "peak_gpu_memory_mb": 47.7,
+  "n_energy_evals": 98304000,
+  "n_grad_evals": 98304000,
+  "mean_energy": 47.6779,
+  "median_energy": 47.8316,
+  "min_energy": 5.0096,
+  "std_energy": 12.6806,
+  "energy_quantiles": {
+    "q01": 17.736,
+    "q05": 26.8301,
+    "q25": 38.9047,
+    "q75": 56.568,
+    "q95": 68.2411
+  },
+  "nan_count": 0,
+  "diverged_count": 0,
+  "acceptance_rate": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0
+  }
+}

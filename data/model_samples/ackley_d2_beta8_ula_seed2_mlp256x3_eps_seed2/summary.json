@@ -1,0 +1,37 @@
+{
+  "model_run": "ackley_d2_beta8_ula_seed2_mlp256x3_eps_seed2",
+  "n_samples": 8192,
+  "n_steps": 500,
+  "t_start": 1.0,
+  "t_end": 0.001,
+  "seed": 2,
+  "wall_clock_seconds": 4.78,
+  "model_stats": {
+    "mean_energy": 1.613,
+    "median_energy": 0.3504,
+    "min_energy": 0.0008,
+    "std_energy": 2.3823,
+    "q01": 0.0228,
+    "q05": 0.059,
+    "q25": 0.1701,
+    "q75": 1.9377,
+    "q95": 6.8037
+  },
+  "mcmc_stats": {
+    "mean_energy": 1.2561,
+    "median_energy": 0.3269,
+    "min_energy": 0.0028,
+    "std_energy": 1.8256,
+    "q01": 0.0227,
+    "q05": 0.0577,
+    "q25": 0.1707,
+    "q75": 0.9535,
+    "q95": 5.4399
+  },
+  "delta_stats": {
+    "delta_mean": 0.2841,
+    "delta_median": 0.0719,
+    "delta_min": 0.7143,
+    "delta_std": 0.3049
+  }
+}

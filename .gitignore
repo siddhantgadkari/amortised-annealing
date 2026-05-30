@@ -21,7 +21,4 @@ wandb/
 runs/
 
 # Data
-data/
-
-# Transfer staging area
-data_dump/
+data/*.png
