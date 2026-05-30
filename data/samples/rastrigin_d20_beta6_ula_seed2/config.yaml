@@ -1,0 +1,19 @@
+job:
+  seed: 2
+  device: auto
+  dtype: float32
+target:
+  energy: rastrigin
+  dim: 20
+  beta_m: 6.0
+sampler:
+  method: ULA
+  step_size: 0.001
+  n_particles: 8192
+  n_steps: 10000
+  burn_in: 2000
+  save_every: 100
+  init_scale: 1.0
+output:
+  root: runs/sampling
+  run_name: rastrigin_d20_beta6_ula_seed2

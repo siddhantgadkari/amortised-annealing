@@ -1,0 +1,75 @@
+{
+  "energy": "many_well",
+  "dims": [
+    2,
+    5,
+    10,
+    20
+  ],
+  "beta_ms": [
+    0.1,
+    0.25,
+    0.5,
+    1.0,
+    2.0,
+    3.0,
+    4.0,
+    5.0,
+    6.0,
+    7.0,
+    8.0,
+    9.0
+  ],
+  "beta_h": 10.0,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "desc": "",
+  "mcmc": {
+    "n_particles": 8192,
+    "n_steps": 10000,
+    "burn_in": 2000,
+    "save_every": 100,
+    "step_size": 0.001
+  },
+  "model": {
+    "hidden_dims": [
+      256,
+      256,
+      256
+    ],
+    "time_embed_dim": 64,
+    "loss_type": "eps",
+    "train_n_steps": 20000,
+    "batch_size": 512,
+    "lr": 0.0002
+  },
+  "model_sampling": {
+    "n_steps": 500,
+    "t_start": 1.0,
+    "t_end": 0.001
+  },
+  "annealing": {
+    "n_particles": 2048,
+    "n_smc_steps": 50,
+    "ess_threshold": 0.5,
+    "ula": {
+      "n_steps": 10,
+      "step_size": 0.001
+    },
+    "diffusion": {
+      "n_steps": 10,
+      "t_start": 0.05,
+      "t_end": 0.001,
+      "score_scaling": true
+    },
+    "fkc": {
+      "n_steps": 500,
+      "t_start": 1.0,
+      "t_end": 0.001,
+      "include_divergence": false
+    }
+  }
+}
