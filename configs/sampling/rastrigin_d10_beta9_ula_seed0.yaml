@@ -5,7 +5,7 @@ job:
 target:
   energy: rastrigin
   dim: 10
-  beta_m: 1.0
+  beta_m: 9.0
 sampler:
   method: ULA
   step_size: 0.001
@@ -16,4 +16,4 @@ sampler:
   init_scale: 1.0
 output:
   root: runs/sampling
-  run_name: rastrigin_d10_beta1_ula_seed0
+  run_name: rastrigin_d10_beta9_ula_seed0
