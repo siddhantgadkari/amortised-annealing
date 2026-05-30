@@ -21,6 +21,7 @@ import sys
 import time
 from pathlib import Path
 
+import numpy as np
 import torch
 import yaml
 
@@ -118,6 +119,9 @@ REUSE_MODEL_SAMPLES = True
 REUSE_ANNEALING     = True  # skip (dim, betaM) if already in results_seed{s}.json
 
 DESC = ""
+
+# Contour plots
+CONTOUR_KDE = False  # True → scipy gaussian_kde contour lines; False → scatter
 # ===========================================================================
 
 
@@ -667,6 +671,174 @@ def plot_results() -> None:
 
 
 # ---------------------------------------------------------------------------
+# Contour plots
+# ---------------------------------------------------------------------------
+
+try:
+    from scipy.stats import gaussian_kde as _scipy_kde
+    _HAS_SCIPY = True
+except ImportError:
+    _HAS_SCIPY = False
+
+
+def _plot_kde_overlay(ax, pts2d: "np.ndarray", color: str, label: str) -> None:
+    kde = _scipy_kde(pts2d.T)
+    lo = pts2d.min(axis=0) - 0.5
+    hi = pts2d.max(axis=0) + 0.5
+    xx, yy = np.meshgrid(np.linspace(lo[0], hi[0], 80), np.linspace(lo[1], hi[1], 80))
+    zz = kde(np.vstack([xx.ravel(), yy.ravel()])).reshape(xx.shape)
+    ax.contour(xx, yy, zz, levels=5, colors=[color], linewidths=1.5, alpha=0.9)
+    ax.plot([], [], color=color, linewidth=1.5, label=label)
+
+
+def plot_sample_contours(kde: bool = CONTOUR_KDE) -> None:
+    import matplotlib.pyplot as plt
+
+    if kde and not _HAS_SCIPY:
+        print("  WARNING: scipy not installed — falling back to scatter.")
+        kde = False
+
+    plots_dir = _experiment_dir() / "plots"
+    plots_dir.mkdir(exist_ok=True)
+    energy_cls = ENERGY_MAP[ENERGY]
+
+    for dim in DIMS:
+        energy_fn = energy_cls(dim=dim)
+
+        # ------------------------------------------------------------------
+        # Pass 1: load all samples for this dim across every (beta_m, seed).
+        # PCA is fitted once on the union so the projection is consistent
+        # across beta_ms, and the plot range is fixed for the whole dim.
+        # ------------------------------------------------------------------
+        sample_data: dict[float, tuple] = {}  # beta_m -> (diff_np, mcmc_np)
+        all_raw: list[np.ndarray] = []
+
+        for beta_m in BETA_MS:
+            diff_parts, mcmc_parts = [], []
+            for seed in SEEDS:
+                sample_run = _sample_run_name(dim, beta_m, seed)
+                model_run  = _model_run_name(sample_run, seed)
+                d_path = MODEL_SAMPLE_DIR / model_run / "samples.pt"
+                m_path = SAMPLE_DIR / sample_run / "particles.pt"
+                if d_path.exists():
+                    diff_parts.append(
+                        torch.load(d_path, map_location="cpu", weights_only=True).numpy()
+                    )
+                if m_path.exists():
+                    pts = torch.load(m_path, map_location="cpu", weights_only=True)
+                    mcmc_parts.append(pts[:, -1, :].numpy())
+            if diff_parts and mcmc_parts:
+                d = np.concatenate(diff_parts, axis=0)
+                m = np.concatenate(mcmc_parts, axis=0)
+                sample_data[beta_m] = (d, m)
+                all_raw.extend([d, m])
+
+        if not sample_data:
+            continue
+
+        all_np = np.concatenate(all_raw, axis=0)
+
+        # ------------------------------------------------------------------
+        # Dimensionality reduction (fitted once for this dim)
+        # ------------------------------------------------------------------
+        if dim == 2:
+            mean_vec      = None
+            pca_components = None
+            xlabel, ylabel = "x₀", "x₁"
+            pca_info       = ""
+
+            def _proj(x):     return x
+            def _energy_grid(xx, yy):
+                pts = np.stack([xx.ravel(), yy.ravel()], axis=1)
+                with torch.no_grad():
+                    e = energy_fn(torch.tensor(pts, dtype=torch.float32)).numpy()
+                return e.reshape(xx.shape)
+
+        else:
+            mean_vec  = all_np.mean(axis=0)
+            centered  = all_np - mean_vec
+            _, s_vals, Vt = np.linalg.svd(centered, full_matrices=False)
+            pca_components = Vt[:2]
+            exp_var   = s_vals[:2] ** 2 / (s_vals ** 2).sum()
+            xlabel    = f"PC1 ({exp_var[0]:.0%})"
+            ylabel    = f"PC2 ({exp_var[1]:.0%})"
+            pca_info  = f"  PCA {exp_var[0]+exp_var[1]:.0%} var."
+
+            def _proj(x):
+                return (x - mean_vec) @ pca_components.T
+
+            def _energy_grid(xx, yy):
+                pts_2d   = np.stack([xx.ravel(), yy.ravel()], axis=1)
+                pts_full = mean_vec + pts_2d @ pca_components
+                with torch.no_grad():
+                    e = energy_fn(torch.tensor(pts_full, dtype=torch.float32)).numpy()
+                return e.reshape(xx.shape)
+
+        # ------------------------------------------------------------------
+        # Fixed plot range across all beta_ms for this dim
+        # ------------------------------------------------------------------
+        all_2d = _proj(all_np)
+        pad = 0.12
+        x0, x1 = all_2d[:, 0].min(), all_2d[:, 0].max()
+        y0, y1 = all_2d[:, 1].min(), all_2d[:, 1].max()
+        dx, dy  = max(x1 - x0, 1e-3), max(y1 - y0, 1e-3)
+        x0 -= pad * dx;  x1 += pad * dx
+        y0 -= pad * dy;  y1 += pad * dy
+
+        # Energy grid — computed once per dim (landscape doesn't change with beta_m)
+        xx, yy = np.meshgrid(np.linspace(x0, x1, 120), np.linspace(y0, y1, 120))
+        zz = _energy_grid(xx, yy)
+
+        # Global optima projected
+        gm      = energy_fn.global_minima
+        gm_2d   = _proj(gm.numpy()) if gm is not None else None
+
+        # ------------------------------------------------------------------
+        # Pass 2: one figure per beta_m (fixed range, fixed energy bg)
+        # ------------------------------------------------------------------
+        for beta_m, (diff_np, mcmc_np) in sample_data.items():
+            diff_2d = _proj(diff_np)
+            mcmc_2d = _proj(mcmc_np)
+
+            fig, ax = plt.subplots(figsize=(6, 5))
+            cf = ax.contourf(xx, yy, zz, levels=25, cmap="YlOrRd_r", alpha=0.75)
+            ax.contour(xx, yy, zz, levels=25, colors="k", linewidths=0.3, alpha=0.3)
+            plt.colorbar(cf, ax=ax, label="E(x)")
+
+            _DIFF_COLOR = "lime"
+            _MCMC_COLOR = "#1A3A8A"
+
+            if kde:
+                _plot_kde_overlay(ax, diff_2d, color=_DIFF_COLOR, label="Diffusion model")
+                _plot_kde_overlay(ax, mcmc_2d, color=_MCMC_COLOR, label="MCMC (ULA)")
+            else:
+                n = min(2000, len(diff_2d))
+                ax.scatter(diff_2d[:n, 0], diff_2d[:n, 1],
+                           c=_DIFF_COLOR, s=5, alpha=0.6, linewidths=0,
+                           label="Diffusion model", zorder=3)
+                n = min(2000, len(mcmc_2d))
+                ax.scatter(mcmc_2d[:n, 0], mcmc_2d[:n, 1],
+                           c=_MCMC_COLOR, s=5, alpha=0.6, linewidths=0,
+                           label="MCMC (ULA)", zorder=3)
+
+            if gm_2d is not None:
+                ax.scatter(gm_2d[:, 0], gm_2d[:, 1],
+                           marker="*", s=120, c="gold", edgecolors="k",
+                           linewidths=0.5, zorder=5, label="Global min")
+
+            ax.set_xlabel(xlabel); ax.set_ylabel(ylabel)
+            ax.set_xlim(x0, x1);   ax.set_ylim(y0, y1)
+            ax.set_title(f"{ENERGY}  d={dim}  β_M={beta_m}{pca_info}", fontsize=10)
+            ax.legend(loc="upper right", markerscale=1, fontsize=8)
+
+            fig.tight_layout()
+            out = plots_dir / f"contour_d{dim}_beta{_beta_str(beta_m)}.svg"
+            fig.savefig(out, bbox_inches="tight")
+            plt.close(fig)
+            print(f"  [contour] d={dim} β_M={beta_m} → {out.name}")
+
+
+# ---------------------------------------------------------------------------
 # Config snapshot
 # ---------------------------------------------------------------------------
 
@@ -739,6 +911,8 @@ def main() -> None:
                         help="Re-plot from existing aggregate.json (no pipeline)")
     parser.add_argument("--aggregate",  action="store_true",
                         help="Aggregate all seed results and plot (use after parallel seeds finish)")
+    parser.add_argument("--plot-contours", action="store_true",
+                        help="Plot energy contour + sample overlays per (dim, betaM)")
     args = parser.parse_args()
 
     if args.energy is not None:
@@ -746,6 +920,10 @@ def main() -> None:
 
     if args.plot_only:
         plot_results()
+        return
+
+    if args.plot_contours:
+        plot_sample_contours()
         return
 
     if args.aggregate:
