@@ -720,38 +720,66 @@ def _config_snapshot() -> dict:
 # ---------------------------------------------------------------------------
 
 def main() -> None:
+    global ENERGY
+
     parser = argparse.ArgumentParser()
-    parser.add_argument("--plot-only", action="store_true",
-                        help="Skip pipeline and re-plot from saved aggregate.json")
+    parser.add_argument(
+        "--energy",
+        choices=list(ENERGY_MAP),
+        default=None,
+        help="Override ENERGY from the USER CONFIG block",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Run a single seed only (no aggregation); run --aggregate when all seeds done",
+    )
+    parser.add_argument("--plot-only",  action="store_true",
+                        help="Re-plot from existing aggregate.json (no pipeline)")
+    parser.add_argument("--aggregate",  action="store_true",
+                        help="Aggregate all seed results and plot (use after parallel seeds finish)")
     args = parser.parse_args()
 
+    if args.energy is not None:
+        ENERGY = args.energy
+
     if args.plot_only:
+        plot_results()
+        return
+
+    if args.aggregate:
+        print("Aggregating across seeds...")
+        aggregate_results()
+        print("Plotting...")
         plot_results()
         return
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     torch.set_default_dtype(torch.float32)
 
+    seeds_to_run = [args.seed] if args.seed is not None else SEEDS
+
     exp_dir = _experiment_dir()
     exp_dir.mkdir(parents=True, exist_ok=True)
-    cfg_path = exp_dir / "config.json"
-    if not cfg_path.exists():
-        cfg_path.write_text(json.dumps(_config_snapshot(), indent=2))
+    exp_dir.joinpath("config.json").write_text(json.dumps(_config_snapshot(), indent=2))
 
-    print(f"=== {ENERGY}  dims={DIMS}  beta_H={BETA_H}  seeds={SEEDS} ===")
+    print(f"=== {ENERGY}  dims={DIMS}  beta_H={BETA_H}  seeds={seeds_to_run} ===")
     print(f"    beta_Ms={BETA_MS}  device={device}\n")
 
-    for seed in SEEDS:
+    for seed in seeds_to_run:
         print(f"\n{'='*60}")
         print(f"  SEED {seed}")
         print(f"{'='*60}")
         run_seed(seed, device)
 
-    print("\nAggregating across seeds...")
-    aggregate_results()
-
-    print("\nPlotting...")
-    plot_results()
+    if args.seed is None:
+        print("\nAggregating across seeds...")
+        aggregate_results()
+        print("\nPlotting...")
+        plot_results()
+    else:
+        print(f"\nSeed {args.seed} done. Run --aggregate once all seeds complete.")
 
 
 if __name__ == "__main__":
