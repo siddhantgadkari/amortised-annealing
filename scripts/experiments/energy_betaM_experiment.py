@@ -674,8 +674,9 @@ def plot_results() -> None:
 # Contour plots
 # ---------------------------------------------------------------------------
 
+_scipy_kde = None
 try:
-    from scipy.stats import gaussian_kde as _scipy_kde
+    from scipy.stats import gaussian_kde as _scipy_kde  # type: ignore[assignment]
     _HAS_SCIPY = True
 except ImportError:
     _HAS_SCIPY = False
@@ -743,7 +744,6 @@ def plot_sample_contours(kde: bool = CONTOUR_KDE) -> None:
         # ------------------------------------------------------------------
         if dim == 2:
             mean_vec      = None
-            pca_components = None
             xlabel, ylabel = "x₀", "x₁"
             pca_info       = ""
 
@@ -838,6 +838,181 @@ def plot_sample_contours(kde: bool = CONTOUR_KDE) -> None:
             print(f"  [contour] d={dim} β_M={beta_m} → {out.name}")
 
 
+def plot_contour_grids(kde: bool = CONTOUR_KDE) -> None:
+    """One grid figure per dim combining all beta_m contour plots in sorted order."""
+    import matplotlib.pyplot as plt
+    import matplotlib.gridspec as gridspec
+    from matplotlib.lines import Line2D
+
+    if kde and not _HAS_SCIPY:
+        print("  WARNING: scipy not installed — falling back to scatter.")
+        kde = False
+
+    plots_dir = _experiment_dir() / "plots"
+    plots_dir.mkdir(exist_ok=True)
+    energy_cls = ENERGY_MAP[ENERGY]
+
+    _DIFF_COLOR = "lime"
+    _MCMC_COLOR = "#1A3A8A"
+    beta_ms_sorted = sorted(BETA_MS)
+
+    for dim in DIMS:
+        energy_fn = energy_cls(dim=dim)
+
+        # Load samples — identical to plot_sample_contours Pass 1
+        sample_data: dict[float, tuple] = {}
+        all_raw: list[np.ndarray] = []
+
+        for beta_m in beta_ms_sorted:
+            diff_parts, mcmc_parts = [], []
+            for seed in SEEDS:
+                sample_run = _sample_run_name(dim, beta_m, seed)
+                model_run  = _model_run_name(sample_run, seed)
+                d_path = MODEL_SAMPLE_DIR / model_run / "samples.pt"
+                m_path = SAMPLE_DIR / sample_run / "particles.pt"
+                if d_path.exists():
+                    diff_parts.append(
+                        torch.load(d_path, map_location="cpu", weights_only=True).numpy()
+                    )
+                if m_path.exists():
+                    pts = torch.load(m_path, map_location="cpu", weights_only=True)
+                    mcmc_parts.append(pts[:, -1, :].numpy())
+            if diff_parts and mcmc_parts:
+                d = np.concatenate(diff_parts, axis=0)
+                m = np.concatenate(mcmc_parts, axis=0)
+                sample_data[beta_m] = (d, m)
+                all_raw.extend([d, m])
+
+        if not sample_data:
+            continue
+
+        all_np = np.concatenate(all_raw, axis=0)
+
+        if dim == 2:
+            xlabel, ylabel = "x₀", "x₁"
+            pca_info = ""
+
+            def _proj(x):
+                return x
+
+            def _energy_grid(xx, yy):
+                pts = np.stack([xx.ravel(), yy.ravel()], axis=1)
+                with torch.no_grad():
+                    e = energy_fn(torch.tensor(pts, dtype=torch.float32)).numpy()
+                return e.reshape(xx.shape)
+
+        else:
+            mean_vec = all_np.mean(axis=0)
+            centered = all_np - mean_vec
+            _, s_vals, Vt = np.linalg.svd(centered, full_matrices=False)
+            pca_components = Vt[:2]
+            exp_var  = s_vals[:2] ** 2 / (s_vals ** 2).sum()
+            xlabel   = f"PC1 ({exp_var[0]:.0%})"
+            ylabel   = f"PC2 ({exp_var[1]:.0%})"
+            pca_info = f"  PCA {exp_var[0]+exp_var[1]:.0%} var."
+
+            def _proj(x):
+                return (x - mean_vec) @ pca_components.T
+
+            def _energy_grid(xx, yy):
+                pts_2d   = np.stack([xx.ravel(), yy.ravel()], axis=1)
+                pts_full = mean_vec + pts_2d @ pca_components
+                with torch.no_grad():
+                    e = energy_fn(torch.tensor(pts_full, dtype=torch.float32)).numpy()
+                return e.reshape(xx.shape)
+
+        all_2d = _proj(all_np)
+        pad = 0.12
+        x0, x1 = all_2d[:, 0].min(), all_2d[:, 0].max()
+        y0, y1 = all_2d[:, 1].min(), all_2d[:, 1].max()
+        dx, dy  = max(x1 - x0, 1e-3), max(y1 - y0, 1e-3)
+        x0 -= pad * dx;  x1 += pad * dx
+        y0 -= pad * dy;  y1 += pad * dy
+
+        xx, yy = np.meshgrid(np.linspace(x0, x1, 100), np.linspace(y0, y1, 100))
+        zz     = _energy_grid(xx, yy)
+        vmin, vmax = float(zz.min()), float(zz.max())
+
+        gm    = energy_fn.global_minima
+        gm_2d = _proj(gm.numpy()) if gm is not None else None
+
+        # 3 rows × 4 cols for up to 12 beta_ms
+        ncols = 4
+        nrows = (len(beta_ms_sorted) + ncols - 1) // ncols
+
+        fig = plt.figure(figsize=(ncols * 4.2 + 0.7, nrows * 3.8 + 0.6))
+        gs  = gridspec.GridSpec(
+            nrows, ncols + 1, figure=fig,
+            width_ratios=[1.0] * ncols + [0.04],
+            hspace=0.40, wspace=0.18,
+        )
+        cax = fig.add_subplot(gs[:, -1])
+
+        last_cf = None
+        for idx, beta_m in enumerate(beta_ms_sorted):
+            row, col = divmod(idx, ncols)
+            ax = fig.add_subplot(gs[row, col])
+
+            cf = ax.contourf(xx, yy, zz, levels=20, cmap="YlOrRd_r",
+                             alpha=0.75, vmin=vmin, vmax=vmax)
+            ax.contour(xx, yy, zz, levels=20, colors="k",
+                       linewidths=0.2, alpha=0.25, vmin=vmin, vmax=vmax)
+            last_cf = cf
+
+            if beta_m in sample_data:
+                diff_2d = _proj(sample_data[beta_m][0])
+                mcmc_2d = _proj(sample_data[beta_m][1])
+                if kde:
+                    _plot_kde_overlay(ax, diff_2d, color=_DIFF_COLOR, label="Diffusion")
+                    _plot_kde_overlay(ax, mcmc_2d, color=_MCMC_COLOR, label="MCMC")
+                else:
+                    n = min(1000, len(diff_2d))
+                    ax.scatter(diff_2d[:n, 0], diff_2d[:n, 1],
+                               c=_DIFF_COLOR, s=3, alpha=0.5, linewidths=0, zorder=3)
+                    n = min(1000, len(mcmc_2d))
+                    ax.scatter(mcmc_2d[:n, 0], mcmc_2d[:n, 1],
+                               c=_MCMC_COLOR, s=3, alpha=0.5, linewidths=0, zorder=3)
+
+            if gm_2d is not None:
+                ax.scatter(gm_2d[:, 0], gm_2d[:, 1],
+                           marker="*", s=70, c="gold", edgecolors="k",
+                           linewidths=0.4, zorder=5)
+
+            ax.set_title(f"β_M={beta_m}", fontsize=8, pad=3)
+            ax.set_xlim(x0, x1)
+            ax.set_ylim(y0, y1)
+            ax.tick_params(labelsize=6)
+            if col == 0:
+                ax.set_ylabel(ylabel, fontsize=7)
+            if row == nrows - 1:
+                ax.set_xlabel(xlabel, fontsize=7)
+
+        if last_cf is not None:
+            plt.colorbar(last_cf, cax=cax, label="E(x)")
+
+        # Shared legend below the grid
+        handles = [
+            Line2D([0], [0], marker="o", color="w", markerfacecolor=_DIFF_COLOR,
+                   markersize=6, label="Diffusion model"),
+            Line2D([0], [0], marker="o", color="w", markerfacecolor=_MCMC_COLOR,
+                   markersize=6, label="MCMC (ULA)"),
+        ]
+        if gm_2d is not None:
+            handles.append(Line2D(
+                [0], [0], marker="*", color="w", markerfacecolor="gold",
+                markeredgecolor="k", markeredgewidth=0.4, markersize=9,
+                label="Global min",
+            ))
+        fig.legend(handles=handles, loc="lower center", ncol=len(handles),
+                   fontsize=8, bbox_to_anchor=(0.46, -0.02))
+
+        fig.suptitle(f"{ENERGY}  d={dim}{pca_info}", fontsize=11)
+        out = plots_dir / f"contour_grid_d{dim}.svg"
+        fig.savefig(out, bbox_inches="tight")
+        plt.close(fig)
+        print(f"  [contour grid] d={dim} → {out.name}")
+
+
 # ---------------------------------------------------------------------------
 # Config snapshot
 # ---------------------------------------------------------------------------
@@ -913,6 +1088,8 @@ def main() -> None:
                         help="Aggregate all seed results and plot (use after parallel seeds finish)")
     parser.add_argument("--plot-contours", action="store_true",
                         help="Plot energy contour + sample overlays per (dim, betaM)")
+    parser.add_argument("--plot-contour-grids", action="store_true",
+                        help="Plot one grid figure per dim combining all betaM contour panels")
     args = parser.parse_args()
 
     if args.energy is not None:
@@ -924,6 +1101,10 @@ def main() -> None:
 
     if args.plot_contours:
         plot_sample_contours()
+        return
+
+    if args.plot_contour_grids:
+        plot_contour_grids()
         return
 
     if args.aggregate:

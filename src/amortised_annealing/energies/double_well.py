@@ -95,6 +95,8 @@ class ManyWell(Energy):
         signs = torch.cartesian_prod(*[
             torch.tensor([-1.0, 1.0]) for _ in range(n_wells)
         ])
+        if signs.dim() == 1:
+            signs = signs.unsqueeze(1)
 
         minima = torch.zeros(signs.shape[0], self.dim)
 
