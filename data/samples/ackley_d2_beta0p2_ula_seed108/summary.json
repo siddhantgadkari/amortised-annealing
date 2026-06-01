@@ -8,7 +8,6 @@
   "n_particles": 8192,
   "n_steps": 200,
   "burn_in": 2000,
-  "save_every": 100,
   "step_size": 0.001,
   "wall_clock_seconds": 1.56,
   "device": "cpu",
@@ -33,5 +32,48 @@
     "mean": 1.0,
     "min": 1.0,
     "max": 1.0
+  },
+  "trace_every": 100,
+  "mean_x_norm": 2.361,
+  "max_x_norm": 9.8681,
+  "coord_mean": 0.0099,
+  "coord_std": 1.9433,
+  "prop_excess_E_lt_0.01": 0.0,
+  "prop_excess_E_lt_0.1": 0.0001,
+  "prop_excess_E_lt_1.0": 0.0077,
+  "energy_tail_slope": null,
+  "traces": {
+    "steps": [
+      100,
+      200
+    ],
+    "mean_energy": [
+      6.8888,
+      6.9238
+    ],
+    "median_energy": [
+      6.5968,
+      6.6073
+    ],
+    "min_energy": [
+      0.0567,
+      0.0258
+    ],
+    "q05_energy": [
+      2.9162,
+      2.9237
+    ],
+    "q95_energy": [
+      11.6678,
+      11.7481
+    ],
+    "mean_x_norm": [
+      2.3384,
+      2.361
+    ],
+    "mean_displacement": [
+      null,
+      0.5482
+    ]
   }
 }

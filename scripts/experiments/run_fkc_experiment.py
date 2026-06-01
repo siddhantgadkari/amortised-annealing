@@ -158,7 +158,7 @@ def _make_training_config(sample_run: str) -> dict:
     model_run = _model_run_name(sample_run)
     return {
         "job":      {"seed": SEED, "device": "auto", "dtype": "float32"},
-        "samples":  {"run_name": sample_run, "snapshot": -1},
+        "samples":  {"run_name": sample_run},
         "schedule": {"type": "vp", "beta_min": 0.1, "beta_max": 20.0},
         "model": {
             "hidden_dims":    MODEL_HIDDEN_DIMS,
@@ -289,7 +289,7 @@ def _mcmc_particles(sample_run: str, device: torch.device) -> torch.Tensor:
         SAMPLE_DIR / sample_run / "particles.pt",
         map_location=device, weights_only=True,
     )
-    x = pts[:, -1, :]  # last snapshot: [N, dim]
+    x = pts  # [N, dim]
     if x.shape[0] > FKC_N_PARTICLES:
         x = x[torch.randperm(x.shape[0], device=device)[:FKC_N_PARTICLES]]
     return x

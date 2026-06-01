@@ -51,11 +51,9 @@ def main() -> None:
     device = _resolve_device(cfg["job"]["device"])
     torch.set_default_dtype(getattr(torch, cfg["job"]["dtype"]))
 
-    # Load training data (same snapshot used for training)
+    # Load training data
     sample_cfg  = cfg["samples"]
-    particles   = torch.load(DATA_DIR / sample_cfg["run_name"] / "particles.pt", map_location="cpu")
-    snapshot    = sample_cfg.get("snapshot", -1)
-    x_data      = particles[:, snapshot, :] if snapshot is not None else particles.reshape(-1, particles.shape[-1])
+    x_data      = torch.load(DATA_DIR / sample_cfg["run_name"] / "particles.pt", map_location="cpu", weights_only=True)
 
     # Load model
     model_cfg = cfg["model"]

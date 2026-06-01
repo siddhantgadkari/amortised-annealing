@@ -25,20 +25,9 @@ def _resolve_device(s: str) -> torch.device:
 
 
 def _load_samples(samples_cfg: dict) -> torch.Tensor:
-    """Load particles.pt and select the configured snapshot(s).
-
-    Returns [N, dim] tensor on CPU.
-    """
+    """Load particles.pt. Returns [N, dim] tensor on CPU."""
     particles_path = DATA_DIR / "samples" / samples_cfg["run_name"] / "particles.pt"
-    particles = torch.load(particles_path, map_location="cpu")  # [N, num_snapshots, dim]
-
-    snapshot = samples_cfg.get("snapshot", -1)
-    if snapshot is None:
-        # Flatten all snapshots into one pool
-        n, s, d = particles.shape
-        return particles.reshape(n * s, d)
-    else:
-        return particles[:, snapshot, :]  # [N, dim]
+    return torch.load(particles_path, map_location="cpu", weights_only=True)  # [N, dim]
 
 
 def _build_schedule(schedule_cfg: dict):
@@ -112,7 +101,6 @@ def run_config(cfg_path: Path) -> None:
         "status":             "completed",
         "run_name":           run_name,
         "sample_run_name":    cfg["samples"]["run_name"],
-        "snapshot":           cfg["samples"].get("snapshot", -1),
         "n_training_samples": x_data.shape[0],
         "dim":                x_data.shape[-1],
         "n_params":           n_params,

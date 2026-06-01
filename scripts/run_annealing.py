@@ -96,8 +96,7 @@ def _get_initial_particles(
 ) -> torch.Tensor:
     if init_source == "mcmc":
         pts = torch.load(SAMPLE_DIR / sample_run / "particles.pt", map_location=device, weights_only=True)
-        # shape: [n_saved, n_snapshots, dim] — take last snapshot
-        x = pts[:, -1, :]
+        x = pts  # shape: [n_saved, dim]
         if x.shape[0] > n_particles:
             idx = torch.randperm(x.shape[0], device=device)[:n_particles]
             x = x[idx]

@@ -34,10 +34,6 @@ SEEDS         = [0]
 # --- schedule ---
 SCHEDULE = {"type": "vp", "beta_min": 0.1, "beta_max": 20.0}
 
-# --- snapshot to use from the [n_particles, num_snapshots, dim] tensor ---
-# -1: final snapshot (recommended); null: flatten all; integer: specific index
-SNAPSHOT = -1
-
 ROOT        = Path(__file__).parent.parent
 DATA_DIR    = ROOT / "data" / "samples"
 OUT_DIR     = ROOT / "configs" / "models"
@@ -63,7 +59,6 @@ def _make_config(run_name: str, preset_name: str, preset: dict, loss_type: str, 
         },
         "samples": {
             "run_name": run_name,
-            "snapshot": SNAPSHOT,
         },
         "schedule": SCHEDULE,
         "model": {

@@ -126,17 +126,17 @@ def run_sampling(dim: int, beta: float, device: torch.device) -> str:
     gen    = SampleGenerator(energy=energy, betaM=beta, mcmc_method=MCMC_METHOD,
                              step_size=STEP_SIZE, device=device)
     t0 = time.perf_counter()
-    samples, step_rates = gen.sample(N_PARTICLES, N_STEPS, burn_in=BURN_IN,
-                                     save_every=SAVE_EVERY, progress=True)
+    final_x, _traces, step_rates = gen.sample(N_PARTICLES, N_STEPS, burn_in=BURN_IN,
+                                              trace_every=SAVE_EVERY, progress=True)
     wall = time.perf_counter() - t0
 
-    stats = _energy_stats(samples[:, -1, :], energy)
+    stats = _energy_stats(final_x, energy)
     cfg = {
         "job":     {"seed": SEED, "device": DEVICE_STR, "dtype": "float32"},
         "target":  {"energy": ENERGY, "dim": dim, "beta_m": beta},
         "sampler": {"method": MCMC_METHOD, "step_size": STEP_SIZE,
                     "n_particles": N_PARTICLES, "n_steps": N_STEPS,
-                    "burn_in": BURN_IN, "save_every": SAVE_EVERY},
+                    "burn_in": BURN_IN, "trace_every": SAVE_EVERY},
         "output":  {"run_name": run_name},
     }
     summary = {
@@ -148,7 +148,7 @@ def run_sampling(dim: int, beta: float, device: torch.device) -> str:
         "energy_quantiles": {"q25": stats["q25"], "q75": stats["q75"]},
         "acceptance_rate": {"mean": round(sum(step_rates) / len(step_rates), 4)},
     }
-    torch.save(samples.cpu(), out_dir / "particles.pt")
+    torch.save(final_x.cpu(), out_dir / "particles.pt")
     with open(out_dir / "config.yaml",  "w") as f: yaml.dump(cfg,     f, sort_keys=False)
     with open(out_dir / "summary.json", "w") as f: json.dump(summary, f, indent=2)
 
@@ -169,8 +169,7 @@ def run_training(sample_run_name: str, dim: int, device: torch.device) -> str:
     print(f"  [train]  {model_run_name}")
 
     torch.manual_seed(SEED)
-    particles = torch.load(SAMPLES_DIR / sample_run_name / "particles.pt", map_location="cpu")
-    x_data    = particles[:, -1, :]
+    x_data = torch.load(SAMPLES_DIR / sample_run_name / "particles.pt", map_location="cpu", weights_only=True)
 
     model    = MLPScore(dim=dim, hidden_dims=tuple(HIDDEN_DIMS),
                         time_embed_dim=TIME_EMBED_DIM, activation=ACTIVATION,
@@ -196,7 +195,7 @@ def run_training(sample_run_name: str, dim: int, device: torch.device) -> str:
     }
     cfg_yaml = {
         "job":      {"seed": SEED, "device": DEVICE_STR, "dtype": "float32"},
-        "samples":  {"run_name": sample_run_name, "snapshot": -1},
+        "samples":  {"run_name": sample_run_name},
         "schedule": {"type": "vp", "beta_min": BETA_MIN, "beta_max": BETA_MAX},
         "model":    {"hidden_dims": HIDDEN_DIMS, "time_embed_dim": TIME_EMBED_DIM,
                      "activation": ACTIVATION, "predict_score": LOSS_TYPE == "score"},

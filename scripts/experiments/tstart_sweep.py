@@ -232,12 +232,24 @@ def run_seed(seed: int, device: torch.device) -> None:
 
             rsde, energy_fn, _, _, _ = _load_model(model_run, device)
 
+            # ULA initial cloud: MCMC particles at β_M
             pts = torch.load(sample_path, map_location=device, weights_only=True)
-            x0  = pts[:, -1, :]
-            if x0.shape[0] > N_PARTICLES:
-                x0 = x0[torch.randperm(x0.shape[0], device=device)[:N_PARTICLES]]
-            initial_cloud = ParticleCloud(x0, torch.zeros(N_PARTICLES, device=device))
-            beta_ladder   = torch.linspace(beta_m, BETA_H, N_SMC_STEPS + 1, device=device)
+            x0_mcmc = pts  # [N, dim]
+            if x0_mcmc.shape[0] > N_PARTICLES:
+                x0_mcmc = x0_mcmc[torch.randperm(x0_mcmc.shape[0], device=device)[:N_PARTICLES]]
+            ula_initial_cloud = ParticleCloud(x0_mcmc, torch.zeros(N_PARTICLES, device=device))
+
+            # Diffusion SMC initial cloud: model samples at β_M
+            model_samples_path = MODEL_SAMPLE_DIR / model_run / "samples.pt"
+            if not model_samples_path.exists():
+                print(f"    SKIP  {model_run}  (model samples not found)")
+                continue
+            x0_model = torch.load(model_samples_path, map_location=device, weights_only=True)
+            if x0_model.shape[0] > N_PARTICLES:
+                x0_model = x0_model[torch.randperm(x0_model.shape[0], device=device)[:N_PARTICLES]]
+            diff_initial_cloud = ParticleCloud(x0_model, torch.zeros(N_PARTICLES, device=device))
+
+            beta_ladder = torch.linspace(beta_m, BETA_H, N_SMC_STEPS + 1, device=device)
 
             # ------------------------------------------------------------------
             # ULA baseline — run once per (dim, beta_m)
@@ -251,7 +263,7 @@ def run_seed(seed: int, device: torch.device) -> None:
                 ula_cloud, ula_diag = SMCSampler(
                     ula_p.mutation_kernel, ula_p.weight_update, energy_fn,
                     ess_threshold=ESS_THRESHOLD,
-                ).run(initial_cloud, beta_ladder, show_progress=True)
+                ).run(ula_initial_cloud, beta_ladder, show_progress=True)
                 ula_result = {
                     "dim": dim, "beta_m": beta_m,
                     **_energy_stats(ula_cloud.x, energy_fn),
@@ -286,7 +298,7 @@ def run_seed(seed: int, device: torch.device) -> None:
                 diff_cloud, diff_diag = SMCSampler(
                     diff_p.mutation_kernel, diff_p.weight_update, energy_fn,
                     ess_threshold=ESS_THRESHOLD,
-                ).run(initial_cloud, beta_ladder, show_progress=True)
+                ).run(diff_initial_cloud, beta_ladder, show_progress=True)
                 diff_result = {
                     "dim": dim, "beta_m": beta_m, "t_start": t_start,
                     **_energy_stats(diff_cloud.x, energy_fn),

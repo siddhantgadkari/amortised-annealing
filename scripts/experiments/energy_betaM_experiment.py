@@ -70,7 +70,7 @@ SEEDS   = [0, 1, 2]
 MCMC_N_PARTICLES = 8192
 MCMC_N_STEPS     = 10_000
 MCMC_BURN_IN     = 2_000
-MCMC_SAVE_EVERY  = 100
+MCMC_TRACE_EVERY  = 100
 MCMC_STEP_SIZE   = 1e-3
 
 # Score model architecture
@@ -168,7 +168,7 @@ def _make_sampling_config(dim: int, beta_m: float, seed: int) -> dict:
             "n_particles": MCMC_N_PARTICLES,
             "n_steps":     MCMC_N_STEPS,
             "burn_in":     MCMC_BURN_IN,
-            "save_every":  MCMC_SAVE_EVERY,
+            "trace_every": MCMC_TRACE_EVERY,
             "init_scale":  1.0,
         },
         "output": {"root": "runs/sampling", "run_name": run_name},
@@ -179,7 +179,7 @@ def _make_training_config(sample_run: str, seed: int) -> dict:
     model_run = _model_run_name(sample_run, seed)
     return {
         "job":      {"seed": seed, "device": "auto", "dtype": "float32"},
-        "samples":  {"run_name": sample_run, "snapshot": -1},
+        "samples":  {"run_name": sample_run},
         "schedule": {"type": "vp", "beta_min": 0.1, "beta_max": 20.0},
         "model": {
             "hidden_dims":    MODEL_HIDDEN_DIMS,
@@ -336,7 +336,7 @@ def _mcmc_stats_from_summary(sample_run: str) -> dict:
             SAMPLE_DIR / sample_run / "particles.pt",
             map_location="cpu", weights_only=True,
         )
-        final = pts[:, -1, :]
+        final = pts  # [N, dim]
         energy_fn = ENERGY_MAP[ENERGY](dim=final.shape[-1])
         with torch.no_grad():
             e = energy_fn(final).float()
@@ -431,14 +431,24 @@ def _run_all_annealing(
 ) -> dict:
     rsde, energy, dim, beta_m, _ = _load_model(model_run, device)
 
+    # ULA SMC initial cloud: MCMC particles at β_M
     pts = torch.load(
         SAMPLE_DIR / sample_run / "particles.pt", map_location=device, weights_only=True,
     )
-    x0 = pts[:, -1, :]
-    if x0.shape[0] > N_PARTICLES:
-        x0 = x0[torch.randperm(x0.shape[0], device=device)[:N_PARTICLES]]
-    initial_cloud = ParticleCloud(x0, torch.zeros(N_PARTICLES, device=device))
-    beta_ladder   = torch.linspace(beta_m, BETA_H, N_SMC_STEPS + 1, device=device)
+    x0_mcmc = pts  # [N, dim]
+    if x0_mcmc.shape[0] > N_PARTICLES:
+        x0_mcmc = x0_mcmc[torch.randperm(x0_mcmc.shape[0], device=device)[:N_PARTICLES]]
+    ula_initial_cloud = ParticleCloud(x0_mcmc, torch.zeros(N_PARTICLES, device=device))
+
+    # Diffusion SMC initial cloud: model samples at β_M
+    x0_model = torch.load(
+        MODEL_SAMPLE_DIR / model_run / "samples.pt", map_location=device, weights_only=True,
+    )
+    if x0_model.shape[0] > N_PARTICLES:
+        x0_model = x0_model[torch.randperm(x0_model.shape[0], device=device)[:N_PARTICLES]]
+    diff_initial_cloud = ParticleCloud(x0_model, torch.zeros(N_PARTICLES, device=device))
+
+    beta_ladder = torch.linspace(beta_m, BETA_H, N_SMC_STEPS + 1, device=device)
 
     results = {}
 
@@ -449,7 +459,7 @@ def _run_all_annealing(
     ula_p = ULAProposal(energy, step_size=ULA_STEP_SIZE, n_steps=N_ULA_STEPS)
     ula_cloud, ula_diag = SMCSampler(
         ula_p.mutation_kernel, ula_p.weight_update, energy, ess_threshold=ESS_THRESHOLD,
-    ).run(initial_cloud, beta_ladder, show_progress=True)
+    ).run(ula_initial_cloud, beta_ladder, show_progress=True)
     results["ula"] = {
         **_energy_stats(ula_cloud.x, energy),
         "final_ess":      round(ula_cloud.ess_ratio(), 4),
@@ -470,7 +480,7 @@ def _run_all_annealing(
     )
     diff_cloud, diff_diag = SMCSampler(
         diff_p.mutation_kernel, diff_p.weight_update, energy, ess_threshold=ESS_THRESHOLD,
-    ).run(initial_cloud, beta_ladder, show_progress=True)
+    ).run(diff_initial_cloud, beta_ladder, show_progress=True)
     results["diffusion"] = {
         **_energy_stats(diff_cloud.x, energy),
         "final_ess":      round(diff_cloud.ess_ratio(), 4),
@@ -727,7 +737,7 @@ def plot_sample_contours(kde: bool = CONTOUR_KDE) -> None:
                     )
                 if m_path.exists():
                     pts = torch.load(m_path, map_location="cpu", weights_only=True)
-                    mcmc_parts.append(pts[:, -1, :].numpy())
+                    mcmc_parts.append(pts.numpy())
             if diff_parts and mcmc_parts:
                 d = np.concatenate(diff_parts, axis=0)
                 m = np.concatenate(mcmc_parts, axis=0)
@@ -876,7 +886,7 @@ def plot_contour_grids(kde: bool = CONTOUR_KDE) -> None:
                     )
                 if m_path.exists():
                     pts = torch.load(m_path, map_location="cpu", weights_only=True)
-                    mcmc_parts.append(pts[:, -1, :].numpy())
+                    mcmc_parts.append(pts.numpy())
             if diff_parts and mcmc_parts:
                 d = np.concatenate(diff_parts, axis=0)
                 m = np.concatenate(mcmc_parts, axis=0)
@@ -1070,7 +1080,7 @@ def plot_clustering_rates() -> None:
                 if m_path.exists():
                     pts = torch.load(m_path, map_location="cpu", weights_only=True)
                     mcmc_per_seed.append(
-                        _dist_to_nearest_min(pts[:, -1, :], gm).mean().item()
+                        _dist_to_nearest_min(pts, gm).mean().item()
                     )
 
             def _agg(vals: list[float]) -> tuple[float, float]:
@@ -1128,7 +1138,13 @@ def plot_clustering_rates() -> None:
 # ---------------------------------------------------------------------------
 
 def plot_annealing_improvement() -> None:
-    """Relative energy improvement of each annealing method over direct model samples."""
+    """Relative energy improvement of each annealing method over its initial-particle baseline.
+
+    Baselines per method:
+    - ULA SMC:       mcmc_stats  (starts from MCMC particles at β_M)
+    - Diffusion SMC: model_stats (starts from diffusion model samples at β_M)
+    - FKC:           model_stats (reverse SDE from N(0,I) — IS the model)
+    """
     import matplotlib.pyplot as plt
     from collections import defaultdict
 
@@ -1136,10 +1152,11 @@ def plot_annealing_improvement() -> None:
     plots_dir.mkdir(exist_ok=True)
     beta_ms_sorted = sorted(BETA_MS)
 
+    # (method_key, label, color, baseline_key)
     methods = [
-        ("ula",       "ULA SMC",       "steelblue"),
-        ("diffusion", "Diffusion SMC", "darkorange"),
-        ("fkc",       "FKC",           "mediumseagreen"),
+        ("ula",       "ULA SMC",       "steelblue",      "mcmc_stats"),
+        ("diffusion", "Diffusion SMC", "darkorange",     "model_stats"),
+        ("fkc",       "FKC",           "mediumseagreen", "model_stats"),
     ]
     eps = 1e-8
 
@@ -1159,17 +1176,17 @@ def plot_annealing_improvement() -> None:
     fig, axes = plt.subplots(1, len(DIMS), figsize=(4.5 * len(DIMS), 4), squeeze=False)
 
     for ax, dim in zip(axes[0], DIMS):
-        for method_key, label, color in methods:
+        for method_key, label, color, baseline_key in methods:
             means: list[float] = []
             stds:  list[float] = []
             for beta_m in beta_ms_sorted:
                 per_seed: list[float] = []
                 for r in groups.get((dim, beta_m), []):
-                    if method_key not in r or "model_stats" not in r:
+                    if method_key not in r or baseline_key not in r:
                         continue
-                    e_model  = r["model_stats"]["mean_energy"]
-                    e_anneal = r[method_key]["mean_energy"]
-                    per_seed.append((e_model - e_anneal) / (abs(e_model) + eps))
+                    e_baseline = r[baseline_key]["mean_energy"]
+                    e_anneal   = r[method_key]["mean_energy"]
+                    per_seed.append((e_baseline - e_anneal) / (abs(e_baseline) + eps))
                 means.append(statistics.mean(per_seed) if per_seed else float("nan"))
                 stds.append(statistics.stdev(per_seed) if len(per_seed) > 1 else 0.0)
 
@@ -1221,7 +1238,7 @@ def _config_snapshot() -> dict:
             "n_particles": MCMC_N_PARTICLES,
             "n_steps":     MCMC_N_STEPS,
             "burn_in":     MCMC_BURN_IN,
-            "save_every":  MCMC_SAVE_EVERY,
+            "trace_every": MCMC_TRACE_EVERY,
             "step_size":   MCMC_STEP_SIZE,
         },
         "model": {
