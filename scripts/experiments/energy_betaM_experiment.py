@@ -1014,6 +1014,198 @@ def plot_contour_grids(kde: bool = CONTOUR_KDE) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Clustering rates
+# ---------------------------------------------------------------------------
+
+def _dist_to_nearest_min(x: torch.Tensor, gm: torch.Tensor) -> torch.Tensor:
+    """Per-sample L2 distance to the closest global minimum. Returns shape [N]."""
+    return torch.cdist(x.float(), gm.float()).min(dim=1).values
+
+
+def plot_clustering_rates() -> None:
+    """Plot mean distance to nearest global minimum vs beta_M for both methods."""
+    import matplotlib.pyplot as plt
+
+    energy_cls = ENERGY_MAP[ENERGY]
+    test_gm = energy_cls(dim=DIMS[0]).global_minima
+    if test_gm is None:
+        print(f"  {ENERGY} has no defined global_minima — skipping clustering plot.")
+        return
+
+    plots_dir = _experiment_dir() / "plots"
+    plots_dir.mkdir(exist_ok=True)
+
+    _DIFF_COLOR = "lime"
+    _MCMC_COLOR = "#1A3A8A"
+    beta_ms_sorted = sorted(BETA_MS)
+
+    ncols = len(DIMS)
+    fig, axes = plt.subplots(1, ncols, figsize=(4.5 * ncols, 4), squeeze=False)
+
+    for ax, dim in zip(axes[0], DIMS):
+        energy_fn = energy_cls(dim=dim)
+        gm = energy_fn.global_minima
+        if gm is None:
+            ax.set_visible(False)
+            continue
+
+        diff_means, diff_stds = [], []
+        mcmc_means, mcmc_stds = [], []
+
+        for beta_m in beta_ms_sorted:
+            diff_per_seed: list[float] = []
+            mcmc_per_seed: list[float] = []
+
+            for seed in SEEDS:
+                sample_run = _sample_run_name(dim, beta_m, seed)
+                model_run  = _model_run_name(sample_run, seed)
+
+                d_path = MODEL_SAMPLE_DIR / model_run / "samples.pt"
+                m_path = SAMPLE_DIR / sample_run / "particles.pt"
+
+                if d_path.exists():
+                    x_diff = torch.load(d_path, map_location="cpu", weights_only=True)
+                    diff_per_seed.append(_dist_to_nearest_min(x_diff, gm).mean().item())
+
+                if m_path.exists():
+                    pts = torch.load(m_path, map_location="cpu", weights_only=True)
+                    mcmc_per_seed.append(
+                        _dist_to_nearest_min(pts[:, -1, :], gm).mean().item()
+                    )
+
+            def _agg(vals: list[float]) -> tuple[float, float]:
+                if not vals:
+                    return float("nan"), 0.0
+                return (
+                    statistics.mean(vals),
+                    statistics.stdev(vals) if len(vals) > 1 else 0.0,
+                )
+
+            dm, ds = _agg(diff_per_seed)
+            mm, ms = _agg(mcmc_per_seed)
+            diff_means.append(dm);  diff_stds.append(ds)
+            mcmc_means.append(mm);  mcmc_stds.append(ms)
+
+        betas = beta_ms_sorted
+
+        ax.plot(betas, diff_means, "o-", color=_DIFF_COLOR, lw=1.5, label="Diffusion model")
+        ax.fill_between(
+            betas,
+            [m - s for m, s in zip(diff_means, diff_stds)],
+            [m + s for m, s in zip(diff_means, diff_stds)],
+            color=_DIFF_COLOR, alpha=0.25,
+        )
+        ax.plot(betas, mcmc_means, "s-", color=_MCMC_COLOR, lw=1.5, label="MCMC (ULA)")
+        ax.fill_between(
+            betas,
+            [m - s for m, s in zip(mcmc_means, mcmc_stds)],
+            [m + s for m, s in zip(mcmc_means, mcmc_stds)],
+            color=_MCMC_COLOR, alpha=0.2,
+        )
+
+        ax.set_xlabel(r"$\beta_M$")
+        ax.set_ylabel(r"$\mathbb{E}[\min_{x^*} \|x - x^*\|]$")
+        ax.set_title(f"d={dim}", fontsize=9)
+        ax.legend(fontsize=8)
+        ax.grid(True, alpha=0.3)
+
+    n_seeds_found = sum(
+        1 for s in SEEDS if (_experiment_dir() / f"results_seed{s}.json").exists()
+    )
+    fig.suptitle(
+        f"{ENERGY}  mean dist to nearest global min  {n_seeds_found} seeds ±1σ",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    out = plots_dir / "clustering_rates.svg"
+    fig.savefig(out, bbox_inches="tight")
+    plt.close(fig)
+    print(f"  Clustering rates saved to {out}")
+
+
+# ---------------------------------------------------------------------------
+# Annealing improvement
+# ---------------------------------------------------------------------------
+
+def plot_annealing_improvement() -> None:
+    """Relative energy improvement of each annealing method over direct model samples."""
+    import matplotlib.pyplot as plt
+    from collections import defaultdict
+
+    plots_dir = _experiment_dir() / "plots"
+    plots_dir.mkdir(exist_ok=True)
+    beta_ms_sorted = sorted(BETA_MS)
+
+    methods = [
+        ("ula",       "ULA SMC",       "steelblue"),
+        ("diffusion", "Diffusion SMC", "darkorange"),
+        ("fkc",       "FKC",           "mediumseagreen"),
+    ]
+    eps = 1e-8
+
+    groups: dict[tuple, list[dict]] = defaultdict(list)
+    for seed in SEEDS:
+        path = _experiment_dir() / f"results_seed{seed}.json"
+        if not path.exists():
+            print(f"  WARNING: missing results_seed{seed}.json — skipping")
+            continue
+        for r in json.loads(path.read_text()).get("runs", []):
+            groups[(r["dim"], r["beta_m"])].append(r)
+
+    if not groups:
+        print("  No seed results found.")
+        return
+
+    fig, axes = plt.subplots(1, len(DIMS), figsize=(4.5 * len(DIMS), 4), squeeze=False)
+
+    for ax, dim in zip(axes[0], DIMS):
+        for method_key, label, color in methods:
+            means: list[float] = []
+            stds:  list[float] = []
+            for beta_m in beta_ms_sorted:
+                per_seed: list[float] = []
+                for r in groups.get((dim, beta_m), []):
+                    if method_key not in r or "model_stats" not in r:
+                        continue
+                    e_model  = r["model_stats"]["mean_energy"]
+                    e_anneal = r[method_key]["mean_energy"]
+                    per_seed.append((e_model - e_anneal) / (abs(e_model) + eps))
+                means.append(statistics.mean(per_seed) if per_seed else float("nan"))
+                stds.append(statistics.stdev(per_seed) if len(per_seed) > 1 else 0.0)
+
+            ax.plot(beta_ms_sorted, means, "o-", color=color, lw=1.5, label=label)
+            ax.fill_between(
+                beta_ms_sorted,
+                [m - s for m, s in zip(means, stds)],
+                [m + s for m, s in zip(means, stds)],
+                color=color, alpha=0.15,
+            )
+
+        ax.axhline(0, color="k", lw=0.8, linestyle="--", alpha=0.4)
+        ax.set_xlabel(r"$\beta_M$")
+        ax.set_ylabel(
+            r"$(E_\mathrm{model} - E_\mathrm{anneal})\,/\,(|E_\mathrm{model}|+\varepsilon)$",
+            fontsize=7,
+        )
+        ax.set_title(f"d={dim}", fontsize=9)
+        ax.legend(fontsize=8)
+        ax.grid(True, alpha=0.3)
+
+    n_seeds_found = sum(
+        1 for s in SEEDS if (_experiment_dir() / f"results_seed{s}.json").exists()
+    )
+    fig.suptitle(
+        f"{ENERGY}  annealing improvement over direct model  {n_seeds_found} seeds ±1σ",
+        fontsize=10,
+    )
+    fig.tight_layout()
+    out = plots_dir / "annealing_improvement.svg"
+    fig.savefig(out, bbox_inches="tight")
+    plt.close(fig)
+    print(f"  Annealing improvement saved to {out}")
+
+
+# ---------------------------------------------------------------------------
 # Config snapshot
 # ---------------------------------------------------------------------------
 
@@ -1090,6 +1282,10 @@ def main() -> None:
                         help="Plot energy contour + sample overlays per (dim, betaM)")
     parser.add_argument("--plot-contour-grids", action="store_true",
                         help="Plot one grid figure per dim combining all betaM contour panels")
+    parser.add_argument("--plot-clustering", action="store_true",
+                        help="Plot mean dist to nearest global min vs beta_M for both methods")
+    parser.add_argument("--plot-improvement", action="store_true",
+                        help="Plot relative annealing improvement over direct model samples")
     args = parser.parse_args()
 
     if args.energy is not None:
@@ -1105,6 +1301,14 @@ def main() -> None:
 
     if args.plot_contour_grids:
         plot_contour_grids()
+        return
+
+    if args.plot_clustering:
+        plot_clustering_rates()
+        return
+
+    if args.plot_improvement:
+        plot_annealing_improvement()
         return
 
     if args.aggregate:
