@@ -116,7 +116,7 @@ FKC_INCLUDE_DIVERGENCE = False
 REUSE_SAMPLES       = True
 REUSE_MODELS        = True
 REUSE_MODEL_SAMPLES = True
-REUSE_ANNEALING     = True  # skip (dim, betaM) if already in results_seed{s}.json
+REUSE_ANNEALING     = False  # skip (dim, betaM) if already in results_seed{s}.json
 
 DESC = ""
 
