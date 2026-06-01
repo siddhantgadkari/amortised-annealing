@@ -85,7 +85,7 @@ DIFF_SCORE_SCALING = True
 
 # Reuse flags
 REUSE_ULA  = True  # skip (dim, beta_m, seed) if ULA result already saved
-REUSE_DIFF = True  # skip (dim, beta_m, t_start, seed) if result already saved
+REUSE_DIFF = False  # skip (dim, beta_m, t_start, seed) if result already saved
 
 DESC = ""  # optional tag appended to sweep dir name
 # ===========================================================================

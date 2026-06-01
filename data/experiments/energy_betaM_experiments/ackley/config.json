@@ -31,7 +31,7 @@
     "n_particles": 8192,
     "n_steps": 10000,
     "burn_in": 2000,
-    "save_every": 100,
+    "trace_every": 100,
     "step_size": 0.001
   },
   "model": {
