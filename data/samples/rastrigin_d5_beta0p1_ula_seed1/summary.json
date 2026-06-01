@@ -1,0 +1,37 @@
+{
+  "status": "completed",
+  "seed": 1,
+  "energy": "rastrigin",
+  "dim": 5,
+  "beta_m": 0.1,
+  "sampler": "ULA",
+  "n_particles": 8192,
+  "n_steps": 10000,
+  "burn_in": 2000,
+  "save_every": 100,
+  "step_size": 0.001,
+  "wall_clock_seconds": 8.84,
+  "device": "cuda",
+  "gpu_name": "NVIDIA RTX A6000",
+  "peak_gpu_memory_mb": 47.7,
+  "n_energy_evals": 98304000,
+  "n_grad_evals": 98304000,
+  "mean_energy": 52.0084,
+  "median_energy": 50.1352,
+  "min_energy": 5.7443,
+  "std_energy": 20.1963,
+  "energy_quantiles": {
+    "q01": 14.508,
+    "q05": 22.7573,
+    "q25": 37.6304,
+    "q75": 63.9346,
+    "q95": 87.7826
+  },
+  "nan_count": 0,
+  "diverged_count": 0,
+  "acceptance_rate": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0
+  }
+}

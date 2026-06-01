@@ -1,0 +1,6 @@
+model_run: double_well_d2_beta6_ula_seed2_mlp256x3_eps_seed2
+n_samples: 8192
+n_steps: 500
+t_start: 1.0
+t_end: 0.001
+seed: 2

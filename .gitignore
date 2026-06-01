@@ -21,4 +21,5 @@ wandb/
 runs/
 
 # Data
-data/
+*.png
+*.svg

@@ -1,0 +1,27 @@
+{
+  "model_run": "ackley_d2_beta0p5_ula_seed0_mlp256x3_eps_seed0",
+  "init_source": "mcmc",
+  "beta_m": 0.5,
+  "beta_target": 10.0,
+  "n_particles": 2048,
+  "n_smc_steps": 50,
+  "ula": {
+    "n_ula_steps": 10,
+    "step_size": 0.001,
+    "n_resamples": 2,
+    "final_ess": 0.8522021770477295,
+    "mean": 0.3188,
+    "min": 0.0039,
+    "std": 0.4047,
+    "median": 0.2302
+  },
+  "diffusion": {
+    "n_diffusion_steps": 10,
+    "n_resamples": 2,
+    "final_ess": 0.6928195357322693,
+    "mean": 1.248,
+    "min": 0.0147,
+    "std": 0.757,
+    "median": 1.1202
+  }
+}

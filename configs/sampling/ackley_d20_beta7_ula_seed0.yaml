@@ -1,0 +1,19 @@
+job:
+  seed: 0
+  device: auto
+  dtype: float32
+target:
+  energy: ackley
+  dim: 20
+  beta_m: 7.0
+sampler:
+  method: ULA
+  step_size: 0.001
+  n_particles: 8192
+  n_steps: 10000
+  burn_in: 2000
+  save_every: 100
+  init_scale: 1.0
+output:
+  root: runs/sampling
+  run_name: ackley_d20_beta7_ula_seed0

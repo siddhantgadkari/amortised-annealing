@@ -1,0 +1,19 @@
+job:
+  seed: 1
+  device: auto
+  dtype: float32
+target:
+  energy: double_well
+  dim: 5
+  beta_m: 1.0
+sampler:
+  method: ULA
+  step_size: 0.001
+  n_particles: 8192
+  n_steps: 10000
+  burn_in: 2000
+  save_every: 100
+  init_scale: 1.0
+output:
+  root: runs/sampling
+  run_name: double_well_d5_beta1_ula_seed1

@@ -1,0 +1,6 @@
+model_run: ackley_d5_beta0p25_ula_seed0_mlp256x3_eps_seed0
+n_samples: 8192
+n_steps: 500
+t_start: 1.0
+t_end: 0.001
+seed: 0

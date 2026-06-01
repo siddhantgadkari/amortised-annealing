@@ -1,0 +1,37 @@
+{
+  "model_run": "double_well_d5_beta5_ula_seed0_mlp256x3_eps_seed0",
+  "n_samples": 8192,
+  "n_steps": 500,
+  "t_start": 1.0,
+  "t_end": 0.001,
+  "seed": 0,
+  "wall_clock_seconds": 1.56,
+  "model_stats": {
+    "mean_energy": -3.6102,
+    "median_energy": -3.6662,
+    "min_energy": -3.9966,
+    "std_energy": 0.262,
+    "q01": -3.9582,
+    "q05": -3.9141,
+    "q25": -3.7955,
+    "q75": -3.4861,
+    "q95": -3.1332
+  },
+  "mcmc_stats": {
+    "mean_energy": -3.496,
+    "median_energy": -3.563,
+    "min_energy": -3.993,
+    "std_energy": 0.318,
+    "q01": -3.9412,
+    "q05": -3.8791,
+    "q25": -3.728,
+    "q75": -3.3274,
+    "q95": -2.8893
+  },
+  "delta_stats": {
+    "delta_mean": 0.0327,
+    "delta_median": 0.029,
+    "delta_min": 0.0009,
+    "delta_std": 0.1761
+  }
+}

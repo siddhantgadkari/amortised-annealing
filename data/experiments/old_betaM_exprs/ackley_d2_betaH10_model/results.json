@@ -1,0 +1,248 @@
+{
+  "energy": "ackley",
+  "dim": 2,
+  "beta_h": 10.0,
+  "init_source": "model",
+  "runs": [
+    {
+      "beta_m": 0.1,
+      "model_run": "ackley_d2_beta0p1_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 0.7246,
+        "min_energy": 0.0088,
+        "std_energy": 1.1094,
+        "median_energy": 0.2741,
+        "final_ess": 0.5493,
+        "n_resamples": 3
+      },
+      "diffusion": {
+        "mean_energy": 1.8274,
+        "min_energy": 0.0159,
+        "std_energy": 0.8854,
+        "median_energy": 1.8426,
+        "final_ess": 0.8835,
+        "n_resamples": 7
+      }
+    },
+    {
+      "beta_m": 0.25,
+      "model_run": "ackley_d2_beta0p25_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 0.3537,
+        "min_energy": 0.001,
+        "std_energy": 0.4922,
+        "median_energy": 0.2409,
+        "final_ess": 0.8084,
+        "n_resamples": 3
+      },
+      "diffusion": {
+        "mean_energy": 1.1411,
+        "min_energy": 0.0158,
+        "std_energy": 0.6405,
+        "median_energy": 1.0857,
+        "final_ess": 0.5184,
+        "n_resamples": 4
+      }
+    },
+    {
+      "beta_m": 0.5,
+      "model_run": "ackley_d2_beta0p5_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 0.5119,
+        "min_energy": 0.0026,
+        "std_energy": 0.8182,
+        "median_energy": 0.2498,
+        "final_ess": 0.7038,
+        "n_resamples": 2
+      },
+      "diffusion": {
+        "mean_energy": 0.6881,
+        "min_energy": 0.0035,
+        "std_energy": 0.4793,
+        "median_energy": 0.5868,
+        "final_ess": 0.6384,
+        "n_resamples": 3
+      }
+    },
+    {
+      "beta_m": 1.0,
+      "model_run": "ackley_d2_beta1_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 0.4116,
+        "min_energy": 0.0036,
+        "std_energy": 0.6355,
+        "median_energy": 0.2411,
+        "final_ess": 0.7638,
+        "n_resamples": 1
+      },
+      "diffusion": {
+        "mean_energy": 0.3454,
+        "min_energy": 0.0096,
+        "std_energy": 0.236,
+        "median_energy": 0.2967,
+        "final_ess": 0.6572,
+        "n_resamples": 1
+      }
+    },
+    {
+      "beta_m": 2.0,
+      "model_run": "ackley_d2_beta2_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 0.3013,
+        "min_energy": 0.0043,
+        "std_energy": 0.3253,
+        "median_energy": 0.2346,
+        "final_ess": 0.8315,
+        "n_resamples": 0
+      },
+      "diffusion": {
+        "mean_energy": 0.1832,
+        "min_energy": 0.003,
+        "std_energy": 0.1175,
+        "median_energy": 0.1622,
+        "final_ess": 0.9022,
+        "n_resamples": 0
+      }
+    },
+    {
+      "beta_m": 3.0,
+      "model_run": "ackley_d2_beta3_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 0.2736,
+        "min_energy": 0.0017,
+        "std_energy": 0.1955,
+        "median_energy": 0.2325,
+        "final_ess": 0.9349,
+        "n_resamples": 0
+      },
+      "diffusion": {
+        "mean_energy": 0.1948,
+        "min_energy": 0.0027,
+        "std_energy": 0.1259,
+        "median_energy": 0.1716,
+        "final_ess": 0.9535,
+        "n_resamples": 0
+      }
+    },
+    {
+      "beta_m": 4.0,
+      "model_run": "ackley_d2_beta4_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 0.2804,
+        "min_energy": 0.0076,
+        "std_energy": 0.1907,
+        "median_energy": 0.2413,
+        "final_ess": 0.9622,
+        "n_resamples": 0
+      },
+      "diffusion": {
+        "mean_energy": 0.1901,
+        "min_energy": 0.0012,
+        "std_energy": 0.1281,
+        "median_energy": 0.1637,
+        "final_ess": 0.9722,
+        "n_resamples": 0
+      }
+    },
+    {
+      "beta_m": 5.0,
+      "model_run": "ackley_d2_beta5_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 0.272,
+        "min_energy": 0.0011,
+        "std_energy": 0.183,
+        "median_energy": 0.2384,
+        "final_ess": 0.976,
+        "n_resamples": 0
+      },
+      "diffusion": {
+        "mean_energy": 0.2051,
+        "min_energy": 0.0031,
+        "std_energy": 0.1341,
+        "median_energy": 0.1763,
+        "final_ess": 0.9822,
+        "n_resamples": 0
+      }
+    },
+    {
+      "beta_m": 6.0,
+      "model_run": "ackley_d2_beta6_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 0.3451,
+        "min_energy": 0.0049,
+        "std_energy": 0.635,
+        "median_energy": 0.2393,
+        "final_ess": 0.9693,
+        "n_resamples": 0
+      },
+      "diffusion": {
+        "mean_energy": 0.3419,
+        "min_energy": 0.0026,
+        "std_energy": 1.2373,
+        "median_energy": 0.1953,
+        "final_ess": 0.9754,
+        "n_resamples": 0
+      }
+    },
+    {
+      "beta_m": 7.0,
+      "model_run": "ackley_d2_beta7_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 0.6101,
+        "min_energy": 0.0012,
+        "std_energy": 1.2163,
+        "median_energy": 0.2522,
+        "final_ess": 0.9106,
+        "n_resamples": 0
+      },
+      "diffusion": {
+        "mean_energy": 0.7237,
+        "min_energy": 0.0013,
+        "std_energy": 1.982,
+        "median_energy": 0.2115,
+        "final_ess": 0.9236,
+        "n_resamples": 0
+      }
+    },
+    {
+      "beta_m": 8.0,
+      "model_run": "ackley_d2_beta8_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 1.066,
+        "min_energy": 0.0052,
+        "std_energy": 1.6807,
+        "median_energy": 0.2947,
+        "final_ess": 0.795,
+        "n_resamples": 0
+      },
+      "diffusion": {
+        "mean_energy": 0.8638,
+        "min_energy": 0.0033,
+        "std_energy": 1.8786,
+        "median_energy": 0.245,
+        "final_ess": 0.8261,
+        "n_resamples": 0
+      }
+    },
+    {
+      "beta_m": 9.0,
+      "model_run": "ackley_d2_beta9_ula_seed0_mlp256x3_eps_seed0",
+      "ula": {
+        "mean_energy": 1.5082,
+        "min_energy": 0.0054,
+        "std_energy": 1.9189,
+        "median_energy": 0.3736,
+        "final_ess": 0.6985,
+        "n_resamples": 0
+      },
+      "diffusion": {
+        "mean_energy": 1.2025,
+        "min_energy": 0.0072,
+        "std_energy": 2.1668,
+        "median_energy": 0.3071,
+        "final_ess": 0.7501,
+        "n_resamples": 0
+      }
+    }
+  ]
+}

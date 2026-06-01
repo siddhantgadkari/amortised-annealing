@@ -1,0 +1,17 @@
+{
+  "status": "completed",
+  "run_name": "ackley_d2_beta0p2_ula_seed108_mlp256x3_eps_seed108",
+  "sample_run_name": "ackley_d2_beta0p2_ula_seed108",
+  "snapshot": -1,
+  "n_training_samples": 8192,
+  "dim": 2,
+  "n_params": 149250,
+  "wall_clock_seconds": 2.36,
+  "device": "cpu",
+  "gpu_name": null,
+  "peak_gpu_memory_mb": null,
+  "final_loss": 1.211611,
+  "loss_history": [
+    1.211611
+  ]
+}

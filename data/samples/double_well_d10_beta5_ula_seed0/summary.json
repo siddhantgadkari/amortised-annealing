@@ -1,0 +1,20 @@
+{
+  "status": "completed",
+  "energy": "double_well",
+  "dim": 10,
+  "beta_m": 5.0,
+  "sampler": "ULA",
+  "n_particles": 8192,
+  "wall_clock_seconds": 26.85,
+  "mean_energy": -2.987,
+  "median_energy": -3.049,
+  "min_energy": -3.923,
+  "std_energy": 0.447,
+  "energy_quantiles": {
+    "q25": -3.323,
+    "q75": -2.724
+  },
+  "acceptance_rate": {
+    "mean": 1.0
+  }
+}

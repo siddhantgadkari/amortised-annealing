@@ -1,0 +1,37 @@
+{
+  "status": "completed",
+  "seed": 0,
+  "energy": "ackley",
+  "dim": 2,
+  "beta_m": 0.1,
+  "sampler": "ULA",
+  "n_particles": 8192,
+  "n_steps": 10000,
+  "burn_in": 2000,
+  "save_every": 100,
+  "step_size": 0.001,
+  "wall_clock_seconds": 8.57,
+  "device": "cpu",
+  "gpu_name": null,
+  "peak_gpu_memory_mb": null,
+  "n_energy_evals": 98304000,
+  "n_grad_evals": 98304000,
+  "mean_energy": 11.1887,
+  "median_energy": 11.3667,
+  "min_energy": 0.0476,
+  "std_energy": 3.9697,
+  "energy_quantiles": {
+    "q01": 2.9577,
+    "q05": 4.3918,
+    "q25": 8.213,
+    "q75": 14.2588,
+    "q95": 17.3673
+  },
+  "nan_count": 0,
+  "diverged_count": 0,
+  "acceptance_rate": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0
+  }
+}
