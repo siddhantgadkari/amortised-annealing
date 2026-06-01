@@ -38,10 +38,11 @@ from amortised_annealing.smc import (
     DiffusionAnnealingProposal,
 )
 
-ROOT       = Path(__file__).parent.parent.parent
-SAMPLE_DIR = ROOT / "data" / "samples"
-MODEL_DIR  = ROOT / "data" / "models"
-SWEEP_BASE = ROOT / "data" / "experiments" / "tstart_sweep"
+ROOT             = Path(__file__).parent.parent.parent
+SAMPLE_DIR       = ROOT / "data" / "samples"
+MODEL_DIR        = ROOT / "data" / "models"
+MODEL_SAMPLE_DIR = ROOT / "data" / "model_samples"
+SWEEP_BASE       = ROOT / "data" / "experiments" / "tstart_sweep"
 
 ENERGY_MAP = {
     "double_well": DoubleWell,
