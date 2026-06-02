@@ -1,0 +1,12 @@
+{
+  "status": "completed",
+  "run_name": "ackley_d5_beta20_ula_seed2_ntrain1024_mlp256x3_eps_seed2",
+  "sample_run_name": "ackley_d5_beta20_ula_seed2",
+  "n_training_samples": 1024,
+  "n_train": 1024,
+  "dim": 5,
+  "n_params": 150789,
+  "wall_clock_seconds": 25.19,
+  "final_loss": 1.195287,
+  "best_loss": 1.183708
+}
