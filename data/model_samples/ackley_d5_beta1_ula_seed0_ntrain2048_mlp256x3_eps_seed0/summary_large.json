@@ -1,0 +1,7 @@
+{
+  "model_run": "ackley_d5_beta1_ula_seed0_ntrain2048_mlp256x3_eps_seed0",
+  "n_samples": 8192,
+  "n_steps": 500,
+  "seed": 0,
+  "wall_clock_seconds": 0.11
+}
