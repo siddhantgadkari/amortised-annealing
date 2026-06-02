@@ -369,15 +369,9 @@ def _diag_stats(diag: SMCDiagnostics) -> dict:
 
 
 def _load_particles(path: Path, device=None) -> torch.Tensor:
-    """Load particles.pt handling both new [N,D] and legacy [N,S,D] formats,
-    and both old/new PyTorch pickle conventions."""
-    kwargs: dict = {"map_location": device or "cpu"}
-    try:
-        x = torch.load(path, weights_only=True, **kwargs)
-    except Exception:
-        x = torch.load(path, weights_only=False, **kwargs)
+    x = torch.load(path, weights_only=True, map_location=device or "cpu")
     if x.dim() == 3:
-        x = x[:, -1, :]  # legacy format: take final snapshot
+        x = x[:, -1, :]
     return x
 
 
