@@ -5,7 +5,7 @@ job:
 target:
   energy: ackley
   dim: 20
-  beta_m: 5.0
+  beta_m: 20.0
 sampler:
   method: ULA
   step_size: 0.001
@@ -14,4 +14,4 @@ sampler:
   burn_in: 2000
   trace_every: 100
 output:
-  run_name: ackley_d20_beta5_ula_seed0
+  run_name: ackley_d20_beta20_ula_seed0

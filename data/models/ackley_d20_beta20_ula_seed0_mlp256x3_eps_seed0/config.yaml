@@ -3,7 +3,7 @@ job:
   device: auto
   dtype: float32
 samples:
-  run_name: ackley_d20_beta5_ula_seed0
+  run_name: ackley_d20_beta20_ula_seed0
 schedule:
   type: vp
   beta_min: 0.1
@@ -26,4 +26,4 @@ training:
   log_every: 500
   loss_type: eps
 output:
-  run_name: ackley_d20_beta5_ula_seed0_mlp256x3_eps_seed0
+  run_name: ackley_d20_beta20_ula_seed0_mlp256x3_eps_seed0
