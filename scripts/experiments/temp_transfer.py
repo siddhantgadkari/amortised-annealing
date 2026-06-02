@@ -794,6 +794,80 @@ def plot_results() -> None:
     print(f"\nAll plots saved to {plots_dir}")
 
 
+def plot_gap_heatmap() -> None:
+    """Heatmap of G = E_diff_smc - E_ula_smc for each dim.
+
+    Positive (red)  = diffusion worse than ULA.
+    Negative (blue) = diffusion better than ULA.
+    """
+    agg_path = _exp_dir() / "aggregate.json"
+    if not agg_path.exists():
+        print("  No aggregate.json — run --aggregate first.")
+        return
+
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    data  = json.loads(agg_path.read_text())
+    cells = data["cells"]
+
+    plots_dir = _exp_dir() / "plots"
+    plots_dir.mkdir(exist_ok=True)
+
+    dims    = sorted(set(c["dim"]    for c in cells))
+    beta_ms = sorted(set(c["beta_m"] for c in cells))
+    beta_hs = sorted(set(c["beta_h"] for c in cells))
+    n_bm, n_bh = len(beta_ms), len(beta_hs)
+
+    def _mean(cell, method, key):
+        v = cell.get(method, {}).get(key, {})
+        return v.get("mean") if isinstance(v, dict) else v
+
+    fig, axes = plt.subplots(1, len(dims), figsize=(5 * len(dims), 4.5), squeeze=False)
+
+    for ax, dim in zip(axes[0], dims):
+        grid = np.full((n_bh, n_bm), np.nan)
+        for cell in cells:
+            if cell["dim"] != dim:
+                continue
+            bm_i = beta_ms.index(cell["beta_m"])
+            bh_i = beta_hs.index(cell["beta_h"])
+            e_diff = _mean(cell, "diff_smc", "mean_energy")
+            e_ula  = _mean(cell, "ula_smc",  "mean_energy")
+            if e_diff is not None and e_ula is not None:
+                grid[bh_i, bm_i] = e_diff - e_ula
+
+        vmax = np.nanmax(np.abs(grid)) if not np.all(np.isnan(grid)) else 1.0
+        im = ax.imshow(grid, aspect="auto", origin="lower",
+                       cmap="RdBu_r", vmin=-vmax, vmax=vmax)
+
+        ax.set_xticks(range(n_bm))
+        ax.set_xticklabels([_beta_str(b) for b in beta_ms], fontsize=7)
+        ax.set_yticks(range(n_bh))
+        ax.set_yticklabels([_beta_str(b) for b in beta_hs], fontsize=7)
+        ax.set_xlabel(r"$\beta_M$", fontsize=8)
+        ax.set_ylabel(r"$\beta_H$", fontsize=8)
+        ax.set_title(f"d={dim}", fontsize=9)
+
+        for bh_i, bm_i in np.ndindex(grid.shape):
+            v = grid[bh_i, bm_i]
+            if not np.isnan(v):
+                ax.text(bm_i, bh_i, f"{v:.2f}", ha="center", va="center",
+                        fontsize=5, color="black")
+
+        plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04,
+                     label=r"$E_\mathrm{diff} - E_\mathrm{ULA}$")
+
+    fig.suptitle(f"{ENERGY}  gap: Diffusion SMC − ULA SMC  (red=diffusion worse)",
+                 fontsize=10)
+    fig.tight_layout()
+    out = plots_dir / "gap_diff_vs_ula.svg"
+    fig.savefig(out, bbox_inches="tight")
+    plt.close(fig)
+    print(f"  Saved {out.name}")
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
@@ -814,6 +888,8 @@ def main() -> None:
                              f"seeds={FSWEEP_SEEDS}")
     parser.add_argument("--aggregate", action="store_true")
     parser.add_argument("--plot-only", action="store_true")
+    parser.add_argument("--plot-gap",  action="store_true",
+                        help="Plot E_diff_smc - E_ula_smc heatmap per dim")
     parser.add_argument("--no-plot",   action="store_true",
                         help="Skip plotting after run/aggregate (use on server)")
     args = parser.parse_args()
@@ -823,6 +899,11 @@ def main() -> None:
 
     if args.plot_only:
         plot_results()
+        plot_gap_heatmap()
+        return
+
+    if args.plot_gap:
+        plot_gap_heatmap()
         return
 
     if args.aggregate:
