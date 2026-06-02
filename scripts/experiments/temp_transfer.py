@@ -368,6 +368,19 @@ def _diag_stats(diag: SMCDiagnostics) -> dict:
     }
 
 
+def _load_particles(path: Path, device=None) -> torch.Tensor:
+    """Load particles.pt handling both new [N,D] and legacy [N,S,D] formats,
+    and both old/new PyTorch pickle conventions."""
+    kwargs: dict = {"map_location": device or "cpu"}
+    try:
+        x = torch.load(path, weights_only=True, **kwargs)
+    except Exception:
+        x = torch.load(path, weights_only=False, **kwargs)
+    if x.dim() == 3:
+        x = x[:, -1, :]  # legacy format: take final snapshot
+    return x
+
+
 def _subsample(x: torch.Tensor, n: int, device: torch.device) -> torch.Tensor:
     x = x.to(device)
     return x[torch.randperm(x.shape[0], device=device)[:n]] if x.shape[0] > n else x
@@ -394,8 +407,8 @@ def _delta_diagnostic(dim: int, beta_m: float, seed: int) -> dict:
         return {}
 
     energy_fn = ENERGY_MAP[ENERGY](dim=dim).energy
-    x_mcmc  = torch.load(mcmc_path,  map_location="cpu", weights_only=True)
-    x_model = torch.load(model_path, map_location="cpu", weights_only=True)
+    x_mcmc  = _load_particles(mcmc_path)
+    x_model = _load_particles(model_path)
 
     with torch.no_grad():
         e_mcmc  = energy_fn(x_mcmc).float()
@@ -429,10 +442,8 @@ def _run_cell(
     rsde, energy, dim, _, _ = _load_model(model_run, device)
     energy_fn = energy.energy
 
-    mcmc_pts  = torch.load(SAMPLE_DIR / sample_run / "particles.pt",
-                           map_location=device, weights_only=True)
-    model_pts = torch.load(MODEL_SAMPLE_DIR / model_run / "samples.pt",
-                           map_location=device, weights_only=True)
+    mcmc_pts  = _load_particles(SAMPLE_DIR / sample_run / "particles.pt", device)
+    model_pts = _load_particles(MODEL_SAMPLE_DIR / model_run / "samples.pt", device)
     x0_mcmc  = _subsample(mcmc_pts,  N_PARTICLES, device)
     x0_model = _subsample(model_pts, N_PARTICLES, device)
 
