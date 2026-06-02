@@ -83,6 +83,13 @@ PILOT_BETA_MS = [5.0, 10.0, 20.0]
 PILOT_BETA_HS = [20.0, 50.0]
 PILOT_SEEDS   = [0]
 
+# Failure-sweep subset (--failure-sweep flag)
+# Fine β_H grid to locate the diffusion-SMC breakdown boundary
+FSWEEP_DIMS    = [20]
+FSWEEP_BETA_MS = [10.0, 20.0]
+FSWEEP_BETA_HS = [10.0, 20.0, 30.0, 40.0, 50.0, 75.0, 100.0]
+FSWEEP_SEEDS   = [0]
+
 # Model architecture — must match energy_betaM_experiment.py
 MODEL_HIDDEN_DIMS    = [256, 256, 256]
 MODEL_TIME_EMBED_DIM = 64
@@ -798,11 +805,17 @@ def main() -> None:
     parser.add_argument("--energy",    choices=list(ENERGY_MAP), default=None)
     parser.add_argument("--seed",      type=int, default=None,
                         help="Run a single seed (use --aggregate when all done)")
-    parser.add_argument("--pilot",     action="store_true",
+    parser.add_argument("--pilot",         action="store_true",
                         help=f"Small grid: dims={PILOT_DIMS} β_M={PILOT_BETA_MS} "
                              f"β_H={PILOT_BETA_HS} seeds={PILOT_SEEDS}")
+    parser.add_argument("--failure-sweep", action="store_true",
+                        help=f"Fine β_H grid to find diffusion-SMC breakdown boundary: "
+                             f"dims={FSWEEP_DIMS} β_M={FSWEEP_BETA_MS} β_H={FSWEEP_BETA_HS} "
+                             f"seeds={FSWEEP_SEEDS}")
     parser.add_argument("--aggregate", action="store_true")
     parser.add_argument("--plot-only", action="store_true")
+    parser.add_argument("--no-plot",   action="store_true",
+                        help="Skip plotting after run/aggregate (use on server)")
     args = parser.parse_args()
 
     if args.energy:
@@ -815,8 +828,9 @@ def main() -> None:
     if args.aggregate:
         print("Aggregating...")
         aggregate_results()
-        print("Plotting...")
-        plot_results()
+        if not args.no_plot:
+            print("Plotting...")
+            plot_results()
         return
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -826,6 +840,10 @@ def main() -> None:
         dims, beta_ms, beta_hs = PILOT_DIMS, PILOT_BETA_MS, PILOT_BETA_HS
         seeds = PILOT_SEEDS
         print(f"=== PILOT  {ENERGY}  dims={dims}  β_M={beta_ms}  β_H={beta_hs} ===")
+    elif args.failure_sweep:
+        dims, beta_ms, beta_hs = FSWEEP_DIMS, FSWEEP_BETA_MS, FSWEEP_BETA_HS
+        seeds = FSWEEP_SEEDS
+        print(f"=== FAILURE SWEEP  {ENERGY}  dims={dims}  β_M={beta_ms}  β_H={beta_hs} ===")
     else:
         dims, beta_ms, beta_hs = DIMS, BETA_MS, BETA_HS
         seeds = [args.seed] if args.seed is not None else SEEDS
@@ -840,8 +858,9 @@ def main() -> None:
     if args.seed is None:
         print("\nAggregating...")
         aggregate_results()
-        print("Plotting...")
-        plot_results()
+        if not args.no_plot:
+            print("Plotting...")
+            plot_results()
     else:
         print(f"\nSeed {args.seed} done. Run --aggregate when all seeds complete.")
 
