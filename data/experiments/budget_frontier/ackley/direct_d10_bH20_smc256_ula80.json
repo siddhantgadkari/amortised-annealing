@@ -1,0 +1,21 @@
+{
+  "dim": 10,
+  "beta_h": 20.0,
+  "n_smc": 256,
+  "n_ula": 80,
+  "oracle_cost_per_run": 84934656,
+  "n_restarts": 1,
+  "wall_seconds": 4.3,
+  "restarts": [
+    {
+      "restart_id": 0,
+      "best_energy": 0.0794,
+      "mean_energy": 0.4332,
+      "q01": 0.1636,
+      "q05": 0.2243,
+      "q10": 0.2579,
+      "q50": 0.414,
+      "q90": 0.633
+    }
+  ]
+}
