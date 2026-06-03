@@ -4,7 +4,6 @@ job:
   dtype: float32
 samples:
   run_name: ackley_d20_beta1_ula_seed2
-  snapshot: -1
 schedule:
   type: vp
   beta_min: 0.1
@@ -25,8 +24,6 @@ training:
   grad_clip: 1.0
   ema_decay: 0.999
   log_every: 500
-  log_uniform_t: false
   loss_type: eps
 output:
-  root: data/models
   run_name: ackley_d20_beta1_ula_seed2_mlp256x3_eps_seed2

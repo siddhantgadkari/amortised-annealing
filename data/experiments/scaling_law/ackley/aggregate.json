@@ -1,0 +1,4984 @@
+{
+  "n_seeds": 3,
+  "results": [
+    {
+      "dim": 5,
+      "beta_m": 1.0,
+      "n_train": 256,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 2560000,
+      "delta_E": {
+        "mean": 0.091801,
+        "std": 0.050572
+      },
+      "delta_tail": {
+        "mean": 0.044392,
+        "std": 0.04617
+      },
+      "final_train_loss": {
+        "mean": 1.744936,
+        "std": 0.021099
+      },
+      "best_train_loss": {
+        "mean": 1.741262,
+        "std": 0.018772
+      },
+      "model_min": {
+        "mean": 1.312573,
+        "std": 0.484891
+      },
+      "holdout_min": {
+        "mean": 0.85831,
+        "std": 0.2116
+      },
+      "downstream_min": {
+        "mean": 0.088833,
+        "std": 0.011822
+      },
+      "model_q01": {
+        "mean": 3.046287,
+        "std": 0.168568
+      },
+      "holdout_q01": {
+        "mean": 2.955947,
+        "std": 0.069898
+      },
+      "downstream_q01": {
+        "mean": 0.89155,
+        "std": 0.621431
+      },
+      "model_q05": {
+        "mean": 3.926417,
+        "std": 0.159069
+      },
+      "holdout_q05": {
+        "mean": 3.84558,
+        "std": 0.03168
+      },
+      "downstream_q05": {
+        "mean": 2.232993,
+        "std": 0.245227
+      },
+      "model_q10": {
+        "mean": 4.491377,
+        "std": 0.199956
+      },
+      "holdout_q10": {
+        "mean": 4.39065,
+        "std": 0.050578
+      },
+      "downstream_q10": {
+        "mean": 2.788863,
+        "std": 0.166633
+      },
+      "model_q50": {
+        "mean": 7.306683,
+        "std": 0.204331
+      },
+      "holdout_q50": {
+        "mean": 7.140567,
+        "std": 0.036185
+      },
+      "downstream_q50": {
+        "mean": 5.60839,
+        "std": 0.20518
+      },
+      "model_q90": {
+        "mean": 10.41891,
+        "std": 0.217871
+      },
+      "holdout_q90": {
+        "mean": 10.793767,
+        "std": 0.025933
+      },
+      "downstream_q90": {
+        "mean": 8.88826,
+        "std": 0.258129
+      },
+      "model_mean": {
+        "mean": 7.416627,
+        "std": 0.146314
+      },
+      "holdout_mean": {
+        "mean": 7.410257,
+        "std": 0.029778
+      },
+      "downstream_mean": {
+        "mean": 5.754177,
+        "std": 0.119854
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 1.0,
+      "n_train": 512,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 5120000,
+      "delta_E": {
+        "mean": 0.084913,
+        "std": 0.02928
+      },
+      "delta_tail": {
+        "mean": 0.074544,
+        "std": 0.044447
+      },
+      "final_train_loss": {
+        "mean": 1.882888,
+        "std": 0.011696
+      },
+      "best_train_loss": {
+        "mean": 1.876631,
+        "std": 0.011877
+      },
+      "model_min": {
+        "mean": 1.607263,
+        "std": 0.540321
+      },
+      "holdout_min": {
+        "mean": 0.85831,
+        "std": 0.2116
+      },
+      "downstream_min": {
+        "mean": 0.07554,
+        "std": 0.025427
+      },
+      "model_q01": {
+        "mean": 3.145587,
+        "std": 0.154773
+      },
+      "holdout_q01": {
+        "mean": 2.955947,
+        "std": 0.069898
+      },
+      "downstream_q01": {
+        "mean": 1.157807,
+        "std": 0.685506
+      },
+      "model_q05": {
+        "mean": 3.980057,
+        "std": 0.132519
+      },
+      "holdout_q05": {
+        "mean": 3.84558,
+        "std": 0.03168
+      },
+      "downstream_q05": {
+        "mean": 2.228177,
+        "std": 0.288697
+      },
+      "model_q10": {
+        "mean": 4.53106,
+        "std": 0.121676
+      },
+      "holdout_q10": {
+        "mean": 4.39065,
+        "std": 0.050578
+      },
+      "downstream_q10": {
+        "mean": 2.756973,
+        "std": 0.222169
+      },
+      "model_q50": {
+        "mean": 7.231203,
+        "std": 0.197104
+      },
+      "holdout_q50": {
+        "mean": 7.140567,
+        "std": 0.036185
+      },
+      "downstream_q50": {
+        "mean": 5.578457,
+        "std": 0.141486
+      },
+      "model_q90": {
+        "mean": 10.48652,
+        "std": 0.301318
+      },
+      "holdout_q90": {
+        "mean": 10.793767,
+        "std": 0.025933
+      },
+      "downstream_q90": {
+        "mean": 8.946003,
+        "std": 0.305005
+      },
+      "model_mean": {
+        "mean": 7.412167,
+        "std": 0.146946
+      },
+      "holdout_mean": {
+        "mean": 7.410257,
+        "std": 0.029778
+      },
+      "downstream_mean": {
+        "mean": 5.74866,
+        "std": 0.095542
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 1.0,
+      "n_train": 1024,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 10240000,
+      "delta_E": {
+        "mean": 0.092365,
+        "std": 0.007657
+      },
+      "delta_tail": {
+        "mean": 0.12848,
+        "std": 0.021215
+      },
+      "final_train_loss": {
+        "mean": 1.934578,
+        "std": 0.02296
+      },
+      "best_train_loss": {
+        "mean": 1.926048,
+        "std": 0.024535
+      },
+      "model_min": {
+        "mean": 1.772313,
+        "std": 0.401699
+      },
+      "holdout_min": {
+        "mean": 0.85831,
+        "std": 0.2116
+      },
+      "downstream_min": {
+        "mean": 0.114313,
+        "std": 0.053625
+      },
+      "model_q01": {
+        "mean": 3.299503,
+        "std": 0.0893
+      },
+      "holdout_q01": {
+        "mean": 2.955947,
+        "std": 0.069898
+      },
+      "downstream_q01": {
+        "mean": 1.346897,
+        "std": 0.613868
+      },
+      "model_q05": {
+        "mean": 4.12427,
+        "std": 0.061537
+      },
+      "holdout_q05": {
+        "mean": 3.84558,
+        "std": 0.03168
+      },
+      "downstream_q05": {
+        "mean": 2.404213,
+        "std": 0.025166
+      },
+      "model_q10": {
+        "mean": 4.676207,
+        "std": 0.051565
+      },
+      "holdout_q10": {
+        "mean": 4.39065,
+        "std": 0.050578
+      },
+      "downstream_q10": {
+        "mean": 2.901513,
+        "std": 0.022981
+      },
+      "model_q50": {
+        "mean": 7.231063,
+        "std": 0.164506
+      },
+      "holdout_q50": {
+        "mean": 7.140567,
+        "std": 0.036185
+      },
+      "downstream_q50": {
+        "mean": 5.59437,
+        "std": 0.125577
+      },
+      "model_q90": {
+        "mean": 10.681043,
+        "std": 0.315058
+      },
+      "holdout_q90": {
+        "mean": 10.793767,
+        "std": 0.025933
+      },
+      "downstream_q90": {
+        "mean": 9.146963,
+        "std": 0.27959
+      },
+      "model_mean": {
+        "mean": 7.506633,
+        "std": 0.149279
+      },
+      "holdout_mean": {
+        "mean": 7.410257,
+        "std": 0.029778
+      },
+      "downstream_mean": {
+        "mean": 5.84235,
+        "std": 0.100541
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 1.0,
+      "n_train": 2048,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 20480000,
+      "delta_E": {
+        "mean": 0.053966,
+        "std": 0.019392
+      },
+      "delta_tail": {
+        "mean": 0.133972,
+        "std": 0.022069
+      },
+      "final_train_loss": {
+        "mean": 1.942472,
+        "std": 0.008525
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 1.95627,
+        "std": 0.29475
+      },
+      "holdout_min": {
+        "mean": 0.85831,
+        "std": 0.2116
+      },
+      "downstream_min": {
+        "mean": 0.08929,
+        "std": 0.029148
+      },
+      "model_q01": {
+        "mean": 3.323067,
+        "std": 0.076332
+      },
+      "holdout_q01": {
+        "mean": 2.955947,
+        "std": 0.069898
+      },
+      "downstream_q01": {
+        "mean": 1.370967,
+        "std": 0.565669
+      },
+      "model_q05": {
+        "mean": 4.127177,
+        "std": 0.060691
+      },
+      "holdout_q05": {
+        "mean": 3.84558,
+        "std": 0.03168
+      },
+      "downstream_q05": {
+        "mean": 2.405563,
+        "std": 0.02439
+      },
+      "model_q10": {
+        "mean": 4.689797,
+        "std": 0.069764
+      },
+      "holdout_q10": {
+        "mean": 4.39065,
+        "std": 0.050578
+      },
+      "downstream_q10": {
+        "mean": 2.902823,
+        "std": 0.029635
+      },
+      "model_q50": {
+        "mean": 7.15118,
+        "std": 0.06714
+      },
+      "holdout_q50": {
+        "mean": 7.140567,
+        "std": 0.036185
+      },
+      "downstream_q50": {
+        "mean": 5.51194,
+        "std": 0.113511
+      },
+      "model_q90": {
+        "mean": 10.767983,
+        "std": 0.058824
+      },
+      "holdout_q90": {
+        "mean": 10.793767,
+        "std": 0.025933
+      },
+      "downstream_q90": {
+        "mean": 9.19959,
+        "std": 0.070805
+      },
+      "model_mean": {
+        "mean": 7.49224,
+        "std": 0.045696
+      },
+      "holdout_mean": {
+        "mean": 7.410257,
+        "std": 0.029778
+      },
+      "downstream_mean": {
+        "mean": 5.83116,
+        "std": 0.059164
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 1.0,
+      "n_train": 8192,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 81920000,
+      "delta_E": {
+        "mean": 0.057112,
+        "std": 0.008574
+      },
+      "delta_tail": {
+        "mean": 0.155198,
+        "std": 0.002905
+      },
+      "final_train_loss": {
+        "mean": 1.958552,
+        "std": 0.004021
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 1.792707,
+        "std": 0.41938
+      },
+      "holdout_min": {
+        "mean": 0.85831,
+        "std": 0.2116
+      },
+      "downstream_min": {
+        "mean": 0.094527,
+        "std": 0.05458
+      },
+      "model_q01": {
+        "mean": 3.37299,
+        "std": 0.022593
+      },
+      "holdout_q01": {
+        "mean": 2.955947,
+        "std": 0.069898
+      },
+      "downstream_q01": {
+        "mean": 1.69476,
+        "std": 0.019127
+      },
+      "model_q05": {
+        "mean": 4.180603,
+        "std": 0.040203
+      },
+      "holdout_q05": {
+        "mean": 3.84558,
+        "std": 0.03168
+      },
+      "downstream_q05": {
+        "mean": 2.419917,
+        "std": 0.013038
+      },
+      "model_q10": {
+        "mean": 4.742683,
+        "std": 0.04211
+      },
+      "holdout_q10": {
+        "mean": 4.39065,
+        "std": 0.050578
+      },
+      "downstream_q10": {
+        "mean": 2.923197,
+        "std": 0.013984
+      },
+      "model_q50": {
+        "mean": 7.16857,
+        "std": 0.027826
+      },
+      "holdout_q50": {
+        "mean": 7.140567,
+        "std": 0.036185
+      },
+      "downstream_q50": {
+        "mean": 5.529923,
+        "std": 0.063371
+      },
+      "model_q90": {
+        "mean": 10.84032,
+        "std": 0.070698
+      },
+      "holdout_q90": {
+        "mean": 10.793767,
+        "std": 0.025933
+      },
+      "downstream_q90": {
+        "mean": 9.2987,
+        "std": 0.054048
+      },
+      "model_mean": {
+        "mean": 7.541377,
+        "std": 0.020727
+      },
+      "holdout_mean": {
+        "mean": 7.410257,
+        "std": 0.029778
+      },
+      "downstream_mean": {
+        "mean": 5.883443,
+        "std": 0.043029
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 5.0,
+      "n_train": 256,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 2560000,
+      "delta_E": {
+        "mean": 0.142307,
+        "std": 0.01075
+      },
+      "delta_tail": {
+        "mean": 0.056145,
+        "std": 0.007424
+      },
+      "final_train_loss": {
+        "mean": 0.267042,
+        "std": 0.003654
+      },
+      "best_train_loss": {
+        "mean": 0.265507,
+        "std": 0.005605
+      },
+      "model_min": {
+        "mean": 0.073807,
+        "std": 0.004392
+      },
+      "holdout_min": {
+        "mean": 0.055963,
+        "std": 0.014131
+      },
+      "downstream_min": {
+        "mean": 0.035533,
+        "std": 0.008682
+      },
+      "model_q01": {
+        "mean": 0.18897,
+        "std": 0.009164
+      },
+      "holdout_q01": {
+        "mean": 0.164037,
+        "std": 0.01107
+      },
+      "downstream_q01": {
+        "mean": 0.103933,
+        "std": 0.000973
+      },
+      "model_q05": {
+        "mean": 0.310147,
+        "std": 0.007642
+      },
+      "holdout_q05": {
+        "mean": 0.264123,
+        "std": 0.004848
+      },
+      "downstream_q05": {
+        "mean": 0.16237,
+        "std": 0.002154
+      },
+      "model_q10": {
+        "mean": 0.39452,
+        "std": 0.013779
+      },
+      "holdout_q10": {
+        "mean": 0.34409,
+        "std": 0.00213
+      },
+      "downstream_q10": {
+        "mean": 0.19819,
+        "std": 0.0024
+      },
+      "model_q50": {
+        "mean": 0.802703,
+        "std": 0.016685
+      },
+      "holdout_q50": {
+        "mean": 0.753527,
+        "std": 0.001893
+      },
+      "downstream_q50": {
+        "mean": 0.369897,
+        "std": 0.002262
+      },
+      "model_q90": {
+        "mean": 1.379183,
+        "std": 0.017476
+      },
+      "holdout_q90": {
+        "mean": 1.529107,
+        "std": 0.011306
+      },
+      "downstream_q90": {
+        "mean": 0.60144,
+        "std": 0.001588
+      },
+      "model_mean": {
+        "mean": 0.85305,
+        "std": 0.014701
+      },
+      "holdout_mean": {
+        "mean": 0.86881,
+        "std": 0.002303
+      },
+      "downstream_mean": {
+        "mean": 0.387633,
+        "std": 0.001832
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 5.0,
+      "n_train": 512,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 5120000,
+      "delta_E": {
+        "mean": 0.159771,
+        "std": 0.007483
+      },
+      "delta_tail": {
+        "mean": 0.078963,
+        "std": 0.009132
+      },
+      "final_train_loss": {
+        "mean": 0.267802,
+        "std": 0.010547
+      },
+      "best_train_loss": {
+        "mean": 0.266684,
+        "std": 0.00927
+      },
+      "model_min": {
+        "mean": 0.077723,
+        "std": 0.013789
+      },
+      "holdout_min": {
+        "mean": 0.055963,
+        "std": 0.014131
+      },
+      "downstream_min": {
+        "mean": 0.035483,
+        "std": 0.008617
+      },
+      "model_q01": {
+        "mean": 0.20051,
+        "std": 0.009993
+      },
+      "holdout_q01": {
+        "mean": 0.164037,
+        "std": 0.01107
+      },
+      "downstream_q01": {
+        "mean": 0.10344,
+        "std": 0.001551
+      },
+      "model_q05": {
+        "mean": 0.32749,
+        "std": 0.018038
+      },
+      "holdout_q05": {
+        "mean": 0.264123,
+        "std": 0.004848
+      },
+      "downstream_q05": {
+        "mean": 0.16249,
+        "std": 0.002022
+      },
+      "model_q10": {
+        "mean": 0.414457,
+        "std": 0.029478
+      },
+      "holdout_q10": {
+        "mean": 0.34409,
+        "std": 0.00213
+      },
+      "downstream_q10": {
+        "mean": 0.19804,
+        "std": 0.00246
+      },
+      "model_q50": {
+        "mean": 0.838207,
+        "std": 0.050628
+      },
+      "holdout_q50": {
+        "mean": 0.753527,
+        "std": 0.001893
+      },
+      "downstream_q50": {
+        "mean": 0.37003,
+        "std": 0.002471
+      },
+      "model_q90": {
+        "mean": 1.403993,
+        "std": 0.077469
+      },
+      "holdout_q90": {
+        "mean": 1.529107,
+        "std": 0.011306
+      },
+      "downstream_q90": {
+        "mean": 0.60127,
+        "std": 0.001484
+      },
+      "model_mean": {
+        "mean": 0.881243,
+        "std": 0.050489
+      },
+      "holdout_mean": {
+        "mean": 0.86881,
+        "std": 0.002303
+      },
+      "downstream_mean": {
+        "mean": 0.387563,
+        "std": 0.00184
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 5.0,
+      "n_train": 1024,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 10240000,
+      "delta_E": {
+        "mean": 0.162829,
+        "std": 0.009923
+      },
+      "delta_tail": {
+        "mean": 0.083288,
+        "std": 0.001984
+      },
+      "final_train_loss": {
+        "mean": 0.26675,
+        "std": 0.011468
+      },
+      "best_train_loss": {
+        "mean": 0.264761,
+        "std": 0.009579
+      },
+      "model_min": {
+        "mean": 0.07149,
+        "std": 0.009726
+      },
+      "holdout_min": {
+        "mean": 0.055963,
+        "std": 0.014131
+      },
+      "downstream_min": {
+        "mean": 0.035523,
+        "std": 0.008462
+      },
+      "model_q01": {
+        "mean": 0.20304,
+        "std": 0.00653
+      },
+      "holdout_q01": {
+        "mean": 0.164037,
+        "std": 0.01107
+      },
+      "downstream_q01": {
+        "mean": 0.103387,
+        "std": 0.001598
+      },
+      "model_q05": {
+        "mean": 0.330413,
+        "std": 0.015224
+      },
+      "holdout_q05": {
+        "mean": 0.264123,
+        "std": 0.004848
+      },
+      "downstream_q05": {
+        "mean": 0.16244,
+        "std": 0.001939
+      },
+      "model_q10": {
+        "mean": 0.41721,
+        "std": 0.023279
+      },
+      "holdout_q10": {
+        "mean": 0.34409,
+        "std": 0.00213
+      },
+      "downstream_q10": {
+        "mean": 0.198103,
+        "std": 0.002517
+      },
+      "model_q50": {
+        "mean": 0.840163,
+        "std": 0.041392
+      },
+      "holdout_q50": {
+        "mean": 0.753527,
+        "std": 0.001893
+      },
+      "downstream_q50": {
+        "mean": 0.370363,
+        "std": 0.002578
+      },
+      "model_q90": {
+        "mean": 1.403333,
+        "std": 0.072934
+      },
+      "holdout_q90": {
+        "mean": 1.529107,
+        "std": 0.011306
+      },
+      "downstream_q90": {
+        "mean": 0.601277,
+        "std": 0.001576
+      },
+      "model_mean": {
+        "mean": 0.88166,
+        "std": 0.043262
+      },
+      "holdout_mean": {
+        "mean": 0.86881,
+        "std": 0.002303
+      },
+      "downstream_mean": {
+        "mean": 0.38758,
+        "std": 0.00184
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 5.0,
+      "n_train": 2048,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 20480000,
+      "delta_E": {
+        "mean": 0.164644,
+        "std": 0.010269
+      },
+      "delta_tail": {
+        "mean": 0.08189,
+        "std": 0.006621
+      },
+      "final_train_loss": {
+        "mean": 0.266956,
+        "std": 0.005992
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 0.070203,
+        "std": 0.01211
+      },
+      "holdout_min": {
+        "mean": 0.055963,
+        "std": 0.014131
+      },
+      "downstream_min": {
+        "mean": 0.035527,
+        "std": 0.008411
+      },
+      "model_q01": {
+        "mean": 0.20205,
+        "std": 0.008968
+      },
+      "holdout_q01": {
+        "mean": 0.164037,
+        "std": 0.01107
+      },
+      "downstream_q01": {
+        "mean": 0.1034,
+        "std": 0.001568
+      },
+      "model_q05": {
+        "mean": 0.32961,
+        "std": 0.009019
+      },
+      "holdout_q05": {
+        "mean": 0.264123,
+        "std": 0.004848
+      },
+      "downstream_q05": {
+        "mean": 0.16264,
+        "std": 0.001849
+      },
+      "model_q10": {
+        "mean": 0.417913,
+        "std": 0.017319
+      },
+      "holdout_q10": {
+        "mean": 0.34409,
+        "std": 0.00213
+      },
+      "downstream_q10": {
+        "mean": 0.198143,
+        "std": 0.002498
+      },
+      "model_q50": {
+        "mean": 0.84066,
+        "std": 0.03019
+      },
+      "holdout_q50": {
+        "mean": 0.753527,
+        "std": 0.001893
+      },
+      "downstream_q50": {
+        "mean": 0.370373,
+        "std": 0.002463
+      },
+      "model_q90": {
+        "mean": 1.401353,
+        "std": 0.052839
+      },
+      "holdout_q90": {
+        "mean": 1.529107,
+        "std": 0.011306
+      },
+      "downstream_q90": {
+        "mean": 0.60117,
+        "std": 0.001448
+      },
+      "model_mean": {
+        "mean": 0.881587,
+        "std": 0.030599
+      },
+      "holdout_mean": {
+        "mean": 0.86881,
+        "std": 0.002303
+      },
+      "downstream_mean": {
+        "mean": 0.38759,
+        "std": 0.001834
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 5.0,
+      "n_train": 8192,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 81920000,
+      "delta_E": {
+        "mean": 0.166276,
+        "std": 0.00725
+      },
+      "delta_tail": {
+        "mean": 0.079473,
+        "std": 0.016557
+      },
+      "final_train_loss": {
+        "mean": 0.264427,
+        "std": 0.002932
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 0.0707,
+        "std": 0.012325
+      },
+      "holdout_min": {
+        "mean": 0.055963,
+        "std": 0.014131
+      },
+      "downstream_min": {
+        "mean": 0.03542,
+        "std": 0.008434
+      },
+      "model_q01": {
+        "mean": 0.201137,
+        "std": 0.010755
+      },
+      "holdout_q01": {
+        "mean": 0.164037,
+        "std": 0.01107
+      },
+      "downstream_q01": {
+        "mean": 0.104007,
+        "std": 0.001535
+      },
+      "model_q05": {
+        "mean": 0.327433,
+        "std": 0.00309
+      },
+      "holdout_q05": {
+        "mean": 0.264123,
+        "std": 0.004848
+      },
+      "downstream_q05": {
+        "mean": 0.162633,
+        "std": 0.001788
+      },
+      "model_q10": {
+        "mean": 0.415157,
+        "std": 0.005222
+      },
+      "holdout_q10": {
+        "mean": 0.34409,
+        "std": 0.00213
+      },
+      "downstream_q10": {
+        "mean": 0.198097,
+        "std": 0.002521
+      },
+      "model_q50": {
+        "mean": 0.832787,
+        "std": 0.00773
+      },
+      "holdout_q50": {
+        "mean": 0.753527,
+        "std": 0.001893
+      },
+      "downstream_q50": {
+        "mean": 0.370333,
+        "std": 0.002273
+      },
+      "model_q90": {
+        "mean": 1.387863,
+        "std": 0.014826
+      },
+      "holdout_q90": {
+        "mean": 1.529107,
+        "std": 0.011306
+      },
+      "downstream_q90": {
+        "mean": 0.601293,
+        "std": 0.001486
+      },
+      "model_mean": {
+        "mean": 0.87426,
+        "std": 0.007925
+      },
+      "holdout_mean": {
+        "mean": 0.86881,
+        "std": 0.002303
+      },
+      "downstream_mean": {
+        "mean": 0.387587,
+        "std": 0.001825
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 20.0,
+      "n_train": 256,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 2560000,
+      "delta_E": {
+        "mean": 1.28122,
+        "std": 0.100933
+      },
+      "delta_tail": {
+        "mean": 3.007027,
+        "std": 1.06849
+      },
+      "final_train_loss": {
+        "mean": 1.168054,
+        "std": 0.021495
+      },
+      "best_train_loss": {
+        "mean": 1.162267,
+        "std": 0.025898
+      },
+      "model_min": {
+        "mean": 0.53765,
+        "std": 0.262783
+      },
+      "holdout_min": {
+        "mean": 0.031487,
+        "std": 0.009064
+      },
+      "downstream_min": {
+        "mean": 0.039497,
+        "std": 0.015667
+      },
+      "model_q01": {
+        "mean": 1.586757,
+        "std": 0.644098
+      },
+      "holdout_q01": {
+        "mean": 0.110373,
+        "std": 0.003275
+      },
+      "downstream_q01": {
+        "mean": 0.161527,
+        "std": 0.016657
+      },
+      "model_q05": {
+        "mean": 2.2787,
+        "std": 0.601993
+      },
+      "holdout_q05": {
+        "mean": 0.187797,
+        "std": 0.006281
+      },
+      "downstream_q05": {
+        "mean": 0.279677,
+        "std": 0.058108
+      },
+      "model_q10": {
+        "mean": 2.667677,
+        "std": 0.516995
+      },
+      "holdout_q10": {
+        "mean": 0.251387,
+        "std": 0.005577
+      },
+      "downstream_q10": {
+        "mean": 0.395257,
+        "std": 0.120446
+      },
+      "model_q50": {
+        "mean": 4.137527,
+        "std": 0.064361
+      },
+      "holdout_q50": {
+        "mean": 2.971707,
+        "std": 0.007774
+      },
+      "downstream_q50": {
+        "mean": 2.449673,
+        "std": 0.030252
+      },
+      "model_q90": {
+        "mean": 6.131987,
+        "std": 0.202939
+      },
+      "holdout_q90": {
+        "mean": 4.625797,
+        "std": 0.028087
+      },
+      "downstream_q90": {
+        "mean": 4.43785,
+        "std": 0.179928
+      },
+      "model_mean": {
+        "mean": 4.30951,
+        "std": 0.117964
+      },
+      "holdout_mean": {
+        "mean": 2.760457,
+        "std": 0.017507
+      },
+      "downstream_mean": {
+        "mean": 2.50996,
+        "std": 0.12672
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 20.0,
+      "n_train": 512,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 5120000,
+      "delta_E": {
+        "mean": 1.33008,
+        "std": 0.033841
+      },
+      "delta_tail": {
+        "mean": 3.789712,
+        "std": 0.289784
+      },
+      "final_train_loss": {
+        "mean": 1.191773,
+        "std": 0.011714
+      },
+      "best_train_loss": {
+        "mean": 1.184429,
+        "std": 0.01266
+      },
+      "model_min": {
+        "mean": 0.877117,
+        "std": 0.060259
+      },
+      "holdout_min": {
+        "mean": 0.031487,
+        "std": 0.009064
+      },
+      "downstream_min": {
+        "mean": 0.04309,
+        "std": 0.004517
+      },
+      "model_q01": {
+        "mean": 2.072827,
+        "std": 0.176088
+      },
+      "holdout_q01": {
+        "mean": 0.110373,
+        "std": 0.003275
+      },
+      "downstream_q01": {
+        "mean": 0.1754,
+        "std": 0.004723
+      },
+      "model_q05": {
+        "mean": 2.72564,
+        "std": 0.142321
+      },
+      "holdout_q05": {
+        "mean": 0.187797,
+        "std": 0.006281
+      },
+      "downstream_q05": {
+        "mean": 0.308933,
+        "std": 0.02545
+      },
+      "model_q10": {
+        "mean": 3.03021,
+        "std": 0.121036
+      },
+      "holdout_q10": {
+        "mean": 0.251387,
+        "std": 0.005577
+      },
+      "downstream_q10": {
+        "mean": 0.46194,
+        "std": 0.061961
+      },
+      "model_q50": {
+        "mean": 4.165437,
+        "std": 0.070387
+      },
+      "holdout_q50": {
+        "mean": 2.971707,
+        "std": 0.007774
+      },
+      "downstream_q50": {
+        "mean": 2.462727,
+        "std": 0.03178
+      },
+      "model_q90": {
+        "mean": 5.935757,
+        "std": 0.075638
+      },
+      "holdout_q90": {
+        "mean": 4.625797,
+        "std": 0.028087
+      },
+      "downstream_q90": {
+        "mean": 4.261387,
+        "std": 0.05822
+      },
+      "model_mean": {
+        "mean": 4.37926,
+        "std": 0.057146
+      },
+      "holdout_mean": {
+        "mean": 2.760457,
+        "std": 0.017507
+      },
+      "downstream_mean": {
+        "mean": 2.591333,
+        "std": 0.057669
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 20.0,
+      "n_train": 1024,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 10240000,
+      "delta_E": {
+        "mean": 1.337961,
+        "std": 0.02232
+      },
+      "delta_tail": {
+        "mean": 3.912721,
+        "std": 0.136655
+      },
+      "final_train_loss": {
+        "mean": 1.19904,
+        "std": 0.004808
+      },
+      "best_train_loss": {
+        "mean": 1.191806,
+        "std": 0.008612
+      },
+      "model_min": {
+        "mean": 0.747557,
+        "std": 0.055332
+      },
+      "holdout_min": {
+        "mean": 0.031487,
+        "std": 0.009064
+      },
+      "downstream_min": {
+        "mean": 0.051867,
+        "std": 0.009456
+      },
+      "model_q01": {
+        "mean": 2.156837,
+        "std": 0.061082
+      },
+      "holdout_q01": {
+        "mean": 0.110373,
+        "std": 0.003275
+      },
+      "downstream_q01": {
+        "mean": 0.181767,
+        "std": 0.002154
+      },
+      "model_q05": {
+        "mean": 2.78828,
+        "std": 0.075763
+      },
+      "holdout_q05": {
+        "mean": 0.187797,
+        "std": 0.006281
+      },
+      "downstream_q05": {
+        "mean": 0.323683,
+        "std": 0.019829
+      },
+      "model_q10": {
+        "mean": 3.08215,
+        "std": 0.054189
+      },
+      "holdout_q10": {
+        "mean": 0.251387,
+        "std": 0.005577
+      },
+      "downstream_q10": {
+        "mean": 0.49405,
+        "std": 0.059579
+      },
+      "model_q50": {
+        "mean": 4.19699,
+        "std": 0.033539
+      },
+      "holdout_q50": {
+        "mean": 2.971707,
+        "std": 0.007774
+      },
+      "downstream_q50": {
+        "mean": 2.477403,
+        "std": 0.020538
+      },
+      "model_q90": {
+        "mean": 5.883637,
+        "std": 0.013951
+      },
+      "holdout_q90": {
+        "mean": 4.625797,
+        "std": 0.028087
+      },
+      "downstream_q90": {
+        "mean": 4.24623,
+        "std": 0.024567
+      },
+      "model_mean": {
+        "mean": 4.39527,
+        "std": 0.028206
+      },
+      "holdout_mean": {
+        "mean": 2.760457,
+        "std": 0.017507
+      },
+      "downstream_mean": {
+        "mean": 2.618467,
+        "std": 0.033675
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 20.0,
+      "n_train": 2048,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 20480000,
+      "delta_E": {
+        "mean": 1.338297,
+        "std": 0.024841
+      },
+      "delta_tail": {
+        "mean": 3.891407,
+        "std": 0.1143
+      },
+      "final_train_loss": {
+        "mean": 1.198967,
+        "std": 0.007198
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 0.664333,
+        "std": 0.035367
+      },
+      "holdout_min": {
+        "mean": 0.031487,
+        "std": 0.009064
+      },
+      "downstream_min": {
+        "mean": 0.052,
+        "std": 0.011692
+      },
+      "model_q01": {
+        "mean": 2.137107,
+        "std": 0.049888
+      },
+      "holdout_q01": {
+        "mean": 0.110373,
+        "std": 0.003275
+      },
+      "downstream_q01": {
+        "mean": 0.183613,
+        "std": 0.00217
+      },
+      "model_q05": {
+        "mean": 2.78279,
+        "std": 0.055663
+      },
+      "holdout_q05": {
+        "mean": 0.187797,
+        "std": 0.006281
+      },
+      "downstream_q05": {
+        "mean": 0.32171,
+        "std": 0.021772
+      },
+      "model_q10": {
+        "mean": 3.081993,
+        "std": 0.048365
+      },
+      "holdout_q10": {
+        "mean": 0.251387,
+        "std": 0.005577
+      },
+      "downstream_q10": {
+        "mean": 0.49178,
+        "std": 0.05861
+      },
+      "model_q50": {
+        "mean": 4.19264,
+        "std": 0.03059
+      },
+      "holdout_q50": {
+        "mean": 2.971707,
+        "std": 0.007774
+      },
+      "downstream_q50": {
+        "mean": 2.470033,
+        "std": 0.023136
+      },
+      "model_q90": {
+        "mean": 5.889483,
+        "std": 0.02546
+      },
+      "holdout_q90": {
+        "mean": 4.625797,
+        "std": 0.028087
+      },
+      "downstream_q90": {
+        "mean": 4.245723,
+        "std": 0.011786
+      },
+      "model_mean": {
+        "mean": 4.395483,
+        "std": 0.032655
+      },
+      "holdout_mean": {
+        "mean": 2.760457,
+        "std": 0.017507
+      },
+      "downstream_mean": {
+        "mean": 2.61722,
+        "std": 0.038006
+      }
+    },
+    {
+      "dim": 5,
+      "beta_m": 20.0,
+      "n_train": 8192,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 81920000,
+      "delta_E": {
+        "mean": 1.360727,
+        "std": 0.024867
+      },
+      "delta_tail": {
+        "mean": 3.923908,
+        "std": 0.121542
+      },
+      "final_train_loss": {
+        "mean": 1.21106,
+        "std": 0.006788
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 0.721903,
+        "std": 0.081042
+      },
+      "holdout_min": {
+        "mean": 0.031487,
+        "std": 0.009064
+      },
+      "downstream_min": {
+        "mean": 0.052863,
+        "std": 0.013394
+      },
+      "model_q01": {
+        "mean": 2.1586,
+        "std": 0.064637
+      },
+      "holdout_q01": {
+        "mean": 0.110373,
+        "std": 0.003275
+      },
+      "downstream_q01": {
+        "mean": 0.18543,
+        "std": 0.004489
+      },
+      "model_q05": {
+        "mean": 2.79987,
+        "std": 0.049117
+      },
+      "holdout_q05": {
+        "mean": 0.187797,
+        "std": 0.006281
+      },
+      "downstream_q05": {
+        "mean": 0.328083,
+        "std": 0.024354
+      },
+      "model_q10": {
+        "mean": 3.10222,
+        "std": 0.042241
+      },
+      "holdout_q10": {
+        "mean": 0.251387,
+        "std": 0.005577
+      },
+      "downstream_q10": {
+        "mean": 0.518883,
+        "std": 0.07584
+      },
+      "model_q50": {
+        "mean": 4.219183,
+        "std": 0.03683
+      },
+      "holdout_q50": {
+        "mean": 2.971707,
+        "std": 0.007774
+      },
+      "downstream_q50": {
+        "mean": 2.492603,
+        "std": 0.031069
+      },
+      "model_q90": {
+        "mean": 5.931817,
+        "std": 0.031358
+      },
+      "holdout_q90": {
+        "mean": 4.625797,
+        "std": 0.028087
+      },
+      "downstream_q90": {
+        "mean": 4.266963,
+        "std": 0.001502
+      },
+      "model_mean": {
+        "mean": 4.427207,
+        "std": 0.029603
+      },
+      "holdout_mean": {
+        "mean": 2.760457,
+        "std": 0.017507
+      },
+      "downstream_mean": {
+        "mean": 2.655143,
+        "std": 0.042169
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 1.0,
+      "n_train": 256,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 2560000,
+      "delta_E": {
+        "mean": 0.201199,
+        "std": 0.052691
+      },
+      "delta_tail": {
+        "mean": 0.03276,
+        "std": 0.022276
+      },
+      "final_train_loss": {
+        "mean": 2.880466,
+        "std": 0.046733
+      },
+      "best_train_loss": {
+        "mean": 2.876347,
+        "std": 0.04582
+      },
+      "model_min": {
+        "mean": 3.93127,
+        "std": 0.579815
+      },
+      "holdout_min": {
+        "mean": 3.888013,
+        "std": 0.28719
+      },
+      "downstream_min": {
+        "mean": 2.676723,
+        "std": 0.287239
+      },
+      "model_q01": {
+        "mean": 6.330267,
+        "std": 0.040973
+      },
+      "holdout_q01": {
+        "mean": 6.263837,
+        "std": 0.042253
+      },
+      "downstream_q01": {
+        "mean": 4.99457,
+        "std": 0.186948
+      },
+      "model_q05": {
+        "mean": 7.483633,
+        "std": 0.279019
+      },
+      "holdout_q05": {
+        "mean": 7.469747,
+        "std": 0.036744
+      },
+      "downstream_q05": {
+        "mean": 6.12619,
+        "std": 0.281608
+      },
+      "model_q10": {
+        "mean": 8.069593,
+        "std": 0.302692
+      },
+      "holdout_q10": {
+        "mean": 8.210253,
+        "std": 0.025331
+      },
+      "downstream_q10": {
+        "mean": 6.666857,
+        "std": 0.304839
+      },
+      "model_q50": {
+        "mean": 10.079163,
+        "std": 0.2291
+      },
+      "holdout_q50": {
+        "mean": 10.96561,
+        "std": 0.028265
+      },
+      "downstream_q50": {
+        "mean": 8.742847,
+        "std": 0.232132
+      },
+      "model_q90": {
+        "mean": 12.38124,
+        "std": 0.186985
+      },
+      "holdout_q90": {
+        "mean": 13.638017,
+        "std": 0.059208
+      },
+      "downstream_q90": {
+        "mean": 11.13341,
+        "std": 0.186006
+      },
+      "model_mean": {
+        "mean": 10.158933,
+        "std": 0.217506
+      },
+      "holdout_mean": {
+        "mean": 10.947157,
+        "std": 0.021494
+      },
+      "downstream_mean": {
+        "mean": 8.83618,
+        "std": 0.220494
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 1.0,
+      "n_train": 512,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 5120000,
+      "delta_E": {
+        "mean": 0.149829,
+        "std": 0.021349
+      },
+      "delta_tail": {
+        "mean": 0.083684,
+        "std": 0.014292
+      },
+      "final_train_loss": {
+        "mean": 3.787828,
+        "std": 0.094144
+      },
+      "best_train_loss": {
+        "mean": 3.780286,
+        "std": 0.09652
+      },
+      "model_min": {
+        "mean": 4.18314,
+        "std": 0.210943
+      },
+      "holdout_min": {
+        "mean": 3.888013,
+        "std": 0.28719
+      },
+      "downstream_min": {
+        "mean": 2.800773,
+        "std": 0.429232
+      },
+      "model_q01": {
+        "mean": 6.627547,
+        "std": 0.068453
+      },
+      "holdout_q01": {
+        "mean": 6.263837,
+        "std": 0.042253
+      },
+      "downstream_q01": {
+        "mean": 5.31538,
+        "std": 0.205084
+      },
+      "model_q05": {
+        "mean": 7.814467,
+        "std": 0.052203
+      },
+      "holdout_q05": {
+        "mean": 7.469747,
+        "std": 0.036744
+      },
+      "downstream_q05": {
+        "mean": 6.429053,
+        "std": 0.165182
+      },
+      "model_q10": {
+        "mean": 8.40457,
+        "std": 0.068898
+      },
+      "holdout_q10": {
+        "mean": 8.210253,
+        "std": 0.025331
+      },
+      "downstream_q10": {
+        "mean": 7.0575,
+        "std": 0.129014
+      },
+      "model_q50": {
+        "mean": 10.420877,
+        "std": 0.129238
+      },
+      "holdout_q50": {
+        "mean": 10.96561,
+        "std": 0.028265
+      },
+      "downstream_q50": {
+        "mean": 9.11346,
+        "std": 0.115982
+      },
+      "model_q90": {
+        "mean": 12.583873,
+        "std": 0.163798
+      },
+      "holdout_q90": {
+        "mean": 13.638017,
+        "std": 0.059208
+      },
+      "downstream_q90": {
+        "mean": 11.381677,
+        "std": 0.079014
+      },
+      "model_mean": {
+        "mean": 10.462233,
+        "std": 0.115864
+      },
+      "holdout_mean": {
+        "mean": 10.947157,
+        "std": 0.021494
+      },
+      "downstream_mean": {
+        "mean": 9.168957,
+        "std": 0.11776
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 1.0,
+      "n_train": 1024,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 10240000,
+      "delta_E": {
+        "mean": 0.113507,
+        "std": 0.018371
+      },
+      "delta_tail": {
+        "mean": 0.123479,
+        "std": 0.035242
+      },
+      "final_train_loss": {
+        "mean": 4.543637,
+        "std": 0.037005
+      },
+      "best_train_loss": {
+        "mean": 4.531162,
+        "std": 0.041345
+      },
+      "model_min": {
+        "mean": 4.51439,
+        "std": 0.516515
+      },
+      "holdout_min": {
+        "mean": 3.888013,
+        "std": 0.28719
+      },
+      "downstream_min": {
+        "mean": 2.96828,
+        "std": 0.512163
+      },
+      "model_q01": {
+        "mean": 6.813977,
+        "std": 0.15398
+      },
+      "holdout_q01": {
+        "mean": 6.263837,
+        "std": 0.042253
+      },
+      "downstream_q01": {
+        "mean": 5.38491,
+        "std": 0.182178
+      },
+      "model_q05": {
+        "mean": 7.965053,
+        "std": 0.111256
+      },
+      "holdout_q05": {
+        "mean": 7.469747,
+        "std": 0.036744
+      },
+      "downstream_q05": {
+        "mean": 6.599707,
+        "std": 0.113277
+      },
+      "model_q10": {
+        "mean": 8.596997,
+        "std": 0.111759
+      },
+      "holdout_q10": {
+        "mean": 8.210253,
+        "std": 0.025331
+      },
+      "downstream_q10": {
+        "mean": 7.240667,
+        "std": 0.097764
+      },
+      "model_q50": {
+        "mean": 10.737697,
+        "std": 0.070246
+      },
+      "holdout_q50": {
+        "mean": 10.96561,
+        "std": 0.028265
+      },
+      "downstream_q50": {
+        "mean": 9.45384,
+        "std": 0.085272
+      },
+      "model_q90": {
+        "mean": 12.89418,
+        "std": 0.115673
+      },
+      "holdout_q90": {
+        "mean": 13.638017,
+        "std": 0.059208
+      },
+      "downstream_q90": {
+        "mean": 11.696153,
+        "std": 0.141644
+      },
+      "model_mean": {
+        "mean": 10.748003,
+        "std": 0.079374
+      },
+      "holdout_mean": {
+        "mean": 10.947157,
+        "std": 0.021494
+      },
+      "downstream_mean": {
+        "mean": 9.470023,
+        "std": 0.077125
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 1.0,
+      "n_train": 2048,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 20480000,
+      "delta_E": {
+        "mean": 0.063011,
+        "std": 0.016821
+      },
+      "delta_tail": {
+        "mean": 0.097166,
+        "std": 0.028742
+      },
+      "final_train_loss": {
+        "mean": 4.785048,
+        "std": 0.018149
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 4.411847,
+        "std": 0.055588
+      },
+      "holdout_min": {
+        "mean": 3.888013,
+        "std": 0.28719
+      },
+      "downstream_min": {
+        "mean": 3.394743,
+        "std": 0.075867
+      },
+      "model_q01": {
+        "mean": 6.695263,
+        "std": 0.174573
+      },
+      "holdout_q01": {
+        "mean": 6.263837,
+        "std": 0.042253
+      },
+      "downstream_q01": {
+        "mean": 5.265667,
+        "std": 0.077525
+      },
+      "model_q05": {
+        "mean": 7.861257,
+        "std": 0.039112
+      },
+      "holdout_q05": {
+        "mean": 7.469747,
+        "std": 0.036744
+      },
+      "downstream_q05": {
+        "mean": 6.44161,
+        "std": 0.057048
+      },
+      "model_q10": {
+        "mean": 8.478003,
+        "std": 0.019128
+      },
+      "holdout_q10": {
+        "mean": 8.210253,
+        "std": 0.025331
+      },
+      "downstream_q10": {
+        "mean": 7.11374,
+        "std": 0.025026
+      },
+      "model_q50": {
+        "mean": 10.82699,
+        "std": 0.034698
+      },
+      "holdout_q50": {
+        "mean": 10.96561,
+        "std": 0.028265
+      },
+      "downstream_q50": {
+        "mean": 9.534867,
+        "std": 0.024324
+      },
+      "model_q90": {
+        "mean": 13.29012,
+        "std": 0.100454
+      },
+      "holdout_q90": {
+        "mean": 13.638017,
+        "std": 0.059208
+      },
+      "downstream_q90": {
+        "mean": 12.13181,
+        "std": 0.11337
+      },
+      "model_mean": {
+        "mean": 10.866933,
+        "std": 0.049721
+      },
+      "holdout_mean": {
+        "mean": 10.947157,
+        "std": 0.021494
+      },
+      "downstream_mean": {
+        "mean": 9.588613,
+        "std": 0.0478
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 1.0,
+      "n_train": 8192,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 81920000,
+      "delta_E": {
+        "mean": 0.034017,
+        "std": 0.008015
+      },
+      "delta_tail": {
+        "mean": 0.094786,
+        "std": 0.027947
+      },
+      "final_train_loss": {
+        "mean": 4.868613,
+        "std": 0.014303
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 4.49661,
+        "std": 0.197508
+      },
+      "holdout_min": {
+        "mean": 3.888013,
+        "std": 0.28719
+      },
+      "downstream_min": {
+        "mean": 3.51153,
+        "std": 0.16916
+      },
+      "model_q01": {
+        "mean": 6.68795,
+        "std": 0.167373
+      },
+      "holdout_q01": {
+        "mean": 6.263837,
+        "std": 0.042253
+      },
+      "downstream_q01": {
+        "mean": 5.253353,
+        "std": 0.050186
+      },
+      "model_q05": {
+        "mean": 7.848667,
+        "std": 0.044736
+      },
+      "holdout_q05": {
+        "mean": 7.469747,
+        "std": 0.036744
+      },
+      "downstream_q05": {
+        "mean": 6.437763,
+        "std": 0.044761
+      },
+      "model_q10": {
+        "mean": 8.471653,
+        "std": 0.027248
+      },
+      "holdout_q10": {
+        "mean": 8.210253,
+        "std": 0.025331
+      },
+      "downstream_q10": {
+        "mean": 7.128417,
+        "std": 0.046933
+      },
+      "model_q50": {
+        "mean": 10.92237,
+        "std": 0.041675
+      },
+      "holdout_q50": {
+        "mean": 10.96561,
+        "std": 0.028265
+      },
+      "downstream_q50": {
+        "mean": 9.63227,
+        "std": 0.032156
+      },
+      "model_q90": {
+        "mean": 13.572997,
+        "std": 0.056262
+      },
+      "holdout_q90": {
+        "mean": 13.638017,
+        "std": 0.059208
+      },
+      "downstream_q90": {
+        "mean": 12.42241,
+        "std": 0.069834
+      },
+      "model_mean": {
+        "mean": 10.986127,
+        "std": 0.027579
+      },
+      "holdout_mean": {
+        "mean": 10.947157,
+        "std": 0.021494
+      },
+      "downstream_mean": {
+        "mean": 9.70812,
+        "std": 0.025892
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 5.0,
+      "n_train": 256,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 2560000,
+      "delta_E": {
+        "mean": 0.30234,
+        "std": 0.007733
+      },
+      "delta_tail": {
+        "mean": 0.962251,
+        "std": 0.028388
+      },
+      "final_train_loss": {
+        "mean": 1.802101,
+        "std": 0.008693
+      },
+      "best_train_loss": {
+        "mean": 1.795664,
+        "std": 0.007479
+      },
+      "model_min": {
+        "mean": 1.175197,
+        "std": 0.341845
+      },
+      "holdout_min": {
+        "mean": 0.40386,
+        "std": 0.037897
+      },
+      "downstream_min": {
+        "mean": 0.073743,
+        "std": 0.034329
+      },
+      "model_q01": {
+        "mean": 2.312797,
+        "std": 0.062566
+      },
+      "holdout_q01": {
+        "mean": 0.941827,
+        "std": 0.016222
+      },
+      "downstream_q01": {
+        "mean": 0.1902,
+        "std": 0.004505
+      },
+      "model_q05": {
+        "mean": 2.702683,
+        "std": 0.03521
+      },
+      "holdout_q05": {
+        "mean": 1.585573,
+        "std": 0.036328
+      },
+      "downstream_q05": {
+        "mean": 0.30902,
+        "std": 0.021916
+      },
+      "model_q10": {
+        "mean": 2.902187,
+        "std": 0.032824
+      },
+      "holdout_q10": {
+        "mean": 2.00696,
+        "std": 0.023224
+      },
+      "downstream_q10": {
+        "mean": 0.878153,
+        "std": 0.31501
+      },
+      "model_q50": {
+        "mean": 3.591227,
+        "std": 0.028621
+      },
+      "holdout_q50": {
+        "mean": 3.27236,
+        "std": 0.014435
+      },
+      "downstream_q50": {
+        "mean": 2.18479,
+        "std": 0.040423
+      },
+      "model_q90": {
+        "mean": 4.315417,
+        "std": 0.066509
+      },
+      "holdout_q90": {
+        "mean": 4.369907,
+        "std": 0.023506
+      },
+      "downstream_q90": {
+        "mean": 3.138753,
+        "std": 0.034201
+      },
+      "model_mean": {
+        "mean": 3.6116,
+        "std": 0.030681
+      },
+      "holdout_mean": {
+        "mean": 3.231043,
+        "std": 0.017472
+      },
+      "downstream_mean": {
+        "mean": 2.114997,
+        "std": 0.04914
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 5.0,
+      "n_train": 512,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 5120000,
+      "delta_E": {
+        "mean": 0.332743,
+        "std": 0.010522
+      },
+      "delta_tail": {
+        "mean": 1.039889,
+        "std": 0.005918
+      },
+      "final_train_loss": {
+        "mean": 1.87229,
+        "std": 0.01361
+      },
+      "best_train_loss": {
+        "mean": 1.863121,
+        "std": 0.011154
+      },
+      "model_min": {
+        "mean": 1.280043,
+        "std": 0.333671
+      },
+      "holdout_min": {
+        "mean": 0.40386,
+        "std": 0.037897
+      },
+      "downstream_min": {
+        "mean": 0.08156,
+        "std": 0.042344
+      },
+      "model_q01": {
+        "mean": 2.41768,
+        "std": 0.028502
+      },
+      "holdout_q01": {
+        "mean": 0.941827,
+        "std": 0.016222
+      },
+      "downstream_q01": {
+        "mean": 0.20943,
+        "std": 0.005064
+      },
+      "model_q05": {
+        "mean": 2.798293,
+        "std": 0.015507
+      },
+      "holdout_q05": {
+        "mean": 1.585573,
+        "std": 0.036328
+      },
+      "downstream_q05": {
+        "mean": 0.387653,
+        "std": 0.034717
+      },
+      "model_q10": {
+        "mean": 2.99723,
+        "std": 0.021744
+      },
+      "holdout_q10": {
+        "mean": 2.00696,
+        "std": 0.023224
+      },
+      "downstream_q10": {
+        "mean": 1.25103,
+        "std": 0.021189
+      },
+      "model_q50": {
+        "mean": 3.66334,
+        "std": 0.020543
+      },
+      "holdout_q50": {
+        "mean": 3.27236,
+        "std": 0.014435
+      },
+      "downstream_q50": {
+        "mean": 2.27906,
+        "std": 0.041613
+      },
+      "model_q90": {
+        "mean": 4.35612,
+        "std": 0.038212
+      },
+      "holdout_q90": {
+        "mean": 4.369907,
+        "std": 0.023506
+      },
+      "downstream_q90": {
+        "mean": 3.179167,
+        "std": 0.019923
+      },
+      "model_mean": {
+        "mean": 3.673297,
+        "std": 0.022372
+      },
+      "holdout_mean": {
+        "mean": 3.231043,
+        "std": 0.017472
+      },
+      "downstream_mean": {
+        "mean": 2.21435,
+        "std": 0.039568
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 5.0,
+      "n_train": 1024,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 10240000,
+      "delta_E": {
+        "mean": 0.342359,
+        "std": 0.005519
+      },
+      "delta_tail": {
+        "mean": 1.068311,
+        "std": 0.027899
+      },
+      "final_train_loss": {
+        "mean": 1.892351,
+        "std": 0.011188
+      },
+      "best_train_loss": {
+        "mean": 1.882409,
+        "std": 0.00918
+      },
+      "model_min": {
+        "mean": 1.31784,
+        "std": 0.354713
+      },
+      "holdout_min": {
+        "mean": 0.40386,
+        "std": 0.037897
+      },
+      "downstream_min": {
+        "mean": 0.08262,
+        "std": 0.042826
+      },
+      "model_q01": {
+        "mean": 2.451417,
+        "std": 0.023071
+      },
+      "holdout_q01": {
+        "mean": 0.941827,
+        "std": 0.016222
+      },
+      "downstream_q01": {
+        "mean": 0.216583,
+        "std": 0.000592
+      },
+      "model_q05": {
+        "mean": 2.837603,
+        "std": 0.012908
+      },
+      "holdout_q05": {
+        "mean": 1.585573,
+        "std": 0.036328
+      },
+      "downstream_q05": {
+        "mean": 0.454183,
+        "std": 0.04009
+      },
+      "model_q10": {
+        "mean": 3.03016,
+        "std": 0.010314
+      },
+      "holdout_q10": {
+        "mean": 2.00696,
+        "std": 0.023224
+      },
+      "downstream_q10": {
+        "mean": 1.27424,
+        "std": 0.001469
+      },
+      "model_q50": {
+        "mean": 3.687977,
+        "std": 0.01014
+      },
+      "holdout_q50": {
+        "mean": 3.27236,
+        "std": 0.014435
+      },
+      "downstream_q50": {
+        "mean": 2.311063,
+        "std": 0.015212
+      },
+      "model_q90": {
+        "mean": 4.353877,
+        "std": 0.018538
+      },
+      "holdout_q90": {
+        "mean": 4.369907,
+        "std": 0.023506
+      },
+      "downstream_q90": {
+        "mean": 3.19123,
+        "std": 0.02881
+      },
+      "model_mean": {
+        "mean": 3.69243,
+        "std": 0.014632
+      },
+      "holdout_mean": {
+        "mean": 3.231043,
+        "std": 0.017472
+      },
+      "downstream_mean": {
+        "mean": 2.24656,
+        "std": 0.008938
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 5.0,
+      "n_train": 2048,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 20480000,
+      "delta_E": {
+        "mean": 0.355886,
+        "std": 0.013728
+      },
+      "delta_tail": {
+        "mean": 1.092465,
+        "std": 0.026089
+      },
+      "final_train_loss": {
+        "mean": 1.902034,
+        "std": 0.006887
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 1.338783,
+        "std": 0.364693
+      },
+      "holdout_min": {
+        "mean": 0.40386,
+        "std": 0.037897
+      },
+      "downstream_min": {
+        "mean": 0.08152,
+        "std": 0.042274
+      },
+      "model_q01": {
+        "mean": 2.483067,
+        "std": 0.015149
+      },
+      "holdout_q01": {
+        "mean": 0.941827,
+        "std": 0.016222
+      },
+      "downstream_q01": {
+        "mean": 0.223127,
+        "std": 0.003521
+      },
+      "model_q05": {
+        "mean": 2.86843,
+        "std": 0.016528
+      },
+      "holdout_q05": {
+        "mean": 1.585573,
+        "std": 0.036328
+      },
+      "downstream_q05": {
+        "mean": 0.592157,
+        "std": 0.097705
+      },
+      "model_q10": {
+        "mean": 3.06198,
+        "std": 0.01604
+      },
+      "holdout_q10": {
+        "mean": 2.00696,
+        "std": 0.023224
+      },
+      "downstream_q10": {
+        "mean": 1.294517,
+        "std": 0.011592
+      },
+      "model_q50": {
+        "mean": 3.717103,
+        "std": 0.017082
+      },
+      "holdout_q50": {
+        "mean": 3.27236,
+        "std": 0.014435
+      },
+      "downstream_q50": {
+        "mean": 2.350167,
+        "std": 0.023464
+      },
+      "model_q90": {
+        "mean": 4.379707,
+        "std": 0.02902
+      },
+      "holdout_q90": {
+        "mean": 4.369907,
+        "std": 0.023506
+      },
+      "downstream_q90": {
+        "mean": 3.212,
+        "std": 0.036772
+      },
+      "model_mean": {
+        "mean": 3.718893,
+        "std": 0.021584
+      },
+      "holdout_mean": {
+        "mean": 3.231043,
+        "std": 0.017472
+      },
+      "downstream_mean": {
+        "mean": 2.284037,
+        "std": 0.024769
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 5.0,
+      "n_train": 8192,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 81920000,
+      "delta_E": {
+        "mean": 0.35668,
+        "std": 0.01279
+      },
+      "delta_tail": {
+        "mean": 1.089692,
+        "std": 0.030021
+      },
+      "final_train_loss": {
+        "mean": 1.907119,
+        "std": 0.018013
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 1.326083,
+        "std": 0.295756
+      },
+      "holdout_min": {
+        "mean": 0.40386,
+        "std": 0.037897
+      },
+      "downstream_min": {
+        "mean": 0.081273,
+        "std": 0.042187
+      },
+      "model_q01": {
+        "mean": 2.48175,
+        "std": 0.008468
+      },
+      "holdout_q01": {
+        "mean": 0.941827,
+        "std": 0.016222
+      },
+      "downstream_q01": {
+        "mean": 0.219737,
+        "std": 0.001541
+      },
+      "model_q05": {
+        "mean": 2.86244,
+        "std": 0.018587
+      },
+      "holdout_q05": {
+        "mean": 1.585573,
+        "std": 0.036328
+      },
+      "downstream_q05": {
+        "mean": 0.6016,
+        "std": 0.096004
+      },
+      "model_q10": {
+        "mean": 3.064763,
+        "std": 0.019425
+      },
+      "holdout_q10": {
+        "mean": 2.00696,
+        "std": 0.023224
+      },
+      "downstream_q10": {
+        "mean": 1.29464,
+        "std": 0.015299
+      },
+      "model_q50": {
+        "mean": 3.711413,
+        "std": 0.021201
+      },
+      "holdout_q50": {
+        "mean": 3.27236,
+        "std": 0.014435
+      },
+      "downstream_q50": {
+        "mean": 2.346847,
+        "std": 0.027692
+      },
+      "model_q90": {
+        "mean": 4.368093,
+        "std": 0.033909
+      },
+      "holdout_q90": {
+        "mean": 4.369907,
+        "std": 0.023506
+      },
+      "downstream_q90": {
+        "mean": 3.205137,
+        "std": 0.034119
+      },
+      "model_mean": {
+        "mean": 3.7145,
+        "std": 0.024823
+      },
+      "holdout_mean": {
+        "mean": 3.231043,
+        "std": 0.017472
+      },
+      "downstream_mean": {
+        "mean": 2.27946,
+        "std": 0.02794
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 20.0,
+      "n_train": 256,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 2560000,
+      "delta_E": {
+        "mean": 0.021474,
+        "std": 0.003693
+      },
+      "delta_tail": {
+        "mean": 0.014223,
+        "std": 0.006616
+      },
+      "final_train_loss": {
+        "mean": 0.301384,
+        "std": 0.0182
+      },
+      "best_train_loss": {
+        "mean": 0.299842,
+        "std": 0.02087
+      },
+      "model_min": {
+        "mean": 0.081293,
+        "std": 0.015701
+      },
+      "holdout_min": {
+        "mean": 0.094653,
+        "std": 0.004424
+      },
+      "downstream_min": {
+        "mean": 0.05767,
+        "std": 0.021975
+      },
+      "model_q01": {
+        "mean": 0.178373,
+        "std": 0.003472
+      },
+      "holdout_q01": {
+        "mean": 0.171523,
+        "std": 0.001131
+      },
+      "downstream_q01": {
+        "mean": 0.12095,
+        "std": 0.002105
+      },
+      "model_q05": {
+        "mean": 0.235347,
+        "std": 0.00303
+      },
+      "holdout_q05": {
+        "mean": 0.224783,
+        "std": 0.001704
+      },
+      "downstream_q05": {
+        "mean": 0.155927,
+        "std": 0.001566
+      },
+      "model_q10": {
+        "mean": 0.2684,
+        "std": 0.00387
+      },
+      "holdout_q10": {
+        "mean": 0.26155,
+        "std": 0.001356
+      },
+      "downstream_q10": {
+        "mean": 0.17772,
+        "std": 0.002196
+      },
+      "model_q50": {
+        "mean": 0.421243,
+        "std": 0.005178
+      },
+      "holdout_q50": {
+        "mean": 0.41781,
+        "std": 0.002715
+      },
+      "downstream_q50": {
+        "mean": 0.272487,
+        "std": 0.001337
+      },
+      "model_q90": {
+        "mean": 0.62505,
+        "std": 0.005763
+      },
+      "holdout_q90": {
+        "mean": 0.64502,
+        "std": 0.002131
+      },
+      "downstream_q90": {
+        "mean": 0.392107,
+        "std": 0.001431
+      },
+      "model_mean": {
+        "mean": 0.443593,
+        "std": 0.004169
+      },
+      "holdout_mean": {
+        "mean": 0.465743,
+        "std": 0.003305
+      },
+      "downstream_mean": {
+        "mean": 0.282307,
+        "std": 0.002696
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 20.0,
+      "n_train": 512,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 5120000,
+      "delta_E": {
+        "mean": 0.023233,
+        "std": 0.001808
+      },
+      "delta_tail": {
+        "mean": 0.018486,
+        "std": 0.001552
+      },
+      "final_train_loss": {
+        "mean": 0.307673,
+        "std": 0.013747
+      },
+      "best_train_loss": {
+        "mean": 0.306708,
+        "std": 0.015337
+      },
+      "model_min": {
+        "mean": 0.079633,
+        "std": 0.011644
+      },
+      "holdout_min": {
+        "mean": 0.094653,
+        "std": 0.004424
+      },
+      "downstream_min": {
+        "mean": 0.05767,
+        "std": 0.021975
+      },
+      "model_q01": {
+        "mean": 0.180103,
+        "std": 0.001544
+      },
+      "holdout_q01": {
+        "mean": 0.171523,
+        "std": 0.001131
+      },
+      "downstream_q01": {
+        "mean": 0.12095,
+        "std": 0.002105
+      },
+      "model_q05": {
+        "mean": 0.238847,
+        "std": 0.003481
+      },
+      "holdout_q05": {
+        "mean": 0.224783,
+        "std": 0.001704
+      },
+      "downstream_q05": {
+        "mean": 0.155907,
+        "std": 0.001543
+      },
+      "model_q10": {
+        "mean": 0.273037,
+        "std": 0.00279
+      },
+      "holdout_q10": {
+        "mean": 0.26155,
+        "std": 0.001356
+      },
+      "downstream_q10": {
+        "mean": 0.177647,
+        "std": 0.002258
+      },
+      "model_q50": {
+        "mean": 0.42776,
+        "std": 0.004308
+      },
+      "holdout_q50": {
+        "mean": 0.41781,
+        "std": 0.002715
+      },
+      "downstream_q50": {
+        "mean": 0.2724,
+        "std": 0.001287
+      },
+      "model_q90": {
+        "mean": 0.63371,
+        "std": 0.008485
+      },
+      "holdout_q90": {
+        "mean": 0.64502,
+        "std": 0.002131
+      },
+      "downstream_q90": {
+        "mean": 0.391637,
+        "std": 0.001281
+      },
+      "model_mean": {
+        "mean": 0.4437,
+        "std": 0.005002
+      },
+      "holdout_mean": {
+        "mean": 0.465743,
+        "std": 0.003305
+      },
+      "downstream_mean": {
+        "mean": 0.28005,
+        "std": 0.000799
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 20.0,
+      "n_train": 1024,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 10240000,
+      "delta_E": {
+        "mean": 0.027634,
+        "std": 0.008947
+      },
+      "delta_tail": {
+        "mean": 0.024273,
+        "std": 0.003325
+      },
+      "final_train_loss": {
+        "mean": 0.322939,
+        "std": 0.010992
+      },
+      "best_train_loss": {
+        "mean": 0.321393,
+        "std": 0.010947
+      },
+      "model_min": {
+        "mean": 0.078257,
+        "std": 0.014858
+      },
+      "holdout_min": {
+        "mean": 0.094653,
+        "std": 0.004424
+      },
+      "downstream_min": {
+        "mean": 0.05767,
+        "std": 0.021975
+      },
+      "model_q01": {
+        "mean": 0.183477,
+        "std": 0.000983
+      },
+      "holdout_q01": {
+        "mean": 0.171523,
+        "std": 0.001131
+      },
+      "downstream_q01": {
+        "mean": 0.12095,
+        "std": 0.002105
+      },
+      "model_q05": {
+        "mean": 0.24256,
+        "std": 0.00421
+      },
+      "holdout_q05": {
+        "mean": 0.224783,
+        "std": 0.001704
+      },
+      "downstream_q05": {
+        "mean": 0.155907,
+        "std": 0.001543
+      },
+      "model_q10": {
+        "mean": 0.277803,
+        "std": 0.003997
+      },
+      "holdout_q10": {
+        "mean": 0.26155,
+        "std": 0.001356
+      },
+      "downstream_q10": {
+        "mean": 0.177647,
+        "std": 0.002258
+      },
+      "model_q50": {
+        "mean": 0.435747,
+        "std": 0.005368
+      },
+      "holdout_q50": {
+        "mean": 0.41781,
+        "std": 0.002715
+      },
+      "downstream_q50": {
+        "mean": 0.2724,
+        "std": 0.001287
+      },
+      "model_q90": {
+        "mean": 0.646717,
+        "std": 0.006352
+      },
+      "holdout_q90": {
+        "mean": 0.64502,
+        "std": 0.002131
+      },
+      "downstream_q90": {
+        "mean": 0.391637,
+        "std": 0.001281
+      },
+      "model_mean": {
+        "mean": 0.451637,
+        "std": 0.005073
+      },
+      "holdout_mean": {
+        "mean": 0.465743,
+        "std": 0.003305
+      },
+      "downstream_mean": {
+        "mean": 0.28005,
+        "std": 0.000799
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 20.0,
+      "n_train": 2048,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 20480000,
+      "delta_E": {
+        "mean": 0.039101,
+        "std": 0.012681
+      },
+      "delta_tail": {
+        "mean": 0.030389,
+        "std": 0.004264
+      },
+      "final_train_loss": {
+        "mean": 0.331454,
+        "std": 0.019852
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 0.078527,
+        "std": 0.014849
+      },
+      "holdout_min": {
+        "mean": 0.094653,
+        "std": 0.004424
+      },
+      "downstream_min": {
+        "mean": 0.05767,
+        "std": 0.021975
+      },
+      "model_q01": {
+        "mean": 0.186703,
+        "std": 0.001334
+      },
+      "holdout_q01": {
+        "mean": 0.171523,
+        "std": 0.001131
+      },
+      "downstream_q01": {
+        "mean": 0.12095,
+        "std": 0.002105
+      },
+      "model_q05": {
+        "mean": 0.246827,
+        "std": 0.004806
+      },
+      "holdout_q05": {
+        "mean": 0.224783,
+        "std": 0.001704
+      },
+      "downstream_q05": {
+        "mean": 0.155907,
+        "std": 0.001543
+      },
+      "model_q10": {
+        "mean": 0.282097,
+        "std": 0.004137
+      },
+      "holdout_q10": {
+        "mean": 0.26155,
+        "std": 0.001356
+      },
+      "downstream_q10": {
+        "mean": 0.177647,
+        "std": 0.002258
+      },
+      "model_q50": {
+        "mean": 0.442327,
+        "std": 0.005118
+      },
+      "holdout_q50": {
+        "mean": 0.41781,
+        "std": 0.002715
+      },
+      "downstream_q50": {
+        "mean": 0.2724,
+        "std": 0.001287
+      },
+      "model_q90": {
+        "mean": 0.655377,
+        "std": 0.007279
+      },
+      "holdout_q90": {
+        "mean": 0.64502,
+        "std": 0.002131
+      },
+      "downstream_q90": {
+        "mean": 0.391637,
+        "std": 0.001281
+      },
+      "model_mean": {
+        "mean": 0.458553,
+        "std": 0.005627
+      },
+      "holdout_mean": {
+        "mean": 0.465743,
+        "std": 0.003305
+      },
+      "downstream_mean": {
+        "mean": 0.28005,
+        "std": 0.000799
+      }
+    },
+    {
+      "dim": 10,
+      "beta_m": 20.0,
+      "n_train": 8192,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 81920000,
+      "delta_E": {
+        "mean": 0.063161,
+        "std": 0.007804
+      },
+      "delta_tail": {
+        "mean": 0.039625,
+        "std": 0.002294
+      },
+      "final_train_loss": {
+        "mean": 0.334398,
+        "std": 0.004343
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 0.081487,
+        "std": 0.017599
+      },
+      "holdout_min": {
+        "mean": 0.094653,
+        "std": 0.004424
+      },
+      "downstream_min": {
+        "mean": 0.05767,
+        "std": 0.021975
+      },
+      "model_q01": {
+        "mean": 0.191933,
+        "std": 0.001616
+      },
+      "holdout_q01": {
+        "mean": 0.171523,
+        "std": 0.001131
+      },
+      "downstream_q01": {
+        "mean": 0.12095,
+        "std": 0.002105
+      },
+      "model_q05": {
+        "mean": 0.252907,
+        "std": 0.004073
+      },
+      "holdout_q05": {
+        "mean": 0.224783,
+        "std": 0.001704
+      },
+      "downstream_q05": {
+        "mean": 0.155907,
+        "std": 0.001543
+      },
+      "model_q10": {
+        "mean": 0.288627,
+        "std": 0.002798
+      },
+      "holdout_q10": {
+        "mean": 0.26155,
+        "std": 0.001356
+      },
+      "downstream_q10": {
+        "mean": 0.177647,
+        "std": 0.002258
+      },
+      "model_q50": {
+        "mean": 0.453903,
+        "std": 0.003117
+      },
+      "holdout_q50": {
+        "mean": 0.41781,
+        "std": 0.002715
+      },
+      "downstream_q50": {
+        "mean": 0.2724,
+        "std": 0.001287
+      },
+      "model_q90": {
+        "mean": 0.671387,
+        "std": 0.002306
+      },
+      "holdout_q90": {
+        "mean": 0.64502,
+        "std": 0.002131
+      },
+      "downstream_q90": {
+        "mean": 0.391637,
+        "std": 0.001281
+      },
+      "model_mean": {
+        "mean": 0.469347,
+        "std": 0.003239
+      },
+      "holdout_mean": {
+        "mean": 0.465743,
+        "std": 0.003305
+      },
+      "downstream_mean": {
+        "mean": 0.28005,
+        "std": 0.000799
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 1.0,
+      "n_train": 256,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 2560000,
+      "delta_E": {
+        "mean": 0.494257,
+        "std": 0.0204
+      },
+      "delta_tail": {
+        "mean": 0.269668,
+        "std": 0.013676
+      },
+      "final_train_loss": {
+        "mean": 5.084367,
+        "std": 0.020738
+      },
+      "best_train_loss": {
+        "mean": 5.082362,
+        "std": 0.019205
+      },
+      "model_min": {
+        "mean": 7.042037,
+        "std": 0.247565
+      },
+      "holdout_min": {
+        "mean": 7.32197,
+        "std": 0.329663
+      },
+      "downstream_min": {
+        "mean": 6.16132,
+        "std": 0.169471
+      },
+      "model_q01": {
+        "mean": 8.079457,
+        "std": 0.105609
+      },
+      "holdout_q01": {
+        "mean": 9.441803,
+        "std": 0.021776
+      },
+      "downstream_q01": {
+        "mean": 7.30523,
+        "std": 0.06848
+      },
+      "model_q05": {
+        "mean": 8.728467,
+        "std": 0.08217
+      },
+      "holdout_q05": {
+        "mean": 10.455027,
+        "std": 0.017387
+      },
+      "downstream_q05": {
+        "mean": 7.962047,
+        "std": 0.074512
+      },
+      "model_q10": {
+        "mean": 9.06436,
+        "std": 0.0861
+      },
+      "holdout_q10": {
+        "mean": 10.986603,
+        "std": 0.037903
+      },
+      "downstream_q10": {
+        "mean": 8.32348,
+        "std": 0.083989
+      },
+      "model_q50": {
+        "mean": 10.405987,
+        "std": 0.082068
+      },
+      "holdout_q50": {
+        "mean": 12.832627,
+        "std": 0.023128
+      },
+      "downstream_q50": {
+        "mean": 9.725553,
+        "std": 0.067674
+      },
+      "model_q90": {
+        "mean": 12.044963,
+        "std": 0.156711
+      },
+      "holdout_q90": {
+        "mean": 14.53319,
+        "std": 0.020646
+      },
+      "downstream_q90": {
+        "mean": 11.419197,
+        "std": 0.127173
+      },
+      "model_mean": {
+        "mean": 10.495297,
+        "std": 0.09488
+      },
+      "holdout_mean": {
+        "mean": 12.78426,
+        "std": 0.008988
+      },
+      "downstream_mean": {
+        "mean": 9.817473,
+        "std": 0.082394
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 1.0,
+      "n_train": 512,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 5120000,
+      "delta_E": {
+        "mean": 0.319442,
+        "std": 0.007956
+      },
+      "delta_tail": {
+        "mean": 0.130921,
+        "std": 0.01609
+      },
+      "final_train_loss": {
+        "mean": 7.053033,
+        "std": 0.048137
+      },
+      "best_train_loss": {
+        "mean": 7.045969,
+        "std": 0.040983
+      },
+      "model_min": {
+        "mean": 7.67683,
+        "std": 0.333459
+      },
+      "holdout_min": {
+        "mean": 7.32197,
+        "std": 0.329663
+      },
+      "downstream_min": {
+        "mean": 6.499517,
+        "std": 0.486584
+      },
+      "model_q01": {
+        "mean": 8.854453,
+        "std": 0.096492
+      },
+      "holdout_q01": {
+        "mean": 9.441803,
+        "std": 0.021776
+      },
+      "downstream_q01": {
+        "mean": 8.068757,
+        "std": 0.082075
+      },
+      "model_q05": {
+        "mean": 9.54256,
+        "std": 0.072894
+      },
+      "holdout_q05": {
+        "mean": 10.455027,
+        "std": 0.017387
+      },
+      "downstream_q05": {
+        "mean": 8.76715,
+        "std": 0.092343
+      },
+      "model_q10": {
+        "mean": 9.913213,
+        "std": 0.07626
+      },
+      "holdout_q10": {
+        "mean": 10.986603,
+        "std": 0.037903
+      },
+      "downstream_q10": {
+        "mean": 9.153417,
+        "std": 0.075416
+      },
+      "model_q50": {
+        "mean": 11.246017,
+        "std": 0.040586
+      },
+      "holdout_q50": {
+        "mean": 12.832627,
+        "std": 0.023128
+      },
+      "downstream_q50": {
+        "mean": 10.5752,
+        "std": 0.054133
+      },
+      "model_q90": {
+        "mean": 12.77452,
+        "std": 0.038237
+      },
+      "holdout_q90": {
+        "mean": 14.53319,
+        "std": 0.020646
+      },
+      "downstream_q90": {
+        "mean": 12.147873,
+        "std": 0.069345
+      },
+      "model_mean": {
+        "mean": 11.295973,
+        "std": 0.045601
+      },
+      "holdout_mean": {
+        "mean": 12.78426,
+        "std": 0.008988
+      },
+      "downstream_mean": {
+        "mean": 10.618503,
+        "std": 0.060516
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 1.0,
+      "n_train": 1024,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 10240000,
+      "delta_E": {
+        "mean": 0.171893,
+        "std": 0.007007
+      },
+      "delta_tail": {
+        "mean": 0.033744,
+        "std": 0.002912
+      },
+      "final_train_loss": {
+        "mean": 9.196376,
+        "std": 0.089743
+      },
+      "best_train_loss": {
+        "mean": 9.179524,
+        "std": 0.088695
+      },
+      "model_min": {
+        "mean": 8.509567,
+        "std": 0.498098
+      },
+      "holdout_min": {
+        "mean": 7.32197,
+        "std": 0.329663
+      },
+      "downstream_min": {
+        "mean": 7.468527,
+        "std": 0.348516
+      },
+      "model_q01": {
+        "mean": 9.719737,
+        "std": 0.061299
+      },
+      "holdout_q01": {
+        "mean": 9.441803,
+        "std": 0.021776
+      },
+      "downstream_q01": {
+        "mean": 8.945443,
+        "std": 0.03588
+      },
+      "model_q05": {
+        "mean": 10.346433,
+        "std": 0.026643
+      },
+      "holdout_q05": {
+        "mean": 10.455027,
+        "std": 0.017387
+      },
+      "downstream_q05": {
+        "mean": 9.596117,
+        "std": 0.037825
+      },
+      "model_q10": {
+        "mean": 10.69757,
+        "std": 0.022159
+      },
+      "holdout_q10": {
+        "mean": 10.986603,
+        "std": 0.037903
+      },
+      "downstream_q10": {
+        "mean": 9.955897,
+        "std": 0.021597
+      },
+      "model_q50": {
+        "mean": 11.949363,
+        "std": 0.02793
+      },
+      "holdout_q50": {
+        "mean": 12.832627,
+        "std": 0.023128
+      },
+      "downstream_q50": {
+        "mean": 11.290303,
+        "std": 0.03293
+      },
+      "model_q90": {
+        "mean": 13.327843,
+        "std": 0.0686
+      },
+      "holdout_q90": {
+        "mean": 14.53319,
+        "std": 0.020646
+      },
+      "downstream_q90": {
+        "mean": 12.736027,
+        "std": 0.074522
+      },
+      "model_mean": {
+        "mean": 11.988117,
+        "std": 0.035392
+      },
+      "holdout_mean": {
+        "mean": 12.78426,
+        "std": 0.008988
+      },
+      "downstream_mean": {
+        "mean": 11.325373,
+        "std": 0.036063
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 1.0,
+      "n_train": 2048,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 20480000,
+      "delta_E": {
+        "mean": 0.06842,
+        "std": 0.004463
+      },
+      "delta_tail": {
+        "mean": 0.047535,
+        "std": 0.018986
+      },
+      "final_train_loss": {
+        "mean": 10.201828,
+        "std": 0.006392
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 8.293667,
+        "std": 0.378831
+      },
+      "holdout_min": {
+        "mean": 7.32197,
+        "std": 0.329663
+      },
+      "downstream_min": {
+        "mean": 7.05779,
+        "std": 0.325447
+      },
+      "model_q01": {
+        "mean": 9.82684,
+        "std": 0.122334
+      },
+      "holdout_q01": {
+        "mean": 9.441803,
+        "std": 0.021776
+      },
+      "downstream_q01": {
+        "mean": 9.05561,
+        "std": 0.065469
+      },
+      "model_q05": {
+        "mean": 10.614447,
+        "std": 0.095424
+      },
+      "holdout_q05": {
+        "mean": 10.455027,
+        "std": 0.017387
+      },
+      "downstream_q05": {
+        "mean": 9.880087,
+        "std": 0.065158
+      },
+      "model_q10": {
+        "mean": 11.02098,
+        "std": 0.07615
+      },
+      "holdout_q10": {
+        "mean": 10.986603,
+        "std": 0.037903
+      },
+      "downstream_q10": {
+        "mean": 10.296787,
+        "std": 0.048565
+      },
+      "model_q50": {
+        "mean": 12.476293,
+        "std": 0.021642
+      },
+      "holdout_q50": {
+        "mean": 12.832627,
+        "std": 0.023128
+      },
+      "downstream_q50": {
+        "mean": 11.816413,
+        "std": 0.026066
+      },
+      "model_q90": {
+        "mean": 14.014023,
+        "std": 0.011157
+      },
+      "holdout_q90": {
+        "mean": 14.53319,
+        "std": 0.020646
+      },
+      "downstream_q90": {
+        "mean": 13.432,
+        "std": 0.060597
+      },
+      "model_mean": {
+        "mean": 12.500577,
+        "std": 0.028146
+      },
+      "holdout_mean": {
+        "mean": 12.78426,
+        "std": 0.008988
+      },
+      "downstream_mean": {
+        "mean": 11.845533,
+        "std": 0.022609
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 1.0,
+      "n_train": 8192,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 81920000,
+      "delta_E": {
+        "mean": 0.01499,
+        "std": 0.006961
+      },
+      "delta_tail": {
+        "mean": 0.029288,
+        "std": 0.010799
+      },
+      "final_train_loss": {
+        "mean": 10.478299,
+        "std": 0.016841
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 7.775723,
+        "std": 0.284233
+      },
+      "holdout_min": {
+        "mean": 7.32197,
+        "std": 0.329663
+      },
+      "downstream_min": {
+        "mean": 6.893393,
+        "std": 0.671841
+      },
+      "model_q01": {
+        "mean": 9.654053,
+        "std": 0.085976
+      },
+      "holdout_q01": {
+        "mean": 9.441803,
+        "std": 0.021776
+      },
+      "downstream_q01": {
+        "mean": 8.918193,
+        "std": 0.069699
+      },
+      "model_q05": {
+        "mean": 10.5782,
+        "std": 0.028218
+      },
+      "holdout_q05": {
+        "mean": 10.455027,
+        "std": 0.017387
+      },
+      "downstream_q05": {
+        "mean": 9.862983,
+        "std": 0.045108
+      },
+      "model_q10": {
+        "mean": 11.0745,
+        "std": 0.02919
+      },
+      "holdout_q10": {
+        "mean": 10.986603,
+        "std": 0.037903
+      },
+      "downstream_q10": {
+        "mean": 10.35711,
+        "std": 0.020419
+      },
+      "model_q50": {
+        "mean": 12.77961,
+        "std": 0.029593
+      },
+      "holdout_q50": {
+        "mean": 12.832627,
+        "std": 0.023128
+      },
+      "downstream_q50": {
+        "mean": 12.133667,
+        "std": 0.027388
+      },
+      "model_q90": {
+        "mean": 14.46665,
+        "std": 0.034012
+      },
+      "holdout_q90": {
+        "mean": 14.53319,
+        "std": 0.020646
+      },
+      "downstream_q90": {
+        "mean": 13.897333,
+        "std": 0.039691
+      },
+      "model_mean": {
+        "mean": 12.771647,
+        "std": 0.013399
+      },
+      "holdout_mean": {
+        "mean": 12.78426,
+        "std": 0.008988
+      },
+      "downstream_mean": {
+        "mean": 12.128263,
+        "std": 0.020842
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 5.0,
+      "n_train": 256,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 2560000,
+      "delta_E": {
+        "mean": 0.114826,
+        "std": 0.015925
+      },
+      "delta_tail": {
+        "mean": 0.037743,
+        "std": 0.012669
+      },
+      "final_train_loss": {
+        "mean": 5.637066,
+        "std": 0.05753
+      },
+      "best_train_loss": {
+        "mean": 5.62457,
+        "std": 0.053731
+      },
+      "model_min": {
+        "mean": 3.365433,
+        "std": 0.232142
+      },
+      "holdout_min": {
+        "mean": 3.036593,
+        "std": 0.113844
+      },
+      "downstream_min": {
+        "mean": 2.258387,
+        "std": 0.032964
+      },
+      "model_q01": {
+        "mean": 4.150247,
+        "std": 0.08449
+      },
+      "holdout_q01": {
+        "mean": 4.014097,
+        "std": 0.015628
+      },
+      "downstream_q01": {
+        "mean": 3.242357,
+        "std": 0.092347
+      },
+      "model_q05": {
+        "mean": 4.54524,
+        "std": 0.095155
+      },
+      "holdout_q05": {
+        "mean": 4.53979,
+        "std": 0.003082
+      },
+      "downstream_q05": {
+        "mean": 3.694463,
+        "std": 0.099722
+      },
+      "model_q10": {
+        "mean": 4.781227,
+        "std": 0.103893
+      },
+      "holdout_q10": {
+        "mean": 4.854607,
+        "std": 0.008788
+      },
+      "downstream_q10": {
+        "mean": 3.95826,
+        "std": 0.088364
+      },
+      "model_q50": {
+        "mean": 5.73001,
+        "std": 0.064958
+      },
+      "holdout_q50": {
+        "mean": 6.067043,
+        "std": 0.00438
+      },
+      "downstream_q50": {
+        "mean": 5.008007,
+        "std": 0.057025
+      },
+      "model_q90": {
+        "mean": 7.156717,
+        "std": 0.110492
+      },
+      "holdout_q90": {
+        "mean": 7.54231,
+        "std": 0.028676
+      },
+      "downstream_q90": {
+        "mean": 6.502927,
+        "std": 0.112255
+      },
+      "model_mean": {
+        "mean": 5.889067,
+        "std": 0.045088
+      },
+      "holdout_mean": {
+        "mean": 6.148037,
+        "std": 0.006596
+      },
+      "downstream_mean": {
+        "mean": 5.152253,
+        "std": 0.03756
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 5.0,
+      "n_train": 512,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 5120000,
+      "delta_E": {
+        "mean": 0.077642,
+        "std": 0.009468
+      },
+      "delta_tail": {
+        "mean": 0.117166,
+        "std": 0.017189
+      },
+      "final_train_loss": {
+        "mean": 6.212745,
+        "std": 0.061625
+      },
+      "best_train_loss": {
+        "mean": 6.198544,
+        "std": 0.065066
+      },
+      "model_min": {
+        "mean": 3.58823,
+        "std": 0.267673
+      },
+      "holdout_min": {
+        "mean": 3.036593,
+        "std": 0.113844
+      },
+      "downstream_min": {
+        "mean": 2.68597,
+        "std": 0.15044
+      },
+      "model_q01": {
+        "mean": 4.392493,
+        "std": 0.04302
+      },
+      "holdout_q01": {
+        "mean": 4.014097,
+        "std": 0.015628
+      },
+      "downstream_q01": {
+        "mean": 3.520117,
+        "std": 0.057236
+      },
+      "model_q05": {
+        "mean": 4.810443,
+        "std": 0.052666
+      },
+      "holdout_q05": {
+        "mean": 4.53979,
+        "std": 0.003082
+      },
+      "downstream_q05": {
+        "mean": 3.967553,
+        "std": 0.053417
+      },
+      "model_q10": {
+        "mean": 5.055103,
+        "std": 0.062365
+      },
+      "holdout_q10": {
+        "mean": 4.854607,
+        "std": 0.008788
+      },
+      "downstream_q10": {
+        "mean": 4.241227,
+        "std": 0.059331
+      },
+      "model_q50": {
+        "mean": 6.004243,
+        "std": 0.066861
+      },
+      "holdout_q50": {
+        "mean": 6.067043,
+        "std": 0.00438
+      },
+      "downstream_q50": {
+        "mean": 5.26376,
+        "std": 0.070182
+      },
+      "model_q90": {
+        "mean": 7.26213,
+        "std": 0.054603
+      },
+      "holdout_q90": {
+        "mean": 7.54231,
+        "std": 0.028676
+      },
+      "downstream_q90": {
+        "mean": 6.59352,
+        "std": 0.054111
+      },
+      "model_mean": {
+        "mean": 6.10383,
+        "std": 0.055584
+      },
+      "holdout_mean": {
+        "mean": 6.148037,
+        "std": 0.006596
+      },
+      "downstream_mean": {
+        "mean": 5.36045,
+        "std": 0.057753
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 5.0,
+      "n_train": 1024,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 10240000,
+      "delta_E": {
+        "mean": 0.060292,
+        "std": 0.012636
+      },
+      "delta_tail": {
+        "mean": 0.12361,
+        "std": 0.006385
+      },
+      "final_train_loss": {
+        "mean": 6.414084,
+        "std": 0.019674
+      },
+      "best_train_loss": {
+        "mean": 6.394324,
+        "std": 0.02328
+      },
+      "model_min": {
+        "mean": 3.568373,
+        "std": 0.068822
+      },
+      "holdout_min": {
+        "mean": 3.036593,
+        "std": 0.113844
+      },
+      "downstream_min": {
+        "mean": 2.542957,
+        "std": 0.210268
+      },
+      "model_q01": {
+        "mean": 4.38997,
+        "std": 0.018865
+      },
+      "holdout_q01": {
+        "mean": 4.014097,
+        "std": 0.015628
+      },
+      "downstream_q01": {
+        "mean": 3.505223,
+        "std": 0.062679
+      },
+      "model_q05": {
+        "mean": 4.84868,
+        "std": 0.017076
+      },
+      "holdout_q05": {
+        "mean": 4.53979,
+        "std": 0.003082
+      },
+      "downstream_q05": {
+        "mean": 4.023303,
+        "std": 0.026286
+      },
+      "model_q10": {
+        "mean": 5.101003,
+        "std": 0.011771
+      },
+      "holdout_q10": {
+        "mean": 4.854607,
+        "std": 0.008788
+      },
+      "downstream_q10": {
+        "mean": 4.29173,
+        "std": 0.013057
+      },
+      "model_q50": {
+        "mean": 6.09751,
+        "std": 0.021981
+      },
+      "holdout_q50": {
+        "mean": 6.067043,
+        "std": 0.00438
+      },
+      "downstream_q50": {
+        "mean": 5.353883,
+        "std": 0.025814
+      },
+      "model_q90": {
+        "mean": 7.393063,
+        "std": 0.042457
+      },
+      "holdout_q90": {
+        "mean": 7.54231,
+        "std": 0.028676
+      },
+      "downstream_q90": {
+        "mean": 6.706873,
+        "std": 0.057744
+      },
+      "model_mean": {
+        "mean": 6.19244,
+        "std": 0.014333
+      },
+      "holdout_mean": {
+        "mean": 6.148037,
+        "std": 0.006596
+      },
+      "downstream_mean": {
+        "mean": 5.444503,
+        "std": 0.018923
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 5.0,
+      "n_train": 2048,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 20480000,
+      "delta_E": {
+        "mean": 0.054437,
+        "std": 0.003147
+      },
+      "delta_tail": {
+        "mean": 0.125177,
+        "std": 0.00496
+      },
+      "final_train_loss": {
+        "mean": 6.479371,
+        "std": 0.017996
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 3.56843,
+        "std": 0.117705
+      },
+      "holdout_min": {
+        "mean": 3.036593,
+        "std": 0.113844
+      },
+      "downstream_min": {
+        "mean": 2.6106,
+        "std": 0.155381
+      },
+      "model_q01": {
+        "mean": 4.393773,
+        "std": 0.00712
+      },
+      "holdout_q01": {
+        "mean": 4.014097,
+        "std": 0.015628
+      },
+      "downstream_q01": {
+        "mean": 3.51719,
+        "std": 0.04566
+      },
+      "model_q05": {
+        "mean": 4.853577,
+        "std": 0.010148
+      },
+      "holdout_q05": {
+        "mean": 4.53979,
+        "std": 0.003082
+      },
+      "downstream_q05": {
+        "mean": 4.023853,
+        "std": 0.003429
+      },
+      "model_q10": {
+        "mean": 5.111317,
+        "std": 0.006122
+      },
+      "holdout_q10": {
+        "mean": 4.854607,
+        "std": 0.008788
+      },
+      "downstream_q10": {
+        "mean": 4.305557,
+        "std": 0.007634
+      },
+      "model_q50": {
+        "mean": 6.138663,
+        "std": 0.008326
+      },
+      "holdout_q50": {
+        "mean": 6.067043,
+        "std": 0.00438
+      },
+      "downstream_q50": {
+        "mean": 5.397157,
+        "std": 0.014927
+      },
+      "model_q90": {
+        "mean": 7.50418,
+        "std": 0.028767
+      },
+      "holdout_q90": {
+        "mean": 7.54231,
+        "std": 0.028676
+      },
+      "downstream_q90": {
+        "mean": 6.818793,
+        "std": 0.030855
+      },
+      "model_mean": {
+        "mean": 6.243883,
+        "std": 0.009325
+      },
+      "holdout_mean": {
+        "mean": 6.148037,
+        "std": 0.006596
+      },
+      "downstream_mean": {
+        "mean": 5.497697,
+        "std": 0.014449
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 5.0,
+      "n_train": 8192,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 81920000,
+      "delta_E": {
+        "mean": 0.058739,
+        "std": 0.007637
+      },
+      "delta_tail": {
+        "mean": 0.118978,
+        "std": 0.005505
+      },
+      "final_train_loss": {
+        "mean": 6.516689,
+        "std": 0.006778
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 3.598687,
+        "std": 0.012778
+      },
+      "holdout_min": {
+        "mean": 3.036593,
+        "std": 0.113844
+      },
+      "downstream_min": {
+        "mean": 2.48699,
+        "std": 0.0468
+      },
+      "model_q01": {
+        "mean": 4.36669,
+        "std": 0.017141
+      },
+      "holdout_q01": {
+        "mean": 4.014097,
+        "std": 0.015628
+      },
+      "downstream_q01": {
+        "mean": 3.48614,
+        "std": 0.015142
+      },
+      "model_q05": {
+        "mean": 4.846313,
+        "std": 0.011115
+      },
+      "holdout_q05": {
+        "mean": 4.53979,
+        "std": 0.003082
+      },
+      "downstream_q05": {
+        "mean": 4.011817,
+        "std": 0.009929
+      },
+      "model_q10": {
+        "mean": 5.107457,
+        "std": 0.008013
+      },
+      "holdout_q10": {
+        "mean": 4.854607,
+        "std": 0.008788
+      },
+      "downstream_q10": {
+        "mean": 4.29788,
+        "std": 0.011902
+      },
+      "model_q50": {
+        "mean": 6.172073,
+        "std": 0.006301
+      },
+      "holdout_q50": {
+        "mean": 6.067043,
+        "std": 0.00438
+      },
+      "downstream_q50": {
+        "mean": 5.432933,
+        "std": 0.016148
+      },
+      "model_q90": {
+        "mean": 7.599537,
+        "std": 0.02021
+      },
+      "holdout_q90": {
+        "mean": 7.54231,
+        "std": 0.028676
+      },
+      "downstream_q90": {
+        "mean": 6.912623,
+        "std": 0.031794
+      },
+      "model_mean": {
+        "mean": 6.28539,
+        "std": 0.003527
+      },
+      "holdout_mean": {
+        "mean": 6.148037,
+        "std": 0.006596
+      },
+      "downstream_mean": {
+        "mean": 5.540233,
+        "std": 0.006346
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 20.0,
+      "n_train": 256,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 2560000,
+      "delta_E": {
+        "mean": 0.065775,
+        "std": 0.012113
+      },
+      "delta_tail": {
+        "mean": 0.032054,
+        "std": 0.005558
+      },
+      "final_train_loss": {
+        "mean": 0.840018,
+        "std": 0.012076
+      },
+      "best_train_loss": {
+        "mean": 0.837839,
+        "std": 0.014542
+      },
+      "model_min": {
+        "mean": 0.237297,
+        "std": 0.025542
+      },
+      "holdout_min": {
+        "mean": 0.236867,
+        "std": 0.016379
+      },
+      "downstream_min": {
+        "mean": 0.120847,
+        "std": 0.000871
+      },
+      "model_q01": {
+        "mean": 0.423357,
+        "std": 0.002079
+      },
+      "holdout_q01": {
+        "mean": 0.39513,
+        "std": 0.0058
+      },
+      "downstream_q01": {
+        "mean": 0.204277,
+        "std": 0.002639
+      },
+      "model_q05": {
+        "mean": 0.511027,
+        "std": 0.003224
+      },
+      "holdout_q05": {
+        "mean": 0.49146,
+        "std": 0.003935
+      },
+      "downstream_q05": {
+        "mean": 0.24336,
+        "std": 0.0025
+      },
+      "model_q10": {
+        "mean": 0.5635,
+        "std": 0.00257
+      },
+      "holdout_q10": {
+        "mean": 0.548553,
+        "std": 0.004561
+      },
+      "downstream_q10": {
+        "mean": 0.26767,
+        "std": 0.000544
+      },
+      "model_q50": {
+        "mean": 0.765237,
+        "std": 0.007289
+      },
+      "holdout_q50": {
+        "mean": 0.781573,
+        "std": 0.002613
+      },
+      "downstream_q50": {
+        "mean": 0.364553,
+        "std": 0.000823
+      },
+      "model_q90": {
+        "mean": 1.000947,
+        "std": 0.011228
+      },
+      "holdout_q90": {
+        "mean": 1.086857,
+        "std": 0.010507
+      },
+      "downstream_q90": {
+        "mean": 0.4854,
+        "std": 0.001415
+      },
+      "model_mean": {
+        "mean": 0.775327,
+        "std": 0.006473
+      },
+      "holdout_mean": {
+        "mean": 0.804207,
+        "std": 0.004484
+      },
+      "downstream_mean": {
+        "mean": 0.371633,
+        "std": 0.000703
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 20.0,
+      "n_train": 512,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 5120000,
+      "delta_E": {
+        "mean": 0.064108,
+        "std": 0.006394
+      },
+      "delta_tail": {
+        "mean": 0.037254,
+        "std": 0.009243
+      },
+      "final_train_loss": {
+        "mean": 0.844271,
+        "std": 0.006831
+      },
+      "best_train_loss": {
+        "mean": 0.842692,
+        "std": 0.009566
+      },
+      "model_min": {
+        "mean": 0.229413,
+        "std": 0.024696
+      },
+      "holdout_min": {
+        "mean": 0.236867,
+        "std": 0.016379
+      },
+      "downstream_min": {
+        "mean": 0.120833,
+        "std": 0.000901
+      },
+      "model_q01": {
+        "mean": 0.426997,
+        "std": 0.006186
+      },
+      "holdout_q01": {
+        "mean": 0.39513,
+        "std": 0.0058
+      },
+      "downstream_q01": {
+        "mean": 0.20434,
+        "std": 0.002686
+      },
+      "model_q05": {
+        "mean": 0.515157,
+        "std": 0.005715
+      },
+      "holdout_q05": {
+        "mean": 0.49146,
+        "std": 0.003935
+      },
+      "downstream_q05": {
+        "mean": 0.243367,
+        "std": 0.00253
+      },
+      "model_q10": {
+        "mean": 0.56774,
+        "std": 0.004979
+      },
+      "holdout_q10": {
+        "mean": 0.548553,
+        "std": 0.004561
+      },
+      "downstream_q10": {
+        "mean": 0.267703,
+        "std": 0.000432
+      },
+      "model_q50": {
+        "mean": 0.769947,
+        "std": 0.008733
+      },
+      "holdout_q50": {
+        "mean": 0.781573,
+        "std": 0.002613
+      },
+      "downstream_q50": {
+        "mean": 0.364593,
+        "std": 0.000827
+      },
+      "model_q90": {
+        "mean": 1.003463,
+        "std": 0.011823
+      },
+      "holdout_q90": {
+        "mean": 1.086857,
+        "std": 0.010507
+      },
+      "downstream_q90": {
+        "mean": 0.485347,
+        "std": 0.001359
+      },
+      "model_mean": {
+        "mean": 0.779317,
+        "std": 0.00853
+      },
+      "holdout_mean": {
+        "mean": 0.804207,
+        "std": 0.004484
+      },
+      "downstream_mean": {
+        "mean": 0.371643,
+        "std": 0.000674
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 20.0,
+      "n_train": 1024,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 10240000,
+      "delta_E": {
+        "mean": 0.064903,
+        "std": 0.001488
+      },
+      "delta_tail": {
+        "mean": 0.035651,
+        "std": 0.011743
+      },
+      "final_train_loss": {
+        "mean": 0.843848,
+        "std": 0.003215
+      },
+      "best_train_loss": {
+        "mean": 0.841201,
+        "std": 0.005389
+      },
+      "model_min": {
+        "mean": 0.237157,
+        "std": 0.030106
+      },
+      "holdout_min": {
+        "mean": 0.236867,
+        "std": 0.016379
+      },
+      "downstream_min": {
+        "mean": 0.12084,
+        "std": 0.000756
+      },
+      "model_q01": {
+        "mean": 0.42473,
+        "std": 0.00585
+      },
+      "holdout_q01": {
+        "mean": 0.39513,
+        "std": 0.0058
+      },
+      "downstream_q01": {
+        "mean": 0.20437,
+        "std": 0.002627
+      },
+      "model_q05": {
+        "mean": 0.515023,
+        "std": 0.006225
+      },
+      "holdout_q05": {
+        "mean": 0.49146,
+        "std": 0.003935
+      },
+      "downstream_q05": {
+        "mean": 0.24333,
+        "std": 0.002543
+      },
+      "model_q10": {
+        "mean": 0.567433,
+        "std": 0.0055
+      },
+      "holdout_q10": {
+        "mean": 0.548553,
+        "std": 0.004561
+      },
+      "downstream_q10": {
+        "mean": 0.267697,
+        "std": 0.000468
+      },
+      "model_q50": {
+        "mean": 0.770113,
+        "std": 0.004649
+      },
+      "holdout_q50": {
+        "mean": 0.781573,
+        "std": 0.002613
+      },
+      "downstream_q50": {
+        "mean": 0.36456,
+        "std": 0.000856
+      },
+      "model_q90": {
+        "mean": 1.001563,
+        "std": 0.005757
+      },
+      "holdout_q90": {
+        "mean": 1.086857,
+        "std": 0.010507
+      },
+      "downstream_q90": {
+        "mean": 0.485343,
+        "std": 0.001306
+      },
+      "model_mean": {
+        "mean": 0.77866,
+        "std": 0.005137
+      },
+      "holdout_mean": {
+        "mean": 0.804207,
+        "std": 0.004484
+      },
+      "downstream_mean": {
+        "mean": 0.371637,
+        "std": 0.00068
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 20.0,
+      "n_train": 2048,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 20480000,
+      "delta_E": {
+        "mean": 0.063233,
+        "std": 0.003107
+      },
+      "delta_tail": {
+        "mean": 0.039686,
+        "std": 0.009099
+      },
+      "final_train_loss": {
+        "mean": 0.847591,
+        "std": 0.004085
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 0.24103,
+        "std": 0.034226
+      },
+      "holdout_min": {
+        "mean": 0.236867,
+        "std": 0.016379
+      },
+      "downstream_min": {
+        "mean": 0.12086,
+        "std": 0.000713
+      },
+      "model_q01": {
+        "mean": 0.42824,
+        "std": 0.004232
+      },
+      "holdout_q01": {
+        "mean": 0.39513,
+        "std": 0.0058
+      },
+      "downstream_q01": {
+        "mean": 0.20464,
+        "std": 0.002728
+      },
+      "model_q05": {
+        "mean": 0.517533,
+        "std": 0.004759
+      },
+      "holdout_q05": {
+        "mean": 0.49146,
+        "std": 0.003935
+      },
+      "downstream_q05": {
+        "mean": 0.243343,
+        "std": 0.002514
+      },
+      "model_q10": {
+        "mean": 0.569997,
+        "std": 0.003732
+      },
+      "holdout_q10": {
+        "mean": 0.548553,
+        "std": 0.004561
+      },
+      "downstream_q10": {
+        "mean": 0.26774,
+        "std": 0.000481
+      },
+      "model_q50": {
+        "mean": 0.772803,
+        "std": 0.002948
+      },
+      "holdout_q50": {
+        "mean": 0.781573,
+        "std": 0.002613
+      },
+      "downstream_q50": {
+        "mean": 0.3645,
+        "std": 0.000854
+      },
+      "model_q90": {
+        "mean": 1.004413,
+        "std": 0.004882
+      },
+      "holdout_q90": {
+        "mean": 1.086857,
+        "std": 0.010507
+      },
+      "downstream_q90": {
+        "mean": 0.48534,
+        "std": 0.00133
+      },
+      "model_mean": {
+        "mean": 0.78094,
+        "std": 0.003692
+      },
+      "holdout_mean": {
+        "mean": 0.804207,
+        "std": 0.004484
+      },
+      "downstream_mean": {
+        "mean": 0.371643,
+        "std": 0.000691
+      }
+    },
+    {
+      "dim": 20,
+      "beta_m": 20.0,
+      "n_train": 8192,
+      "n_seeds": 3,
+      "counterfactual_setup_cost": 81920000,
+      "delta_E": {
+        "mean": 0.063824,
+        "std": 0.005843
+      },
+      "delta_tail": {
+        "mean": 0.039867,
+        "std": 0.00863
+      },
+      "final_train_loss": {
+        "mean": 0.84756,
+        "std": 0.005552
+      },
+      "best_train_loss": {
+        "mean": null,
+        "std": null
+      },
+      "model_min": {
+        "mean": 0.245003,
+        "std": 0.036604
+      },
+      "holdout_min": {
+        "mean": 0.236867,
+        "std": 0.016379
+      },
+      "downstream_min": {
+        "mean": 0.120837,
+        "std": 0.000659
+      },
+      "model_q01": {
+        "mean": 0.428023,
+        "std": 0.002294
+      },
+      "holdout_q01": {
+        "mean": 0.39513,
+        "std": 0.0058
+      },
+      "downstream_q01": {
+        "mean": 0.204477,
+        "std": 0.002672
+      },
+      "model_q05": {
+        "mean": 0.518013,
+        "std": 0.003171
+      },
+      "holdout_q05": {
+        "mean": 0.49146,
+        "std": 0.003935
+      },
+      "downstream_q05": {
+        "mean": 0.243307,
+        "std": 0.00255
+      },
+      "model_q10": {
+        "mean": 0.57049,
+        "std": 0.003338
+      },
+      "holdout_q10": {
+        "mean": 0.548553,
+        "std": 0.004561
+      },
+      "downstream_q10": {
+        "mean": 0.267703,
+        "std": 0.000493
+      },
+      "model_q50": {
+        "mean": 0.772533,
+        "std": 0.000768
+      },
+      "holdout_q50": {
+        "mean": 0.781573,
+        "std": 0.002613
+      },
+      "downstream_q50": {
+        "mean": 0.36448,
+        "std": 0.000887
+      },
+      "model_q90": {
+        "mean": 1.004117,
+        "std": 0.00025
+      },
+      "holdout_q90": {
+        "mean": 1.086857,
+        "std": 0.010507
+      },
+      "downstream_q90": {
+        "mean": 0.485423,
+        "std": 0.001228
+      },
+      "model_mean": {
+        "mean": 0.78124,
+        "std": 0.000926
+      },
+      "holdout_mean": {
+        "mean": 0.804207,
+        "std": 0.004484
+      },
+      "downstream_mean": {
+        "mean": 0.371647,
+        "std": 0.0007
+      }
+    }
+  ],
+  "n_star": [
+    {
+      "dim": 5,
+      "beta_m": 1.0,
+      "tau": 0.05,
+      "n_star": "not_reached"
+    },
+    {
+      "dim": 5,
+      "beta_m": 1.0,
+      "tau": 0.1,
+      "n_star": 256
+    },
+    {
+      "dim": 5,
+      "beta_m": 1.0,
+      "tau": 0.2,
+      "n_star": 256
+    },
+    {
+      "dim": 5,
+      "beta_m": 5.0,
+      "tau": 0.05,
+      "n_star": "not_reached"
+    },
+    {
+      "dim": 5,
+      "beta_m": 5.0,
+      "tau": 0.1,
+      "n_star": "not_reached"
+    },
+    {
+      "dim": 5,
+      "beta_m": 5.0,
+      "tau": 0.2,
+      "n_star": 256
+    },
+    {
+      "dim": 5,
+      "beta_m": 20.0,
+      "tau": 0.05,
+      "n_star": "not_reached"
+    },
+    {
+      "dim": 5,
+      "beta_m": 20.0,
+      "tau": 0.1,
+      "n_star": "not_reached"
+    },
+    {
+      "dim": 5,
+      "beta_m": 20.0,
+      "tau": 0.2,
+      "n_star": "not_reached"
+    },
+    {
+      "dim": 10,
+      "beta_m": 1.0,
+      "tau": 0.05,
+      "n_star": 8192
+    },
+    {
+      "dim": 10,
+      "beta_m": 1.0,
+      "tau": 0.1,
+      "n_star": 2048
+    },
+    {
+      "dim": 10,
+      "beta_m": 1.0,
+      "tau": 0.2,
+      "n_star": 512
+    },
+    {
+      "dim": 10,
+      "beta_m": 5.0,
+      "tau": 0.05,
+      "n_star": "not_reached"
+    },
+    {
+      "dim": 10,
+      "beta_m": 5.0,
+      "tau": 0.1,
+      "n_star": "not_reached"
+    },
+    {
+      "dim": 10,
+      "beta_m": 5.0,
+      "tau": 0.2,
+      "n_star": "not_reached"
+    },
+    {
+      "dim": 10,
+      "beta_m": 20.0,
+      "tau": 0.05,
+      "n_star": 256
+    },
+    {
+      "dim": 10,
+      "beta_m": 20.0,
+      "tau": 0.1,
+      "n_star": 256
+    },
+    {
+      "dim": 10,
+      "beta_m": 20.0,
+      "tau": 0.2,
+      "n_star": 256
+    },
+    {
+      "dim": 20,
+      "beta_m": 1.0,
+      "tau": 0.05,
+      "n_star": 8192
+    },
+    {
+      "dim": 20,
+      "beta_m": 1.0,
+      "tau": 0.1,
+      "n_star": 2048
+    },
+    {
+      "dim": 20,
+      "beta_m": 1.0,
+      "tau": 0.2,
+      "n_star": 1024
+    },
+    {
+      "dim": 20,
+      "beta_m": 5.0,
+      "tau": 0.05,
+      "n_star": "not_reached"
+    },
+    {
+      "dim": 20,
+      "beta_m": 5.0,
+      "tau": 0.1,
+      "n_star": 512
+    },
+    {
+      "dim": 20,
+      "beta_m": 5.0,
+      "tau": 0.2,
+      "n_star": 256
+    },
+    {
+      "dim": 20,
+      "beta_m": 20.0,
+      "tau": 0.05,
+      "n_star": "not_reached"
+    },
+    {
+      "dim": 20,
+      "beta_m": 20.0,
+      "tau": 0.1,
+      "n_star": 256
+    },
+    {
+      "dim": 20,
+      "beta_m": 20.0,
+      "tau": 0.2,
+      "n_star": 256
+    }
+  ]
+}

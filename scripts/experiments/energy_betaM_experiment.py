@@ -116,7 +116,7 @@ FKC_INCLUDE_DIVERGENCE = False
 REUSE_SAMPLES       = True
 REUSE_MODELS        = True
 REUSE_MODEL_SAMPLES = True
-REUSE_ANNEALING     = True  # skip (dim, betaM) if already in results_seed{s}.json
+REUSE_ANNEALING     = False  # skip (dim, betaM) if already in results_seed{s}.json
 
 DESC = ""
 
@@ -1138,12 +1138,17 @@ def plot_clustering_rates() -> None:
 # ---------------------------------------------------------------------------
 
 def plot_annealing_improvement() -> None:
-    """Relative energy improvement of each annealing method over its initial-particle baseline.
+    """Gap-closed improvement G_gap for each annealing method vs β_M.
 
-    Baselines per method:
-    - ULA SMC:       mcmc_stats  (starts from MCMC particles at β_M)
-    - Diffusion SMC: model_stats (starts from diffusion model samples at β_M)
-    - FKC:           model_stats (reverse SDE from N(0,I) — IS the model)
+    G_gap = (E_init - E_final) / (E_init - E_star + ε)
+
+    where E_star is the known global minimum energy for the energy function
+    and E_init is the method-specific baseline:
+      - ULA SMC:       mcmc_stats  (starts from MCMC particles at β_M)
+      - Diffusion SMC: model_stats (starts from diffusion model samples at β_M)
+      - FKC:           model_stats (reverse SDE from N(0,I) — compared against model baseline)
+
+    For energies where E_star is unknown, falls back to |E_init| + ε as denominator.
     """
     import matplotlib.pyplot as plt
     from collections import defaultdict
@@ -1159,6 +1164,12 @@ def plot_annealing_improvement() -> None:
         ("fkc",       "FKC",           "mediumseagreen", "model_stats"),
     ]
     eps = 1e-8
+
+    # Pre-compute global minimum energy per dim (None if unknown)
+    e_star_by_dim: dict[int, float | None] = {}
+    for dim in DIMS:
+        energy_obj = ENERGY_MAP[ENERGY](dim=dim)
+        e_star_by_dim[dim] = getattr(energy_obj, "global_minimum_energy", None)
 
     groups: dict[tuple, list[dict]] = defaultdict(list)
     for seed in SEEDS:
@@ -1176,6 +1187,7 @@ def plot_annealing_improvement() -> None:
     fig, axes = plt.subplots(1, len(DIMS), figsize=(4.5 * len(DIMS), 4), squeeze=False)
 
     for ax, dim in zip(axes[0], DIMS):
+        e_star = e_star_by_dim[dim]
         for method_key, label, color, baseline_key in methods:
             means: list[float] = []
             stds:  list[float] = []
@@ -1184,9 +1196,13 @@ def plot_annealing_improvement() -> None:
                 for r in groups.get((dim, beta_m), []):
                     if method_key not in r or baseline_key not in r:
                         continue
-                    e_baseline = r[baseline_key]["mean_energy"]
-                    e_anneal   = r[method_key]["mean_energy"]
-                    per_seed.append((e_baseline - e_anneal) / (abs(e_baseline) + eps))
+                    e_init  = r[baseline_key]["mean_energy"]
+                    e_final = r[method_key]["mean_energy"]
+                    if e_star is not None:
+                        denom = (e_init - e_star) + eps
+                    else:
+                        denom = abs(e_init) + eps
+                    per_seed.append((e_init - e_final) / denom)
                 means.append(statistics.mean(per_seed) if per_seed else float("nan"))
                 stds.append(statistics.stdev(per_seed) if len(per_seed) > 1 else 0.0)
 
@@ -1200,11 +1216,10 @@ def plot_annealing_improvement() -> None:
 
         ax.axhline(0, color="k", lw=0.8, linestyle="--", alpha=0.4)
         ax.set_xlabel(r"$\beta_M$")
-        ax.set_ylabel(
-            r"$(E_\mathrm{model} - E_\mathrm{anneal})\,/\,(|E_\mathrm{model}|+\varepsilon)$",
-            fontsize=7,
-        )
-        ax.set_title(f"d={dim}", fontsize=9)
+        ax.set_ylabel(r"$G_\mathrm{gap} = (E_\mathrm{init} - E_\mathrm{final})\,/\,(E_\mathrm{init} - E^\star + \varepsilon)$",
+                      fontsize=7)
+        e_star_str = f"{e_star:.3g}" if e_star is not None else "unknown"
+        ax.set_title(f"d={dim}  ($E^\\star={e_star_str}$)", fontsize=9)
         ax.legend(fontsize=8)
         ax.grid(True, alpha=0.3)
 
@@ -1212,7 +1227,7 @@ def plot_annealing_improvement() -> None:
         1 for s in SEEDS if (_experiment_dir() / f"results_seed{s}.json").exists()
     )
     fig.suptitle(
-        f"{ENERGY}  annealing improvement over direct model  {n_seeds_found} seeds ±1σ",
+        f"{ENERGY}  gap-closed improvement  {n_seeds_found} seeds ±1σ",
         fontsize=10,
     )
     fig.tight_layout()

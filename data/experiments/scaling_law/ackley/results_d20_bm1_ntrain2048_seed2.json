@@ -1,0 +1,40 @@
+{
+  "dim": 20,
+  "beta_m": 1.0,
+  "n_train": 2048,
+  "seed": 2,
+  "holdout_seed": 0,
+  "counterfactual_setup_cost": 20480000,
+  "final_train_loss": 10.19488,
+  "best_train_loss": null,
+  "delta_E": 0.072629,
+  "delta_tail": 0.045839,
+  "holdout": {
+    "q01": 9.41668,
+    "q05": 10.43606,
+    "q10": 10.94313,
+    "q50": 12.85037,
+    "q90": 14.55605,
+    "mean": 12.78708,
+    "min": 6.94342
+  },
+  "model_eval": {
+    "q01": 9.79771,
+    "q05": 10.57925,
+    "q10": 11.01318,
+    "q50": 12.45731,
+    "q90": 14.01322,
+    "mean": 12.48092,
+    "min": 8.45149
+  },
+  "downstream": {
+    "downstream_q01": 9.00435,
+    "downstream_q05": 9.87461,
+    "downstream_q10": 10.27266,
+    "downstream_q50": 11.78736,
+    "downstream_q90": 13.42837,
+    "downstream_mean": 11.81957,
+    "downstream_min": 6.84778,
+    "downstream_oracle_cost_per_use": 81920
+  }
+}

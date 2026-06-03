@@ -1,0 +1,30 @@
+job:
+  seed: 1
+  device: auto
+  dtype: float32
+samples:
+  run_name: ackley_d10_beta20_ula_seed1
+n_train: 2048
+schedule:
+  type: vp
+  beta_min: 0.1
+  beta_max: 20.0
+model:
+  hidden_dims:
+  - 256
+  - 256
+  - 256
+  time_embed_dim: 64
+  activation: silu
+  predict_score: false
+training:
+  n_steps: 20000
+  batch_size: 512
+  lr: 0.0002
+  t_eps: 0.0001
+  grad_clip: 1.0
+  ema_decay: 0.999
+  log_every: 500
+  loss_type: eps
+output:
+  run_name: ackley_d10_beta20_ula_seed1_ntrain2048_mlp256x3_eps_seed1
