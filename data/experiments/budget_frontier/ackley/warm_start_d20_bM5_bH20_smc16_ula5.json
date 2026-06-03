@@ -1,0 +1,56 @@
+{
+  "dim": 20,
+  "beta_m": 5.0,
+  "beta_h": 20.0,
+  "n_smc": 16,
+  "n_ula": 5,
+  "n_warm_particles": 2048,
+  "t_ula": 10000,
+  "oracle_cost_ula_phase": 20480000,
+  "oracle_cost_smc_phase": 196608,
+  "oracle_cost_per_restart": 20676608,
+  "n_restarts": 4,
+  "wall_seconds": 11.36,
+  "restarts": [
+    {
+      "restart_id": 0,
+      "best_energy": 1.4806,
+      "mean_energy": 2.6386,
+      "q01": 1.7324,
+      "q05": 2.0875,
+      "q10": 2.2051,
+      "q50": 2.6418,
+      "q90": 3.062
+    },
+    {
+      "restart_id": 1,
+      "best_energy": 1.2823,
+      "mean_energy": 2.4346,
+      "q01": 1.5597,
+      "q05": 1.8686,
+      "q10": 2.0188,
+      "q50": 2.4316,
+      "q90": 2.8622
+    },
+    {
+      "restart_id": 2,
+      "best_energy": 1.8716,
+      "mean_energy": 2.8049,
+      "q01": 2.1775,
+      "q05": 2.3493,
+      "q10": 2.4551,
+      "q50": 2.8016,
+      "q90": 3.1519
+    },
+    {
+      "restart_id": 3,
+      "best_energy": 0.7882,
+      "mean_energy": 2.522,
+      "q01": 1.2695,
+      "q05": 1.8309,
+      "q10": 2.0148,
+      "q50": 2.5537,
+      "q90": 2.9817
+    }
+  ]
+}
