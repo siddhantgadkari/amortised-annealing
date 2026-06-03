@@ -85,8 +85,27 @@ MODEL_SAMPLE_N_STEPS = 500
 MODEL_SAMPLE_T_START = 1.0
 MODEL_SAMPLE_T_END   = 1e-3
 
-B_GRID_N            = 300
-THRESHOLD_VALUES    = [0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0]
+B_GRID_N = 300
+
+# Per-(dim, beta_h) thresholds tuned to the frontier — loose thresholds
+# produce uninformative ratio=0.019 rows where the cheapest direct config
+# already succeeds on its first restart.
+THRESHOLDS: dict[tuple[int, float], list[float]] = {
+    (10, 20.0): [0.10, 0.08, 0.06, 0.05, 0.04, 0.035, 0.03],
+    (10, 50.0): [0.06, 0.05, 0.04, 0.035, 0.03, 0.027, 0.025],
+    (20, 20.0): [0.30, 0.25, 0.20, 0.175, 0.15, 0.125, 0.10],
+    (20, 50.0): [0.15, 0.125, 0.10, 0.09, 0.08, 0.07],
+}
+
+# Warm-start ablation: ULA from N(0,I) → π_{β_M}, then SMC from β_M → β_H
+WARM_N_PARTICLES = 2048
+WARM_T_ULA       = 10_000   # = MCMC_N_STEPS; C_ULA = 2048×10000 = C_setup (same as diffusion)
+WARM_SMC_CONFIGS = [
+    {"n_smc": 16, "n_ula":  5},
+    {"n_smc": 32, "n_ula": 10},
+    {"n_smc": 64, "n_ula": 20},
+]
+WARM_BETA_MS = [5.0, 20.0]
 # ===========================================================================
 
 
@@ -119,6 +138,10 @@ def _run_name(dim: int, beta_m: float, beta_h: float, n_train: int) -> str:
 
 def _oracle_cost_direct(n_smc: int, n_ula: int) -> int:
     return N_DIRECT_PARTICLES * (n_smc * n_ula + n_smc)
+
+
+def _oracle_cost_warm(n_smc: int, n_ula: int) -> int:
+    return WARM_N_PARTICLES * (WARM_T_ULA + n_smc * (n_ula + 1))
 
 
 # ---------------------------------------------------------------------------
@@ -366,6 +389,84 @@ def run_direct(overwrite: bool, device: torch.device) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Step 2b: Warm-start ULA-SMC restarts
+# ---------------------------------------------------------------------------
+
+def run_warm_start(overwrite: bool, device: torch.device) -> None:
+    out_dir = EXP_BASE / ENERGY
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    for dim in DIMS:
+        energy_obj = ENERGY_MAP[ENERGY](dim=dim)
+        energy_fn  = energy_obj.energy
+
+        for beta_m in WARM_BETA_MS:
+            for beta_h in BETA_HS:
+                for cfg in WARM_SMC_CONFIGS:
+                    n_smc = cfg["n_smc"]
+                    n_ula = cfg["n_ula"]
+                    c_k   = _oracle_cost_warm(n_smc, n_ula)
+                    c_ula = WARM_N_PARTICLES * WARM_T_ULA
+                    c_smc = WARM_N_PARTICLES * (n_smc * n_ula + n_smc)
+                    n_restarts = B_MAX // c_k
+
+                    fname    = (f"warm_start_d{dim}_bM{_beta_str(beta_m)}"
+                                f"_bH{beta_h:g}_smc{n_smc}_ula{n_ula}.json")
+                    out_path = out_dir / fname
+
+                    if out_path.exists() and not overwrite:
+                        print(f"  SKIP  {fname}")
+                        continue
+
+                    print(f"  RUN   d={dim}  bM={beta_m}  bH={beta_h}  "
+                          f"smc={n_smc}  ula={n_ula}  c_k={c_k:,}  n_restarts={n_restarts}")
+                    beta_ladder = torch.linspace(beta_m, beta_h, n_smc + 1, device=device)
+                    proposal    = ULAProposal(energy_obj, step_size=DIRECT_ULA_STEP_SIZE,
+                                             n_steps=n_ula)
+
+                    restarts: list[dict] = []
+                    t0 = time.perf_counter()
+                    for restart_id in range(n_restarts):
+                        torch.manual_seed(restart_id)
+                        x0 = torch.randn(WARM_N_PARTICLES, dim, device=device)
+                        # ULA phase: relax from N(0,I) → π_{β_M}
+                        x0 = _apply_local_ula(x0, energy_fn, beta_m, WARM_T_ULA, restart_id)
+                        # SMC phase: anneal β_M → β_H from warm particles
+                        cloud, _ = SMCSampler(
+                            proposal.mutation_kernel, proposal.weight_update, energy_obj,
+                            ess_threshold=0.5,
+                        ).run(
+                            ParticleCloud(x0, torch.zeros(WARM_N_PARTICLES, device=device)),
+                            beta_ladder, show_progress=False,
+                        )
+                        with torch.no_grad():
+                            e = energy_fn(cloud.x.cpu()).float()
+                        restarts.append({"restart_id": restart_id, **_energy_stats(e)})
+
+                        elapsed = time.perf_counter() - t0
+                        print(f"    restart {restart_id+1}/{n_restarts}  "
+                              f"cum_best={min(r['best_energy'] for r in restarts):.4f}  "
+                              f"elapsed={elapsed:.1f}s")
+
+                    wall = round(time.perf_counter() - t0, 2)
+                    result = {
+                        "dim": dim, "beta_m": beta_m, "beta_h": beta_h,
+                        "n_smc": n_smc, "n_ula": n_ula,
+                        "n_warm_particles": WARM_N_PARTICLES, "t_ula": WARM_T_ULA,
+                        "oracle_cost_ula_phase": int(c_ula),
+                        "oracle_cost_smc_phase": int(c_smc),
+                        "oracle_cost_per_restart": int(c_k),
+                        "n_restarts": n_restarts,
+                        "wall_seconds": wall,
+                        "restarts": restarts,
+                    }
+                    with open(out_path, "w") as f:
+                        json.dump(result, f, indent=2)
+                    cum_best = min(r["best_energy"] for r in restarts)
+                    print(f"  Saved {fname}  (cum_best={cum_best:.4f}  wall={wall:.1f}s)")
+
+
+# ---------------------------------------------------------------------------
 # Step 3: Aggregate — build frontier JSONs + threshold table
 # ---------------------------------------------------------------------------
 
@@ -497,6 +598,39 @@ def build_aggregate(no_plot: bool) -> None:
                     diff_best_mean.append(valid[best_k])
                     diff_best_std.append(diff_per_config[best_k]["std"][i])
 
+            # ── Warm-start frontier ──────────────────────────────────────────
+            warm_per_config: dict[str, list] = {}
+            for beta_m in WARM_BETA_MS:
+                for cfg in WARM_SMC_CONFIGS:
+                    n_smc, n_ula = cfg["n_smc"], cfg["n_ula"]
+                    fname = (f"warm_start_d{dim}_bM{_beta_str(beta_m)}"
+                             f"_bH{beta_h:g}_smc{n_smc}_ula{n_ula}.json")
+                    p = data_dir / fname
+                    if not p.exists():
+                        continue
+                    d   = json.loads(p.read_text())
+                    c_k = d["oracle_cost_per_restart"]
+                    best_elist = [r["best_energy"] for r in d["restarts"]]
+                    curve: list[float] = []
+                    for B in b_grid:
+                        m = int(B // c_k)
+                        if m < 1:
+                            curve.append(float("nan"))
+                        else:
+                            m = min(m, len(best_elist))
+                            curve.append(float(min(best_elist[:m])))
+                    key = f"bm{_beta_str(beta_m)}_smc{n_smc}_ula{n_ula}"
+                    warm_per_config[key] = curve
+
+            warm_frontier_best = [
+                float(min(
+                    (curve[i] for curve in warm_per_config.values()
+                     if not math.isnan(curve[i])),
+                    default=float("nan"),
+                ))
+                for i in range(len(b_grid))
+            ]
+
             frontier = {
                 "budget_grid":                b_grid,
                 "direct_frontier_best":       direct_frontier_best,
@@ -504,6 +638,8 @@ def build_aggregate(no_plot: bool) -> None:
                 "diffusion_frontier_best_mean": diff_best_mean,
                 "diffusion_frontier_best_std":  diff_best_std,
                 "diffusion_per_config":        diff_per_config,
+                "warm_start_frontier_best":   warm_frontier_best,
+                "warm_start_per_config":      warm_per_config,
             }
             fpath = data_dir / f"frontier_d{dim}_bH{beta_h:g}.json"
             with open(fpath, "w") as f:
@@ -522,7 +658,11 @@ def _build_threshold_table(data_dir: Path) -> None:
 
     for dim in DIMS:
         for beta_h in BETA_HS:
-            # Load direct data for this (dim, beta_h)
+            thresholds = THRESHOLDS.get((dim, beta_h))
+            if not thresholds:
+                continue
+
+            # Load direct data
             direct_data: dict[str, dict] = {}
             for cfg in DIRECT_SMC_CONFIGS:
                 n_smc, n_ula = cfg["n_smc"], cfg["n_ula"]
@@ -543,11 +683,23 @@ def _build_threshold_table(data_dir: Path) -> None:
                 if sds:
                     diff_data[beta_m] = sds
 
+            # Load warm-start data for this (dim, beta_h)
+            warm_data: dict[str, dict] = {}
+            for beta_m in WARM_BETA_MS:
+                for cfg in WARM_SMC_CONFIGS:
+                    n_smc, n_ula = cfg["n_smc"], cfg["n_ula"]
+                    fname = (f"warm_start_d{dim}_bM{_beta_str(beta_m)}"
+                             f"_bH{beta_h:g}_smc{n_smc}_ula{n_ula}.json")
+                    p = data_dir / fname
+                    if p.exists():
+                        key = f"bm{_beta_str(beta_m)}_smc{n_smc}_ula{n_ula}"
+                        warm_data[key] = json.loads(p.read_text())
+
             if not direct_data or not diff_data:
                 continue
 
-            for thresh in THRESHOLD_VALUES:
-                # Direct: cheapest (config, m) achieving <= thresh
+            for thresh in thresholds:
+                # Direct: cheapest (config, prefix-m) achieving cumulative best <= thresh
                 direct_budget: int | None = None
                 direct_cfg_key: str | None = None
                 for key, d in direct_data.items():
@@ -563,14 +715,13 @@ def _build_threshold_table(data_dir: Path) -> None:
                                 direct_cfg_key = key
                             break
 
-                # Diffusion: cheapest (beta_m, seed) achieving <= thresh
+                # Diffusion: cheapest (beta_m) achieving mean cumulative_best <= thresh
                 diff_budget: int | None = None
                 diff_bm_key: float | None = None
                 for beta_m, seeds_data in diff_data.items():
                     c_setup = seeds_data[0]["oracle_cost_setup"]
-                    # Use mean cumulative_best over seeds
-                    arrays = [sd["cumulative_best"] for sd in seeds_data]
-                    n = min(len(a) for a in arrays)
+                    arrays  = [sd["cumulative_best"] for sd in seeds_data]
+                    n       = min(len(a) for a in arrays)
                     mean_cb = [sum(a[r] for a in arrays) / len(arrays) for r in range(n)]
                     for r, val in enumerate(mean_cb):
                         if val <= thresh:
@@ -580,18 +731,55 @@ def _build_threshold_table(data_dir: Path) -> None:
                                 diff_bm_key = beta_m
                             break
 
+                # Warm-start: cheapest (beta_m, smc_cfg) achieving cumulative best <= thresh
+                warm_budget: int | None = None
+                warm_cfg_key: str | None = None
+                for key, d in warm_data.items():
+                    c_k        = d["oracle_cost_per_restart"]
+                    best_elist = [r["best_energy"] for r in d["restarts"]]
+                    running    = float("inf")
+                    for m, be in enumerate(best_elist, 1):
+                        running = min(running, be)
+                        if running <= thresh:
+                            cost = m * c_k
+                            if warm_budget is None or cost < warm_budget:
+                                warm_budget = cost
+                                warm_cfg_key = key
+                            break
+
+                # Three-way winner
+                budgets = {k: v for k, v in [
+                    ("direct",    direct_budget),
+                    ("diffusion", diff_budget),
+                    ("warm_start", warm_budget),
+                ] if v is not None}
+                if not budgets:
+                    winner = "not_reached"
+                else:
+                    winner = min(budgets, key=budgets.__getitem__)
+
+                # budget_ratio = direct / diff (existing interpretation)
+                if direct_budget is None and diff_budget is None:
+                    ratio = "N/A"
+                elif direct_budget is None:
+                    ratio = "inf"
+                elif diff_budget is None:
+                    ratio = "0.0"
+                else:
+                    ratio = round(direct_budget / diff_budget, 3)
+
                 rows.append({
-                    "dim":          dim,
-                    "beta_h":       beta_h,
-                    "threshold":    thresh,
-                    "direct_budget": direct_budget if direct_budget is not None else "N/A",
-                    "direct_cfg":   direct_cfg_key or "N/A",
-                    "diff_budget":  diff_budget if diff_budget is not None else "N/A",
-                    "diff_bm":      diff_bm_key if diff_bm_key is not None else "N/A",
-                    "budget_ratio": (
-                        round(direct_budget / diff_budget, 3)
-                        if direct_budget and diff_budget else "N/A"
-                    ),
+                    "dim":            dim,
+                    "beta_h":         beta_h,
+                    "threshold":      thresh,
+                    "direct_budget":  direct_budget if direct_budget is not None else "N/A",
+                    "direct_cfg":     direct_cfg_key or "N/A",
+                    "diff_budget":    diff_budget if diff_budget is not None else "N/A",
+                    "diff_bm":        diff_bm_key if diff_bm_key is not None else "N/A",
+                    "warm_budget":    warm_budget if warm_budget is not None else "N/A",
+                    "warm_cfg":       warm_cfg_key or "N/A",
+                    "budget_ratio":   ratio,
+                    "winner":         winner,
                 })
 
     if rows:
@@ -604,13 +792,13 @@ def _build_threshold_table(data_dir: Path) -> None:
 
         # Pretty-print
         hdr = list(rows[0].keys())
-        w   = [5, 7, 10, 14, 14, 14, 8, 12]
+        w   = [4, 6, 9, 14, 14, 14, 6, 14, 18, 12, 12]
         fmt = "  ".join(f"{{:<{n}}}" for n in w)
-        print(f"\n{'='*90}")
-        print("THRESHOLD TABLE")
-        print(f"{'='*90}")
+        print(f"\n{'='*120}")
+        print("THRESHOLD TABLE  (budget_ratio=direct/diff;  >1 → diff cheaper;  winner = cheapest of all three)")
+        print(f"{'='*120}")
         print(fmt.format(*hdr))
-        print("-" * 90)
+        print("-" * 120)
         for r in rows:
             print(fmt.format(*[str(r[k]) for k in hdr]))
 
@@ -692,6 +880,22 @@ def plot_frontiers() -> None:
                 hi = [y + e for y, e in zip(ys, es)]
                 ax.fill_between(xs, lo, hi, color="steelblue", alpha=0.15)
 
+            # Individual warm-start per-config curves (salmon dashed thin)
+            for key, curve in fr.get("warm_start_per_config", {}).items():
+                xs  = [b_grid[i] for i, v in enumerate(curve) if not math.isnan(v)]
+                yss = [v for v in curve if not math.isnan(v)]
+                if xs:
+                    ax.plot(xs, yss, color="#e8897a", ls="--", lw=0.8, alpha=0.6,
+                            label=f"Warm-start {key}")
+
+            # Warm-start lower envelope (crimson thick)
+            wfe = fr.get("warm_start_frontier_best", [])
+            xs  = [b_grid[i] for i, v in enumerate(wfe) if not math.isnan(v)]
+            ys  = [v for v in wfe if not math.isnan(v)]
+            if xs:
+                ax.plot(xs, ys, color="crimson", lw=2.5, ls="-",
+                        label="Warm-start (envelope)", zorder=4)
+
             # Vertical dashed line at C_setup
             ax.axvline(C_SETUP, color="steelblue", ls=":", lw=1.2, alpha=0.7,
                        label=f"C_setup = {C_SETUP:,}")
@@ -722,8 +926,12 @@ def main() -> None:
                         help="Run R=1000 diffusion batches from existing models")
     parser.add_argument("--run-direct",       action="store_true",
                         help="Run direct SMC restarts up to B_MAX")
+    parser.add_argument("--run-warm-start",   action="store_true",
+                        help="Run warm-start ULA-SMC restarts (ULA→β_M then SMC→β_H)")
     parser.add_argument("--aggregate",        action="store_true",
                         help="Build frontier JSONs + threshold table (no GPU needed)")
+    parser.add_argument("--threshold-only",   action="store_true",
+                        help="Rebuild only threshold_table.csv from existing data files")
     parser.add_argument("--plot-only",        action="store_true",
                         help="Plot from existing frontier JSONs")
     parser.add_argument("--no-plot",          action="store_true",
@@ -736,6 +944,11 @@ def main() -> None:
 
     if args.plot_only:
         plot_frontiers()
+        return
+
+    if args.threshold_only:
+        print("Rebuilding threshold table from existing data files...")
+        _build_threshold_table(EXP_BASE / ENERGY)
         return
 
     if args.aggregate:
@@ -762,6 +975,13 @@ def main() -> None:
               f"B_MAX={B_MAX:,} ===\n")
         run_direct(args.overwrite, device)
         print(f"\nDone. Run --aggregate when diffusion seeds also complete.")
+        return
+
+    if args.run_warm_start:
+        print(f"\n=== RUN WARM-START  {ENERGY}  dims={DIMS}  β_M={WARM_BETA_MS}  "
+              f"β_H={BETA_HS}  N={WARM_N_PARTICLES}  T_ULA={WARM_T_ULA} ===\n")
+        run_warm_start(args.overwrite, device)
+        print(f"\nDone. Run --aggregate to rebuild frontiers.")
         return
 
     parser.print_help()
