@@ -319,16 +319,14 @@ def plot_reuse() -> None:
     def _cq_m(d):
         return d["mean"] if isinstance(d, dict) else (d if d is not None else float("nan"))
 
-    for dim in dims:
-        for beta_h in beta_hs:
+    R_range = list(range(1, R_MAX + 1))
+
+    for beta_h in beta_hs:
+        # --- Plot A: strip of dims — total_cost vs cumulative_best ---
+        fig, axes = plt.subplots(1, len(dims), figsize=(5.5 * len(dims), 4.5), squeeze=False)
+        for col_idx, dim in enumerate(dims):
+            ax = axes[0][col_idx]
             configs = [c for c in agg if c["dim"] == dim and c["beta_h"] == beta_h]
-            if not configs:
-                continue
-
-            R_range = list(range(1, R_MAX + 1))
-
-            # --- Plot A: total_cost vs cumulative_best ---
-            fig, ax = plt.subplots(figsize=(7, 5))
             for cfg in configs:
                 cb_mean = cfg.get("cumulative_best_mean", [])
                 cb_std  = cfg.get("cumulative_best_std", [])
@@ -336,7 +334,7 @@ def plot_reuse() -> None:
                 if not cb_mean:
                     continue
                 color = bm_colors.get(cfg["beta_m"], "steelblue")
-                label = f"β_M={cfg['beta_m']:g} N_tr={cfg['n_train']}"
+                label = f"β_M={cfg['beta_m']:g}"
                 ax.plot(tc, cb_mean, color=color, lw=1.5, label=label)
                 lo = [m - s for m, s in zip(cb_mean, cb_std)]
                 hi = [m + s for m, s in zip(cb_mean, cb_std)]
@@ -351,57 +349,25 @@ def plot_reuse() -> None:
                     x_val = pt.get("oracle_cost_total", pt.get("n_grad_evals", 0))
                     y_val = _cq_m(pt.get("best_energy", {}))
                     ax.scatter([x_val], [y_val], color="black", marker="^", zorder=5, s=50)
-                if direct_pts:
+                if direct_pts and col_idx == 0:
                     ax.scatter([], [], color="black", marker="^", s=50,
                                label="Direct SMC (annealed)")
 
             ax.set_xscale("log")
             ax.set_xlabel("Total oracle cost  (C_setup + R × C_use)", fontsize=9)
-            ax.set_ylabel("Cumulative best energy", fontsize=9)
-            ax.set_title(f"Reuse quality: d={dim}  β_H={beta_h}", fontsize=10)
+            if col_idx == 0:
+                ax.set_ylabel("Cumulative best energy", fontsize=9)
+            ax.set_title(f"d = {dim}", fontsize=10)
             ax.legend(fontsize=7)
             ax.grid(True, alpha=0.3)
-            out_path = plots_dir / f"reuse_cost_quality_d{dim}_bH{beta_h:g}.svg"
-            fig.tight_layout()
-            fig.savefig(out_path, bbox_inches="tight")
-            plt.close(fig)
-            print(f"  Saved {out_path.name}")
 
-            # --- Plot B: avg_cost_per_use vs R ---
-            fig, ax = plt.subplots(figsize=(7, 5))
-            for cfg in configs:
-                ac_mean = cfg.get("avg_cost_mean", [])
-                if not ac_mean:
-                    continue
-                color = bm_colors.get(cfg["beta_m"], "steelblue")
-                ls    = "-" if cfg["n_train"] == 2048 else "--"
-                label = f"β_M={cfg['beta_m']:g} N_tr={cfg['n_train']}"
-                ax.plot(R_range[:len(ac_mean)], ac_mean, color=color, ls=ls, lw=1.5,
-                        label=label)
-
-            if cq_data:
-                direct_pts = sorted(
-                    [p for p in cq_data["direct_ula_annealed"]
-                     if p["dim"] == dim and p["beta_h"] == beta_h],
-                    key=lambda p: p.get("oracle_cost_total", 0),
-                )
-                for pt in direct_pts:
-                    c = pt.get("oracle_cost_total", pt.get("n_grad_evals", 0))
-                    ax.axhline(c, color="black", ls=":", lw=0.8, alpha=0.6,
-                               label=f"Direct SMC  cost={c:.2e}")
-
-            ax.set_xscale("log")
-            ax.set_yscale("log")
-            ax.set_xlabel("Number of reuses R", fontsize=9)
-            ax.set_ylabel("Avg oracle cost per call  (C_setup/R + C_use)", fontsize=9)
-            ax.set_title(f"Break-even view: d={dim}  β_H={beta_h}", fontsize=10)
-            ax.legend(fontsize=6, ncol=2)
-            ax.grid(True, alpha=0.3)
-            out_path = plots_dir / f"reuse_avg_cost_d{dim}_bH{beta_h:g}.svg"
-            fig.tight_layout()
-            fig.savefig(out_path, bbox_inches="tight")
-            plt.close(fig)
-            print(f"  Saved {out_path.name}")
+        fig.suptitle(f"Ackley  —  Diffusion reuse quality  (β_H={beta_h:g},  3 seeds ±1σ)",
+                     fontsize=11)
+        fig.tight_layout(rect=[0, 0, 1, 0.96])
+        out_path = plots_dir / f"reuse_cost_quality_bH{beta_h:g}.svg"
+        fig.savefig(out_path, bbox_inches="tight")
+        plt.close(fig)
+        print(f"  Saved {out_path.name}")
 
 
 def main() -> None:

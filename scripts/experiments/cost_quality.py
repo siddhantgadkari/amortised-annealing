@@ -818,10 +818,10 @@ def plot_results() -> None:
                                         capsize=2, alpha=alpha, label=lbl, zorder=5)
 
                 ax.set_xscale("log")
-                ax.set_xlabel("Oracle cost (∇E evals)", fontsize=8)
+                ax.set_xlabel("Oracle cost", fontsize=8)
                 ax.set_ylabel(stat_label, fontsize=8)
                 ax.set_title(f"d={dim}", fontsize=9)
-                ax.legend(fontsize=6, loc="upper right")
+                ax.legend(fontsize=6, loc="upper left")
                 ax.grid(True, alpha=0.3)
 
             fig.suptitle(f"{ENERGY}  β_H={beta_h}  Cost vs {stat_label}", fontsize=10)
@@ -832,37 +832,42 @@ def plot_results() -> None:
             print(f"  Saved {out.name}")
 
     # ── Plot 3: N_train effect ────────────────────────────────────────────────
-    for beta_h in beta_hs:
-        fig, axes = plt.subplots(1, len(dims), figsize=(4.5 * len(dims), 4), squeeze=False)
-        for ax, dim in zip(axes[0], dims):
-            for n_train in sorted(N_TRAIN_SIZES):
-                xs, ys, es = [], [], []
-                for beta_m in beta_ms:
-                    pts = [c for c in data["amortised"]
-                           if c["dim"] == dim and c["beta_m"] == beta_m
-                           and c["beta_h"] == beta_h and c["n_train"] == n_train
-                           and c["n_samples"] == 2048 and c["local_steps"] == 0]
-                    if not pts:
-                        continue
-                    xs.append(beta_m)
-                    ys.append(_m(pts[0].get("q01", {})))
-                    es.append(_s(pts[0].get("q01", {})))
-                color = "steelblue" if n_train == min(N_TRAIN_SIZES) else "darkorange"
-                if xs:
-                    ax.errorbar(xs, ys, yerr=es, fmt="o-", color=color,
-                                label=f"N_train={n_train}", capsize=3, lw=1.5)
-            ax.set_xlabel(r"$\beta_M$", fontsize=8)
-            ax.set_ylabel("q01 energy", fontsize=8)
-            ax.set_title(f"d={dim}", fontsize=9)
-            ax.legend(fontsize=7)
-            ax.grid(True, alpha=0.3)
-        fig.suptitle(f"{ENERGY}  β_H={beta_h}  N_train effect  (N_samples=2048, local_steps=0)",
-                     fontsize=10)
-        fig.tight_layout()
-        out = plots_dir / f"ntrain_effect_betaH{_beta_str(beta_h)}.svg"
-        fig.savefig(out, bbox_inches="tight")
-        plt.close(fig)
-        print(f"  Saved {out.name}")
+    for stat_key, stat_label, stat_fname in [
+        ("q01",         "q01 energy",        "q01"),
+        ("best_energy", "Best energy (min)", "best"),
+        ("mean_energy", "Mean energy",       "mean"),
+    ]:
+        for beta_h in beta_hs:
+            fig, axes = plt.subplots(1, len(dims), figsize=(4.5 * len(dims), 4), squeeze=False)
+            for ax, dim in zip(axes[0], dims):
+                for n_train in sorted(N_TRAIN_SIZES):
+                    xs, ys, es = [], [], []
+                    for beta_m in beta_ms:
+                        pts = [c for c in data["amortised"]
+                               if c["dim"] == dim and c["beta_m"] == beta_m
+                               and c["beta_h"] == beta_h and c["n_train"] == n_train
+                               and c["n_samples"] == 2048 and c["local_steps"] == 0]
+                        if not pts:
+                            continue
+                        xs.append(beta_m)
+                        ys.append(_m(pts[0].get(stat_key, {})))
+                        es.append(_s(pts[0].get(stat_key, {})))
+                    color = "steelblue" if n_train == min(N_TRAIN_SIZES) else "darkorange"
+                    if xs:
+                        ax.errorbar(xs, ys, yerr=es, fmt="o-", color=color,
+                                    label=f"N_train={n_train}", capsize=3, lw=1.5)
+                ax.set_xlabel(r"$\beta_M$", fontsize=8)
+                ax.set_ylabel(stat_label, fontsize=8)
+                ax.set_title(f"d={dim}", fontsize=9)
+                ax.legend(fontsize=7)
+                ax.grid(True, alpha=0.3)
+            fig.suptitle(f"{ENERGY}  β_H={beta_h}  N_train effect  (N_samples=2048, local_steps=0)",
+                         fontsize=10)
+            fig.tight_layout()
+            out = plots_dir / f"ntrain_effect_{stat_fname}_betaH{_beta_str(beta_h)}.svg"
+            fig.savefig(out, bbox_inches="tight")
+            plt.close(fig)
+            print(f"  Saved {out.name}")
 
     # ── Plot 4: N_samples effect ──────────────────────────────────────────────
     for beta_h in beta_hs:

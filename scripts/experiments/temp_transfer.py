@@ -692,7 +692,7 @@ def plot_results() -> None:
                         grid[bh_i, bm_i] = v
 
                 im = ax.imshow(grid, aspect="auto", origin="lower",
-                               cmap="viridis_r" if "energy" in stat_key else "viridis")
+                               cmap="viridis_r")
                 ax.set_xticks(range(n_bm))
                 ax.set_xticklabels([_beta_str(b) for b in beta_ms], fontsize=7)
                 ax.set_yticks(range(n_bh))
@@ -706,7 +706,7 @@ def plot_results() -> None:
                     v = grid[bh_i, bm_i]
                     if not np.isnan(v):
                         ax.text(bm_i, bh_i, f"{v:.2f}", ha="center", va="center",
-                                fontsize=5, color="white")
+                                fontsize=5, color="red")
 
                 plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
 
@@ -854,7 +854,7 @@ def plot_gap_heatmap() -> None:
             v = grid[bh_i, bm_i]
             if not np.isnan(v):
                 ax.text(bm_i, bh_i, f"{v:.2f}", ha="center", va="center",
-                        fontsize=5, color="black")
+                        fontsize=5, color="red")
 
         plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04,
                      label=r"$E_\mathrm{diff} - E_\mathrm{ULA}$")
