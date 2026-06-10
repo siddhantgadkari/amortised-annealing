@@ -901,7 +901,7 @@ def plot_frontiers() -> None:
                        label=f"C_setup = {C_SETUP:,}")
 
             ax.set_xscale("log")
-            ax.set_xlabel("Total oracle budget B  (∇E evals)", fontsize=9)
+            ax.set_xlabel("Oracle cost", fontsize=9)
             ax.set_ylabel("Cumulative best energy", fontsize=9)
             ax.set_title(f"{ENERGY}  d={dim}  β_H={beta_h}  Budget frontier", fontsize=10)
             ax.legend(fontsize=6, loc="upper right", ncol=2)

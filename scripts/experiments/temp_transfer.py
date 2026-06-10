@@ -740,7 +740,7 @@ def plot_results() -> None:
         ax.set_title(f"d={dim}", fontsize=9)
         ax.legend(fontsize=7)
         ax.grid(True, alpha=0.3)
-    fig.suptitle(f"{ENERGY}  Experiment B: delta diagnostic", fontsize=10)
+    fig.suptitle(f"{ENERGY}  —  quantile energy discrepancy  Δ_E  vs  β_M", fontsize=10)
     fig.tight_layout()
     out = plots_dir / "delta_diagnostic.svg"
     fig.savefig(out, bbox_inches="tight")
