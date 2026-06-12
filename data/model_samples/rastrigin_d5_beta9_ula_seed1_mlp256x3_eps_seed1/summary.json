@@ -5,17 +5,17 @@
   "t_start": 1.0,
   "t_end": 0.001,
   "seed": 1,
-  "wall_clock_seconds": 0.87,
+  "wall_clock_seconds": 4.47,
   "model_stats": {
-    "mean_energy": 51.796,
-    "median_energy": 51.6777,
-    "min_energy": 3.6925,
-    "std_energy": 15.945,
-    "q01": 15.9224,
-    "q05": 24.9595,
-    "q25": 40.9692,
-    "q75": 62.9966,
-    "q95": 78.3801
+    "mean_energy": 51.4435,
+    "median_energy": 51.45,
+    "min_energy": 4.6897,
+    "std_energy": 15.8597,
+    "q01": 15.7683,
+    "q05": 25.3413,
+    "q25": 40.5961,
+    "q75": 62.4106,
+    "q95": 77.9447
   },
   "mcmc_stats": {
     "mean_energy": 47.3272,
@@ -29,9 +29,9 @@
     "q95": 67.581
   },
   "delta_stats": {
-    "delta_mean": 0.0944,
-    "delta_median": 0.0885,
-    "delta_min": 0.2918,
-    "delta_std": 0.2763
+    "delta_mean": 0.087,
+    "delta_median": 0.0837,
+    "delta_min": 0.1005,
+    "delta_std": 0.2695
   }
 }

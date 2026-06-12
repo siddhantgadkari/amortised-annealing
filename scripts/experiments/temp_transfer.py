@@ -674,7 +674,7 @@ def plot_results() -> None:
                                           ("direct_model", "Direct model")]:
             n_bm = len(beta_ms)
             n_bh = len(beta_hs)
-            fig, axes = plt.subplots(1, len(metrics), figsize=(4 * len(metrics), 3.5))
+            fig, axes = plt.subplots(1, len(metrics), figsize=(7 * len(metrics), 6))
 
             for ax, (stat_key, stat_label) in zip(axes, metrics):
                 if method_key == "direct_model" and stat_key in ("min_ess", "max_logw_var"):
@@ -694,24 +694,24 @@ def plot_results() -> None:
                 im = ax.imshow(grid, aspect="auto", origin="lower",
                                cmap="viridis_r")
                 ax.set_xticks(range(n_bm))
-                ax.set_xticklabels([_beta_str(b) for b in beta_ms], fontsize=7)
+                ax.set_xticklabels([_beta_str(b) for b in beta_ms], fontsize=13)
                 ax.set_yticks(range(n_bh))
-                ax.set_yticklabels([_beta_str(b) for b in beta_hs], fontsize=7)
-                ax.set_xlabel(r"$\beta_M$", fontsize=8)
-                ax.set_ylabel(r"$\beta_H$", fontsize=8)
-                ax.set_title(stat_label, fontsize=8)
+                ax.set_yticklabels([_beta_str(b) for b in beta_hs], fontsize=13)
+                ax.set_xlabel(r"$\beta_M$", fontsize=16)
+                ax.set_ylabel(r"$\beta_H$", fontsize=16)
+                ax.set_title(stat_label, fontsize=17)
 
                 # Annotate cells
                 for bh_i, bm_i in np.ndindex(grid.shape):
                     v = grid[bh_i, bm_i]
                     if not np.isnan(v):
                         ax.text(bm_i, bh_i, f"{v:.2f}", ha="center", va="center",
-                                fontsize=5, color="red")
+                                fontsize=10, color="red")
 
                 plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
 
             e_str = f" (E*={e_star:.3g})" if e_star is not None else ""
-            fig.suptitle(f"{ENERGY}  d={dim}  {method_label}{e_str}", fontsize=9)
+            fig.suptitle(f"{ENERGY}  d={dim}  {method_label}{e_str}", fontsize=19)
             fig.tight_layout()
             slug = method_key.replace("_", "")
             out  = plots_dir / f"heatmap_d{dim}_{slug}.svg"
@@ -843,24 +843,24 @@ def plot_gap_heatmap() -> None:
                        cmap="RdBu_r", vmin=-vmax, vmax=vmax)
 
         ax.set_xticks(range(n_bm))
-        ax.set_xticklabels([_beta_str(b) for b in beta_ms], fontsize=7)
+        ax.set_xticklabels([_beta_str(b) for b in beta_ms], fontsize=13)
         ax.set_yticks(range(n_bh))
-        ax.set_yticklabels([_beta_str(b) for b in beta_hs], fontsize=7)
-        ax.set_xlabel(r"$\beta_M$", fontsize=8)
-        ax.set_ylabel(r"$\beta_H$", fontsize=8)
-        ax.set_title(f"d={dim}", fontsize=9)
+        ax.set_yticklabels([_beta_str(b) for b in beta_hs], fontsize=13)
+        ax.set_xlabel(r"$\beta_M$", fontsize=16)
+        ax.set_ylabel(r"$\beta_H$", fontsize=16)
+        ax.set_title(f"d={dim}", fontsize=17)
 
         for bh_i, bm_i in np.ndindex(grid.shape):
             v = grid[bh_i, bm_i]
             if not np.isnan(v):
                 ax.text(bm_i, bh_i, f"{v:.2f}", ha="center", va="center",
-                        fontsize=5, color="red")
+                        fontsize=10, color="red")
 
         plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04,
                      label=r"$E_\mathrm{diff} - E_\mathrm{ULA}$")
 
     fig.suptitle(f"{ENERGY}  gap: Diffusion SMC − ULA SMC  (red=diffusion worse)",
-                 fontsize=10)
+                 fontsize=19)
     fig.tight_layout()
     out = plots_dir / "gap_diff_vs_ula.svg"
     fig.savefig(out, bbox_inches="tight")

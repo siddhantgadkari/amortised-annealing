@@ -950,11 +950,11 @@ def plot_contour_grids(kde: bool = CONTOUR_KDE) -> None:
         ncols = 4
         nrows = (len(beta_ms_sorted) + ncols - 1) // ncols
 
-        fig = plt.figure(figsize=(ncols * 4.2 + 0.7, nrows * 3.8 + 0.6))
+        fig = plt.figure(figsize=(ncols * 4.8 + 0.8, nrows * 4.2 + 1.0))
         gs  = gridspec.GridSpec(
             nrows, ncols + 1, figure=fig,
             width_ratios=[1.0] * ncols + [0.04],
-            hspace=0.40, wspace=0.18,
+            hspace=0.45, wspace=0.22,
         )
         cax = fig.add_subplot(gs[:, -1])
 
@@ -978,45 +978,45 @@ def plot_contour_grids(kde: bool = CONTOUR_KDE) -> None:
                 else:
                     n = min(1000, len(diff_2d))
                     ax.scatter(diff_2d[:n, 0], diff_2d[:n, 1],
-                               c=_DIFF_COLOR, s=3, alpha=0.5, linewidths=0, zorder=3)
+                               c=_DIFF_COLOR, s=4, alpha=0.5, linewidths=0, zorder=3)
                     n = min(1000, len(mcmc_2d))
                     ax.scatter(mcmc_2d[:n, 0], mcmc_2d[:n, 1],
-                               c=_MCMC_COLOR, s=3, alpha=0.5, linewidths=0, zorder=3)
+                               c=_MCMC_COLOR, s=4, alpha=0.5, linewidths=0, zorder=3)
 
             if gm_2d is not None:
                 ax.scatter(gm_2d[:, 0], gm_2d[:, 1],
-                           marker="*", s=70, c="gold", edgecolors="k",
+                           marker="*", s=90, c="gold", edgecolors="k",
                            linewidths=0.4, zorder=5)
 
-            ax.set_title(f"β_M={beta_m}", fontsize=8, pad=3)
+            ax.set_title(f"$\\beta_M={beta_m}$", fontsize=11, pad=4)
             ax.set_xlim(x0, x1)
             ax.set_ylim(y0, y1)
-            ax.tick_params(labelsize=6)
+            ax.tick_params(labelsize=8)
             if col == 0:
-                ax.set_ylabel(ylabel, fontsize=7)
+                ax.set_ylabel(ylabel, fontsize=10)
             if row == nrows - 1:
-                ax.set_xlabel(xlabel, fontsize=7)
+                ax.set_xlabel(xlabel, fontsize=10)
 
         if last_cf is not None:
-            plt.colorbar(last_cf, cax=cax, label="E(x)")
+            plt.colorbar(last_cf, cax=cax, label="E(x)").ax.tick_params(labelsize=8)
 
-        # Shared legend below the grid
+        # Shared legend inside figure bottom, no wasted whitespace below
         handles = [
             Line2D([0], [0], marker="o", color="w", markerfacecolor=_DIFF_COLOR,
-                   markersize=6, label="Diffusion model"),
+                   markersize=8, label="Diffusion model"),
             Line2D([0], [0], marker="o", color="w", markerfacecolor=_MCMC_COLOR,
-                   markersize=6, label="MCMC (ULA)"),
+                   markersize=8, label="MCMC (ULA)"),
         ]
         if gm_2d is not None:
             handles.append(Line2D(
                 [0], [0], marker="*", color="w", markerfacecolor="gold",
-                markeredgecolor="k", markeredgewidth=0.4, markersize=9,
+                markeredgecolor="k", markeredgewidth=0.4, markersize=11,
                 label="Global min",
             ))
         fig.legend(handles=handles, loc="lower center", ncol=len(handles),
-                   fontsize=8, bbox_to_anchor=(0.46, -0.02))
+                   fontsize=11, bbox_to_anchor=(0.46, 0.01))
 
-        fig.suptitle(f"{ENERGY}  d={dim}{pca_info}", fontsize=11)
+        fig.suptitle(f"{ENERGY}  d={dim}{pca_info}", fontsize=14)
         out = plots_dir / f"contour_grid_d{dim}.svg"
         fig.savefig(out, bbox_inches="tight")
         plt.close(fig)
